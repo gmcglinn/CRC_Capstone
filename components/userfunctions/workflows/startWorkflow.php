@@ -22,7 +22,7 @@
         <div class="w3-card-4 w3-margin w3-padding">
             <h5>Start Workflow</h5>
 
-            <form id="workflowSelectForm" method="get" action="./dashboard.php">
+            <form id="workflowSelectForm" method="get">
                 <!-- These hidden input fields are needed to get the user back to this page. -->
                 <input type="hidden" name="content" value="workflows">
                 <input type="hidden" name="contentType" value="start">

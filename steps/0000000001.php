@@ -11,16 +11,17 @@
         $fwid = bin2hex(random_bytes(32));  //duplication is unlikely with this one. 1 in 20billion apparently
         $newappsql = "INSERT INTO f20_application_info(fw_id, dept_code, course_number, student_email, semester, year, grade_mode) 
                         VALUES ('$fwid','$department', '$course','$studentEmail', '$semester', '$year', '$gradeMethod');";
-        
+                        
         $newutilsql = "INSERT INTO f20_application_util(fw_id, progress, rejected, assigned_to, assigned_when) 
-                        VALUES ('$fwid', '-1', '0', 'student', 'CURRENT_TIMESTAMP');";
+                        VALUES ('$fwid', '-1', '0', 'student', NOW());";
 
         $insql = mysqli_query($db_conn, $newappsql);
 
         if (mysqli_errno($db_conn) == 0) {
-
+        
             $insql = mysqli_query($db_conn, $newutilsql);
             if (mysqli_errno($db_conn) == 0) {
+
                 echo("<div class='w3-card w3-green w3-margin w3-padding'>Application Successfully Started.</div>");
             }
             else {
@@ -36,7 +37,7 @@
 <!-- This form is specficically for the internship application and may be adapted for
     custom workflows in the future -->
 <div class="w3-card-4 w3-margin w3-padding" style="background-color: whitesmoke;">
-    <form method="post" action="./dashboard.php?content=workflows&contentType=start">
+    <form method="post">
         <h5>Application Start Form:</h5>
         <label class="w3-input" for="studentEmail" class="w3-input">Student's Email</label>
         <input type="email" name="studentEmail" class="w3-input">
