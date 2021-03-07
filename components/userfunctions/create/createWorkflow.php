@@ -3,28 +3,35 @@
     1. Organization.
     2. May need database work.
 -->
-
 <?php
-	include_once('./components/userfunctions/create/create.php');
     if (isset($_POST['workflowCreate'])) {
         include_once('./backend/config.php');
 		include_once('./backend/db_connector.php');
-		//Loading the page title and action buttons.
+		
+		if (isset($_POST['hiddeninput'])) {
+			$newWorkflowOrder = str_replace(',', '=>', $_POST['hiddeninput']);
+			$title = $_POST['workflowTitle'];
+			$sql = "INSERT INTO f20_app_template_table (TSID, title, instructions) 
+				VALUES (1, '$title', '$newWorkflowOrder')";
 
-        //Needs Implementation
+			mysqli_query($db_conn, $sql);
+        	//Database insert success
+        	if (mysqli_errno($db_conn) == 0) {
+            	echo("<div class='w3-panel w3-margin w3-green'><p>Workflow Successfully Created.</p></div>");
+        	} 
+        	//Database detected duplicate entry
+        	else if (mysqli_errno($db_conn) == 1062) {  
+            echo("<div class='w3-panel w3-margin w3-red'><p>Failed to Create Workflow - Duplicate Found.</p></div>");
+        	}
+        	else {
+            	echo("<div class='w3-panel w3-margin w3-red'><p>Failed to Create Workflow.</p></div>");
 
-        //Database insert success
-        if (mysqli_errno($db_conn) == 0) {
-            echo("<div class='w3-panel w3-margin w3-green'><p>Course Successfully Created.</p></div>");
-        } 
-        //Database detected duplicate entry
-        else if (mysqli_errno($db_conn) == 1062) {  
-            echo("<div class='w3-panel w3-margin w3-red'><p>Failed to Create Course - Duplicate Found.</p></div>");
-        }
-        else {
-            echo("<div class='w3-panel w3-margin w3-red'><p>Failed to Create Course.</p></div>");
-
-        }
+        	}	
+		}
+		else {
+			echo("<div class='w3-panel w3-margin w3-red'><p>Failed to Create Workflow. No Entry for workflow order</p></div>");
+		}
+		
     }
 ?>
 
@@ -65,7 +72,7 @@
 <div id="workflowForm" class="w3-card-4 w3-padding w3-margin" style="display: block;">
     <h5>Create Workflow Template</h5>
     <p>You can create a custom workflow template here.</p>
-    <form id="subform" method="post" action="./backend/workflow_edited.php">
+    <form id="subform" method="post">
 	<div class =row>
         <label for="workflowTitle">Workflow Template Title</label>
         <input class="w3-input" type="text" name="workflowTitle"></input>
@@ -115,7 +122,7 @@
             </div>
         </div>
         <br>
-        <input type="submit" value="Create Workflow Template" class="w3-button w3-teal" name="createWorkflow"></input>
+        <input type="submit" value="Create Workflow Template" class="w3-button w3-teal" name="workflowCreate"></input>
     </form>
 </div>
 
