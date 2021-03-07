@@ -10,7 +10,6 @@
     <?php
         include_once('./backend/db_connector.php');
         $user = $_SESSION['user_id'];
-
         $sql = "SELECT * FROM f20_step_details_table
                     JOIN f20_app_details_table
                         ON f20_step_details_table.SID = f20_app_details_table.SID
