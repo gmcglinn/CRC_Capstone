@@ -18,8 +18,8 @@
 <!-- Admin Messages (admin can see all messages)-->
 <div id="messages" class="w3-card-4 w3-padding w3-margin">
     <button class="w3-button w3-right w3-blue" type="button" onclick="window.location.href='./dashboard.php?content=create&contentType=message'">Admin Compose Message</button>
-    <h5>Messagess</h5>
-    <p>You may search by receiver, subject, or message contents</p>
+    <h5>Messages</h5>
+    <p>You may search by receiver, sender, subject, or message contents</p>
     <input type="text" id="userInput" onkeyup="search('messageTable', 'userInput')"></input>
     <table id="messageTable" class="pagination w3-table-all w3-responsive" data-pagecount="8" style="max-width:fit-content;">
         <tr>
