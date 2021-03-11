@@ -49,7 +49,6 @@
             //Get the input from the sign in form.
             $username = mysqli_real_escape_string($db_conn, $_POST['username']);
             $password = mysqli_real_escape_string($db_conn, $_POST['password']);
-          
             //Check if any results match in the database.
             $sql = "SELECT * FROM `f20_user_table` WHERE user_login_name = '$username' AND user_password = '$password'";
             $result = mysqli_query($db_conn, $sql);
