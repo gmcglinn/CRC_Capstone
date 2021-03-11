@@ -37,7 +37,9 @@
     custom workflows in the future -->
 <div class="w3-card-4 w3-margin w3-padding" style="background-color: whitesmoke;">
     <form method="post" action="./dashboard.php?content=workflows&contentType=start">
-        <h5>Application Start Form:</h5>
+        <h5>Appliction Start Form:</h5>
+        <h1>hi</h1>
+        <?php include_once('./stepsMetaData.php')?> 
         <label class="w3-input" for="studentEmail" class="w3-input">Student's Email</label>
         <input type="email" name="studentEmail" class="w3-input">
         <!-- Function to show the courses available in a selected department. -->

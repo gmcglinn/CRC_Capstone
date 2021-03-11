@@ -7,6 +7,10 @@
         $semester = mysqli_real_escape_string($db_conn, $_POST['semester']);
         $year = mysqli_real_escape_string($db_conn, $_POST['year']);
         $gradeMethod = mysqli_real_escape_string($db_conn, $_POST['gradeMethod']);
+        $title = mysqli_real_escape_string($db_conn, $_POST['title']);
+        $deadline = mysqli_real_escape_string($db_conn, $_POST['deadline']);
+        $type = mysqli_real_escape_string($db_conn, $_POST['type']);
+        $template = mysqli_real_escape_string($db_conn, $_POST['template']);
 
         $fwid = bin2hex(random_bytes(32));  //duplication is unlikely with this one. 1 in 20billion apparently
         $newappsql = "INSERT INTO f20_application_info(fw_id, dept_code, course_number, student_email, semester, year, grade_mode) 
@@ -39,6 +43,7 @@
 <div class="w3-card-4 w3-margin w3-padding" style="background-color: whitesmoke;">
     <form method="post">
         <h5>Application Start Form:</h5>
+        <?php include_once('stepsMetaData.php')?>
         <label class="w3-input" for="studentEmail" class="w3-input">Student's Email</label>
         <input type="email" name="studentEmail" class="w3-input">
         <!-- Function to show the courses available in a selected department. -->
