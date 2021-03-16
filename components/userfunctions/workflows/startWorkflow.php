@@ -12,7 +12,7 @@
 <?php
     if(isset($_GET['startWorkflow'])) {
         if($_GET['workflowSelect'] == 'internship') {
-            include_once('./steps/0000000001.php');
+            include_once('./steps/stepsMetaData.php');
         }
     }
 
