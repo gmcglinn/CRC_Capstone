@@ -35,7 +35,7 @@
           echo("<a href='./dashboard.php?content=create' id='createBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-plus fa-fw'></i>  Create</a>");
       }
       //Displaying the workflows option for all users except admin.
-      if(!($_SESSION['user_type'] == $GLOBALS['admin_type'])) {
+      if(($_SESSION['user_type'] == $GLOBALS['admin_type'] || $_SESSION['user_type'] == $GLOBALS['secretary_type'])) {
         echo("<a href='./dashboard.php?content=workflows' id='workflowsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-share-alt fa-fw'></i>  Workflows</a>");
       }
     ?>

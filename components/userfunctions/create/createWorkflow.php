@@ -11,8 +11,12 @@
 		if (isset($_POST['hiddeninput'])) {
 			$newWorkflowOrder = str_replace(',', '=>', $_POST['hiddeninput']);
 			$title = $_POST['workflowTitle'];
-			$sql = "INSERT INTO f20_app_template_table (TSID, title, instructions) 
-				VALUES (1, '$title', '$newWorkflowOrder')";
+			$course_number = $_POST['course_number'];
+			$form_type = $_POST['form_type'];
+
+
+			$sql = "INSERT INTO f20_course_workflow_steps (TSID, title, instructions, form_type, course_number) 
+				VALUES (1, '$title', '$newWorkflowOrder', '$form_type', '$course_number')";
 
 			mysqli_query($db_conn, $sql);
         	//Database insert success
@@ -25,7 +29,6 @@
         	}
         	else {
             	echo("<div class='w3-panel w3-margin w3-red'><p>Failed to Create Workflow.</p></div>");
-
         	}	
 		}
 		else {
@@ -76,28 +79,59 @@
 	<div class =row>
         <label for="workflowTitle">Workflow Template Title</label>
         <input class="w3-input" type="text" name="workflowTitle"></input>
+        
+        <label for="form_type">Workflow Type:</label>
+        <select name="form_type" class="w3-input">
+            <option value="internship">Internship/Fieldwork (General)</option>
+            <option value="transferCred">Transfer Credit Evaluation (Not Implemented)</option>
+        </select>
+        
+        <script>
+            function showCourse(str) {
+                if (str == "") {
+                    document.getElementById("course").innerHTML = "";
+                    return;
+                } 
+                else {
+                    var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            document.getElementById("course").innerHTML = this.responseText;
+                        }
+                    };
+                    xmlhttp.open("GET","./backend/getCourse.php?q="+str,true);
+                    xmlhttp.send();
+                }
+            }
+        </script>
 
-        <?php
-			//Load Departments
-			include_once('./backend/config.php');
-			include_once('./backend/db_connector.php');
-			$sql = "SELECT dept_code, dept_name from f20_academic_dept_info";
-			$result = $db_conn->query($sql);
-			if ($result->num_rows > 0){
-				echo " <select id='deptselect' name='dept' onchange='findCourses(this.value)'><option selected disabled hidden>Select a Department</option>";
-				while($row = $result->fetch_assoc()){
-			
-					echo "<option value=".$row['dept_code']." id=".$row['dept_code'].">" .$row['dept_name']. "</option>";
-				}
-			}
-			echo "</select>";
-            $userLabels = array('Records & Registration', 'Career Resource Center', 'Dean', 'Chair', 'Secretary', 'Student', 'Employer', 'Faculty [Advisor/Instructor]');
-            $userTypes = array('Recreg', 'Crc', 'Dean', 'Chair', 'Secretary', 'Student', 'Employer', 'Faculty');
-        ?>
+		<label class="w3-input" for="department">Department</label>
+        <select class="w3-input" name="department" id="department" onchange="showCourse(this.value)">
+            <option value="">Select a department:</option>
+            <?php 
+                include_once('./backend/db_connector.php');
+
+                $sql = "SELECT * FROM `f20_academic_dept_info`";
+                $query = mysqli_query($db_conn, $sql);
+                if ($query) {
+                    while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+                        echo("<option value='" . $row['dept_code'] . "'>" . $row['dept_name'] . "</option>");
+                    }
+                }
+            ?>
+        </select>
+        
+        <label class="w3-input" for="course_number">Course</label>
+        <select class="w3-input" name="course_number" id="course">
+            <option value="">Select a course:</option>
+        </select>
+
         <h2>Participant List</h2>
         <p>Drag and Drop participants to their appropriate order</p>
 
         <?php
+            $userLabels = array('Records & Registration', 'Career Resource Center', 'Dean', 'Chair', 'Secretary', 'Student', 'Employer', 'Faculty [Advisor/Instructor]');
+            $userTypes = array('Recreg', 'Crc', 'Dean', 'Chair', 'Secretary', 'Student', 'Employer', 'Faculty');
             $length = count($userTypes);
             for ($i=0; $i < $length; $i++) {
         ?>
