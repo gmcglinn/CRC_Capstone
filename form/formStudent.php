@@ -94,6 +94,8 @@
             <input type="text" class="w3-input" name="studentLastName" id="studentLastName" placeholder="Enter the Student's Last Name." required>
             <label class="w3-input" for="studentMiddleName">Middle Initial</label>
             <input type="text" class="w3-input" name="studentMiddleName" id="studentMiddleName" maxlength="1" placeholder="Enter the Student's Middle Initial.">
+            <label class="w3-input" for="studentMiddleName">Banner #</label>
+            <input type="text" class="w3-input" name="studentBannerNumber" id="studentBannerNumber" maxlength="1" placeholder="Enter the Student's Banner #.">
             <label class="w3-input" for="studentPhone">Phone number</label>
             <input type="tel" class="w3-input" name="studentPhone" id="studentPhone" placeholder="Enter the Student's Phone Number.">
             <label class="w3-input" for="studentCredits">Credits registered</label>
