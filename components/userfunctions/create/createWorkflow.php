@@ -14,8 +14,8 @@
 			$course_number = $_POST['course_number'];
 			$form_type = $_POST['form_type'];
 
-
-			$sql = "INSERT INTO f20_course_workflow_steps (TSID, title, instructions, form_type, course_number) 
+            //Insert into Dattabase
+			$sql = "INSERT INTO s21_course_workflow_steps (TSID, title, instructions, form_type, course_number) 
 				VALUES (1, '$title', '$newWorkflowOrder', '$form_type', '$course_number')";
 
 			mysqli_query($db_conn, $sql);
@@ -30,7 +30,8 @@
         	else {
             	echo("<div class='w3-panel w3-margin w3-red'><p>Failed to Create Workflow.</p></div>");
 
-        	}	
+        	}
+
 		}
 		else {
 			echo("<div class='w3-panel w3-margin w3-red'><p>Failed to Create Workflow. No Entry for workflow order</p></div>");
