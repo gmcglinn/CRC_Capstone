@@ -65,9 +65,15 @@
         }
 
         $wf_ids_sql = $columns.")".$values.");";
+
+        //are intitally set to not started
+        $default_workflow_status_sql = "INSERT INTO s21_active_workflow_status(WF_ID) 
+                                VALUES ('$wf_id');";
         //insert into db
+        mysqli_query($db_conn, $default_workflow_status_sql);
 
         mysqli_query($db_conn, $newappsql);
+        
         if (mysqli_errno($db_conn) == 0) {
             mysqli_query($db_conn, $wf_ids_sql);
 
