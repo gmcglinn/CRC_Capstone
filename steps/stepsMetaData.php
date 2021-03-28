@@ -12,10 +12,12 @@
         $title = mysqli_real_escape_string($db_conn, $_POST['title']);
         $deadline = mysqli_real_escape_string($db_conn, $_POST['deadline']);
         $form_type = mysqli_real_escape_string($db_conn, $_POST['form_type']);
+        $priority = mysqli_real_escape_string($db_conn, $_POST['priority']);
+        $deadline = mysqli_real_escape_string($db_conn, $_POST['deadline']);
 
         $wf_id = bin2hex(random_bytes(32));  //duplication is unlikely with this one. 1 in 20billion apparently
-        $newappsql = "INSERT INTO s21_active_workflow_info(WF_ID, title, dept_code, course_number, student_email, semester, year, grade_mode) 
-                        VALUES ('$wf_id','$title', '$dept_code', '$course_number','$studentEmail', '$semester', '$year', '$gradeMethod');";
+        $newappsql = "INSERT INTO s21_active_workflow_info(WF_ID, title, dept_code, course_number, student_email, semester, year, grade_mode, priority, deadline) 
+                        VALUES ('$wf_id','$title', '$dept_code', '$course_number','$studentEmail', '$semester', '$year', '$gradeMethod', '$priority', '$deadline');";
         
         //get instructions
         $sql = "SELECT * FROM s21_course_workflow_steps WHERE course_number = $course_number AND form_type = '$form_type' ";
@@ -66,10 +68,9 @@
         //insert into db
 
         mysqli_query($db_conn, $newappsql);
-        mysqli_query($db_conn, $wf_ids_sql);
-
         if (mysqli_errno($db_conn) == 0) {
-                
+            mysqli_query($db_conn, $wf_ids_sql);
+
             if (mysqli_errno($db_conn) == 0) {
 
                 echo("<div class='w3-card w3-green w3-margin w3-padding'>Application Successfully Started.</div>");
@@ -93,11 +94,11 @@
                 <label for="title">Title</label>
                 <input id="title" name="title" type="text" class="w3-input" required>
                 <br>
-                <label for="type">Priority</label>
-                <select id="type" name="type" class="w3-input">
+                <label for="priority">Priority</label>
+                <select id="type" name="priority" class="w3-input">
         		<option selected="" disabled="" hidden=""> Select a priority. </option>
-        		<option value="1" id="1">urgent</option>
-        		<option value="2" id="2">normal</option>
+        		<option value="urgent" id="1">urgent</option>
+        		<option value="normal" id="2">normal</option>
         		</select>
                 <br>
 		<label for="deadline">Deadline</label>
