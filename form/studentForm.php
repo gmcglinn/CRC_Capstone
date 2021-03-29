@@ -8,16 +8,16 @@
         if($_SESSION['user_type'] == $GLOBALS['student_type']){
 		    $initiatorName = $_SESSION['user_name'];
 		    $initiatorID = mysqli_fetch_assoc(mysqli_query($db_conn, "SELECT * FROM f20_user_table WHERE user_name = '$initiatorName'"))['UID'];
-		    $title = $_POST['title'];
-		    $organization = $_POST['organization'];
-		    $orgStreet = $_POST['orgStreet'];
-		    $orgAptNum = $_POST['orgAptNum'];
-            $orgCity = $_POST['orgCity'];
-            $orgState = $_POST['orgState'];
-            $orgZipCode = $_POST['orgzipCode'];
-            $outcomes1 = $_POST['outcomes1'];
-            $outcomes2 = $_POST['outcomes2'];
-            $outcomes3 = $_POST['outcomes3'];
+		    $title = mysqli_real_escape_string($db_conn, $_POST['title']);
+		    $organization = mysqli_real_escape_string($db_conn, $_POST['organization']);
+		    $orgStreet = mysqli_real_escape_string($db_conn, $_POST['orgStreet']);
+		    $orgAptNum = mysqli_real_escape_string($db_conn, $_POST['orgAptNum']);
+            $orgCity = mysqli_real_escape_string($db_conn, $_POST['orgCity']);
+            $orgState = mysqli_real_escape_string($db_conn, $_POST['orgState']);
+            $orgZipCode = mysqli_real_escape_string($db_conn, $_POST['orgzipCode']);
+            $outcomes1 = mysqli_real_escape_string($db_conn, $_POST['outcomes1']);
+            $outcomes2 = mysqli_real_escape_string($db_conn, $_POST['outcomes2']);
+            $outcomes3 = mysqli_real_escape_string($db_conn, $_POST['outcomes3']);
 		
 
             $insertApp = "INSERT INTO f20_app_table (ASID, ATID, UID, title, organization, orgStreet, orgAptNum, orgCity, orgstate, orgZipCode, outcomes1, outcomes2, outcomes3, created) 

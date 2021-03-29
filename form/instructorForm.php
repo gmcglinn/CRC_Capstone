@@ -8,10 +8,11 @@
         if($_SESSION['user_type'] == $GLOBALS['faculty_type']){
 		    $initiatorName = $_SESSION['user_name'];
 		    $initiatorID = mysqli_fetch_assoc(mysqli_query($db_conn, "SELECT * FROM f20_user_table WHERE user_name = '$initiatorName'"))['UID'];
-		    $fname = $_POST['fname'];
-            $lname = $_POST['lname'];
-            $outcomes1 = $_POST['outcomes1'];
-            $outcomes2 = $_POST['outcomes2'];
+		    $fname = mysqli_real_escape_string($db_conn, $_POST['fname']);
+            $lname = mysqli_real_escape_string($db_conn, $_POST['lname']);
+            $gradeMethod = mysqli_real_escape_string($db_conn, $_POST['gradeMethod']);
+            $outcomes1 = mysqli_real_escape_string($db_conn, $_POST['outcomes1']);
+            $outcomes2 = mysqli_real_escape_string($db_conn, $_POST['outcomes2']);
 		
 
             $insertApp = "INSERT INTO f20_app_table (ASID, ATID, UID, title, organization, orgStreet, orgAptNum, orgCity, orgstate, orgZipCode, outcomes1, outcomes2, outcomes3, created) 
@@ -36,6 +37,13 @@
         <br>
 	    <label for="lname">Last Name</label>
         <input id="lname" name="lname" type="text" class="w3-input" required>
+        <br>
+        <label class="w3-input" for="gradeMethod">Grade Method</label>
+        <select name="gradeMethod" class="w3-input">
+            <option value="">Select a grade method:</option>
+            <option value="Letter Grades">Letter Grades</option>
+            <option value="Pass/Fail">Pass/Fail</option>
+        </select>
         <br>
         <h5>Instructor - Learning Outcomes</h5>
         <br>
