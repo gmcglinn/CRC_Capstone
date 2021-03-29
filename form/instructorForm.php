@@ -5,7 +5,7 @@
     include_once('./backend/db_connector.php');
     
     if (isset($_POST['appCreate'])){
-        if($_SESSION['user_type'] == $GLOBALS['student_type']){
+        if($_SESSION['user_type'] == $GLOBALS['faculty_type']){
 		    $initiatorName = $_SESSION['user_name'];
 		    $initiatorID = mysqli_fetch_assoc(mysqli_query($db_conn, "SELECT * FROM f20_user_table WHERE user_name = '$initiatorName'"))['UID'];
 		    $fname = $_POST['fname'];
@@ -31,13 +31,13 @@
 <div id="userForm" class="w3-card-4 w3-padding w3-margin">
     <h5>Fieldwork Form</h5>
     <form method="post" action="./dashboard.php?content=create&contentType=app">
-        <h5>Instructor - Learning Outcomes</h5>
-        <br>
         <label for="fname">First Name</label>
         <input id="fname" name="fname" type="text" class="w3-input" required>
         <br>
 	    <label for="lname">Last Name</label>
         <input id="lname" name="lname" type="text" class="w3-input" required>
+        <br>
+        <h5>Instructor - Learning Outcomes</h5>
         <br>
         <label class="w3-input" for="outcomes1">
                 1.) What are the student learning outcomes?<br>
