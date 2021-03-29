@@ -36,18 +36,51 @@
 <div id="userForm" class="w3-card-4 w3-padding w3-margin">
     <h5>Fieldwork Form</h5>
     <form method="post" action="./dashboard.php?content=create&contentType=app">
-        <label for="proposal">Project Proposal</label>
-        <input id="proposal" name="proposal" type="text" class="w3-input" required>
+        <h5>Project Proposal</h5>
         <br>
-        <label for="type">Priority</label>
-        <select id="type" name="type" class="w3-input">
-		<option selected="" disabled="" hidden=""> Select a priority. </option>
-		<option value="1" id="1">urgent</option>
-		<option value="2" id="2">normal</option>
-		</select>
+		<label for="title">Project Title</label>
+        <input id="title" name="title" type="project-title" class="w3-input" required>
         <br>
-		<label for="deadline">Deadline</label>
-        <input id="deadline" name="deadline" type="datetime-local" class="w3-input" required>
+		<label for="organization">Name of Organization</label>
+        <input id="organization" name="organization" type="organization-name" class="w3-input" required>
+        <br>
+		<label for="orgStreet">Street</label>
+        <input id="orgStreet" name="orgStreet" type="org-streetname" class="w3-input" placeholder="Enter the Organization's street address." required>
+        <br>
+        <label for="orgAptNum">Apt#</label>
+        <input id="orgAptNum" name="orgAptNum" type="org-AptNum" class="w3-input" placeholder="Enter the Apartment Number or Suite(if applicable)" >
+        <br>
+        <label for="orgCity">City</label>
+        <input id="orgCity" name="orgCity" type="org-city" class="w3-input" placeholder="Enter the Organization's City." required>
+        <br>
+        <label for="orgState">State</label>
+        <input id="orgState" name="orgState" type="org-state" class="w3-input" placeholder="Enter the Organization's State." required>
+        <br>
+        <label for="orgZipCode">Zip Code</label>
+        <input id="orgZipCode" name="orgZipCode" type="org-zipCode" class="w3-input" placeholder="Enter the Organization's Zip Code." required>
+        <br>
+        <label for="supervisorName">Supervisor</label>
+        <input id="supervisorName" name="supervisorName" type="supervisor-name" class="w3-input" required>
+        <br>
+        <label for="supervisorNum">Supervisor's Phone Number</label>
+        <input id="supervisorNum" name="supervisorNum" type="supervisor-num" class="w3-input" required>
+        <br>
+        <h5> Learning Outcomes </h5>
+        <label class="w3-input" for="outcomes1">
+                1.) What are your responsibilities on site?<br>
+                2.) What special project will you be working on?<br>
+                3.) What do you expect to learn?
+            </label>
+            <input type="text" class="w3-input" name="outcomes1" id="outcomes1" required></input>
+            <label class="w3-input" for="outcomes2">
+                1.) How is the proposal related to your major areas of interest? Describe the course work you have completed which provides appropriate background to the project.
+            </label>
+            <input type="text" class="w3-input" name="outcomes2" id="outcomes2" required></input>
+            <label class="w3-input" for="outcomes3">
+                1.) What is the proposed method of study? Where appropriate, cite readings and practical experience.
+            </label>
+            <input type="text" class="w3-input" name="outcomes3" id="outcomes3" required></input>
+            <br>
         <br>
 		<label for="template">Workflow Template</label>
 		<?php
