@@ -9,14 +9,19 @@
 		    $initiatorName = $_SESSION['user_name'];
 		    $initiatorID = mysqli_fetch_assoc(mysqli_query($db_conn, "SELECT * FROM f20_user_table WHERE user_name = '$initiatorName'"))['UID'];
 		    $title = $_POST['title'];
-		    $priority = $_POST['type'];
-		    $deadline = $_POST['deadline'];
-		    $templateID = $_POST['template'];
-		    $template = mysqli_fetch_assoc(mysqli_query($db_conn, "SELECT * FROM f20_app_template_table WHERE ATPID = '$templateID'"))['instructions'];
+		    $organization = $_POST['organization'];
+		    $orgStreet = $_POST['orgStreet'];
+		    $orgAptNum = $_POST['orgAptNum'];
+            $orgCity = $_POST['orgCity'];
+            $orgState = $_POST['orgState'];
+            $orgZipCode = $_POST['orgzipCode'];
+            $outcomes1 = $_POST['outcomes1'];
+            $outcomes2 = $_POST['outcomes2'];
+            $outcomes3 = $_POST['outcomes3'];
 		
 
-            $insertApp = "INSERT INTO f20_app_table (ASID, ATID, UID, title, instructions, deadline, created) 
-                            VALUES (2, '$priority', '$initiatorID', '$title', '$template', '2020-11-28 21:47:51', '2020-11-10 21:47:51')";
+            $insertApp = "INSERT INTO f20_app_table (ASID, ATID, UID, title, organization, orgStreet, orgAptNum, orgCity, orgstate, orgZipCode, outcomes1, outcomes2, outcomes3, created) 
+                            VALUES (2, '$priority', '$initiatorID', '$title', '$organization', '$orgStreet', '$orgAptNum', '$orgCity', '$orgState', '$orgZipCode', '$outcomes1', '$outcomes2', '$outcomes3' , '2020-11-28 21:47:51', '2020-11-10 21:47:51')";
             $insertAppQuery = mysqli_query($db_conn, $insertApp);
 
             //Database insert success
@@ -24,10 +29,6 @@
                 echo("<div class='w3-panel w3-margin w3-green'><p>Workflow app created successfully.</p></div>");
             } 
 		    else { echo("<div class='w3-panel w3-margin w3-red'><p>Error - Form could not be sent.</p></div>");}
-            //Database detected duplicate entry
-            //else if (mysqli_errno($db_conn) == 1062) {  
-            //   echo("<div class='w3-panel w3-margin w3-red'><p>Failed to Create User - Duplicate Found.</p></div>");
-            //}
         }
     }
 ?>
@@ -39,33 +40,33 @@
         <h5>Project Proposal</h5>
         <br>
 		<label for="title">Project Title</label>
-        <input id="title" name="title" type="project-title" class="w3-input" required>
+        <input id="title" name="title" type="text" class="w3-input" required>
         <br>
 		<label for="organization">Name of Organization</label>
-        <input id="organization" name="organization" type="organization-name" class="w3-input" required>
+        <input id="organization" name="organization" type="text" class="w3-input" required>
         <br>
 		<label for="orgStreet">Street</label>
-        <input id="orgStreet" name="orgStreet" type="org-streetname" class="w3-input" placeholder="Enter the Organization's street address." required>
+        <input id="orgStreet" name="orgStreet" type="text" class="w3-input" placeholder="Enter the Organization's street address." required>
         <br>
         <label for="orgAptNum">Apt#</label>
-        <input id="orgAptNum" name="orgAptNum" type="org-AptNum" class="w3-input" placeholder="Enter the Apartment Number or Suite(if applicable)" >
+        <input id="orgAptNum" name="orgAptNum" type="text" class="w3-input" placeholder="Enter the Apartment Number or Suite(if applicable)" >
         <br>
         <label for="orgCity">City</label>
-        <input id="orgCity" name="orgCity" type="org-city" class="w3-input" placeholder="Enter the Organization's City." required>
+        <input id="orgCity" name="orgCity" type="text" class="w3-input" placeholder="Enter the Organization's City." required>
         <br>
         <label for="orgState">State</label>
-        <input id="orgState" name="orgState" type="org-state" class="w3-input" placeholder="Enter the Organization's State." required>
+        <input id="orgState" name="orgState" type="text" class="w3-input" placeholder="Enter the Organization's State." required>
         <br>
         <label for="orgZipCode">Zip Code</label>
-        <input id="orgZipCode" name="orgZipCode" type="org-zipCode" class="w3-input" placeholder="Enter the Organization's Zip Code." required>
+        <input id="orgZipCode" name="orgZipCode" type="text" class="w3-input" placeholder="Enter the Organization's Zip Code." required>
         <br>
         <label for="supervisorName">Supervisor</label>
-        <input id="supervisorName" name="supervisorName" type="supervisor-name" class="w3-input" required>
+        <input id="supervisorName" name="supervisorName" type="text" class="w3-input" placeholder="Enter your Supervisor's Name." required>
         <br>
         <label for="supervisorNum">Supervisor's Phone Number</label>
-        <input id="supervisorNum" name="supervisorNum" type="supervisor-num" class="w3-input" required>
+        <input id="supervisorNum" name="supervisorNum" type="text" class="w3-input" placeholder="Enter your Supervisor's Number." required>
         <br>
-        <h5> Learning Outcomes </h5>
+        <h5>Learning Outcomes</h5>
         <label class="w3-input" for="outcomes1">
                 1.) What are your responsibilities on site?<br>
                 2.) What special project will you be working on?<br>
@@ -81,8 +82,6 @@
             </label>
             <input type="text" class="w3-input" name="outcomes3" id="outcomes3" required></input>
             <br>
-        <br>
-		<label for="template">Workflow Template</label>
 		<?php
 			//Load templates
 			include_once('./backend/config.php');
