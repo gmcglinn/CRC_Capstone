@@ -68,20 +68,21 @@
         <br>
         <h5>Learning Outcomes</h5>
         <label class="w3-input" for="outcomes1">
-                1.) What are your responsibilities on site?<br>
-                2.) What special project will you be working on?<br>
-                3.) What do you expect to learn?
+                1a) What are your responsibilities on site?<br>
+                b) What special project will you be working on?<br>
+                c) What do you expect to learn?
             </label>
             <input type="text" class="w3-input" name="outcomes1" id="outcomes1" required></input>
             <label class="w3-input" for="outcomes2">
-                1.) How is the proposal related to your major areas of interest? Describe the course work you have completed which provides appropriate background to the project.
+                2.) How is the proposal related to your major areas of interest? Describe the course work you have completed which provides appropriate background to the project.
             </label>
             <input type="text" class="w3-input" name="outcomes2" id="outcomes2" required></input>
             <label class="w3-input" for="outcomes3">
-                1.) What is the proposed method of study? Where appropriate, cite readings and practical experience.
+                3.) What is the proposed method of study? Where appropriate, cite readings and practical experience.
             </label>
             <input type="text" class="w3-input" name="outcomes3" id="outcomes3" required></input>
             <br>
+    
 		<?php
 			//Load templates
 			include_once('./backend/config.php');

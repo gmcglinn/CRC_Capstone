@@ -13,7 +13,7 @@
             $approval = $_POST['approval'];
 		
             $insertApp = "INSERT INTO f20_app_table (ASID, ATID, UID, approval, fname, lname, created) 
-                            VALUES (2, '$priority', '$initiatorID', '$approval', '$fname', '$lname', '2020-11-28 21:47:51', '2020-11-10 21:47:51')";
+                            VALUES (2, '$initiatorID', '$approval', '$fname', '$lname', '2020-11-28 21:47:51', '2020-11-10 21:47:51')";
             $insertAppQuery = mysqli_query($db_conn, $insertApp);
 
             //Database insert success
@@ -27,34 +27,34 @@
 
 <!-- Approval Form -->
 <div id="userForm" class="w3-card-4 w3-padding w3-margin">
-    <label for="fname">First Name</label>
-    <input id="fname" name="fname" type="text" class="w3-input" required>
-    <br>
-	<label for="lname">Last Name</label>
-    <input id="lname" name="lname" type="text" class="w3-input" required>
-    <br>
-    <label class="w3-input" for="approval">Approve or Decline</label>
-        <select class= "w3-input" name="approval" id="approval">
-            <option value="">Select:</option>
-            <option value="Fall">Approve</option>
-            <option value="Spring">Decline</option>
-        </select>
-		<?php
-			//Load templates
-			include_once('./backend/config.php');
-			include_once('./backend/db_connector.php');
-			$sql = "SELECT ATPID, title from f20_app_template_table";
-			$result = $db_conn->query($sql);
-			if ($result->num_rows > 0){
-				echo " <select class='w3-input' id='template' name='template'><option selected disabled hidden>Select a Workflow Template</option>";
-				while($row = $result->fetch_assoc()){
-			
-					echo "<option value=".$row['ATPID']." id=".$row['ATPID'].">" .$row['title']. "</option>";
-				}
-			}
-			echo "</select>";
-        ?>
-		<br>
+    <form method="post" action="./dashboard.php?content=create&contentType=app">
+        <label for="fname">First Name</label>
+        <input id="fname" name="fname" type="text" class="w3-input" required>
+        <br>
+	    <label for="lname">Last Name</label>
+        <input id="lname" name="lname" type="text" class="w3-input" required>
+        <br>
+        <label class="w3-input" for="approval">Approve or Decline</label>
+            <select class= "w3-input" name="approval" id="approval">
+                <option value="">Select:</option>
+                <option value="Fall">Approve</option>
+                <option value="Spring">Decline</option>
+            </select>
+        <?php
+            //Load templates
+            include_once('./backend/config.php');
+            include_once('./backend/db_connector.php');
+            $sql = "SELECT ATPID, title from f20_app_template_table";
+            $result = $db_conn->query($sql);
+            if ($result->num_rows > 0){
+                echo " <select class='w3-input' id='template' name='template'><option selected disabled hidden>Select a Workflow Template</option>";
+                while($row = $result->fetch_assoc()){        
+                    echo "<option value=".$row['ATPID']." id=".$row['ATPID'].">" .$row['title']. "</option>";
+                }
+            }
+            echo "</select>";
+            ?>
+        <br>
         <button type="submit" class="w3-button w3-teal" name="appCreate">Submit</button>
     </form>
 </div>
