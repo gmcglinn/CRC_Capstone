@@ -10,13 +10,13 @@
 		
 		if (isset($_POST['hiddeninput'])) {
 			$newWorkflowOrder = str_replace(',', '=>', $_POST['hiddeninput']);
-			$title = $_POST['workflowTitle'];
+			$workflow_title = $_POST['workflowTitle'];
 			$course_number = $_POST['course_number'];
 			$form_type = $_POST['form_type'];
 
             //Insert into Dattabase
-			$sql = "INSERT INTO s21_course_workflow_steps (TSID, title, instructions, form_type, course_number) 
-				VALUES (1, '$title', '$newWorkflowOrder', '$form_type', '$course_number')";
+			$sql = "INSERT INTO s21_course_workflow_steps (TSID, workflow_title, instructions, form_type, course_number) 
+				VALUES (1, '$workflow_title', '$newWorkflowOrder', '$form_type', '$course_number')";
 
 			mysqli_query($db_conn, $sql);
         	//Database insert success
