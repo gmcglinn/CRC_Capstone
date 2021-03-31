@@ -1,4 +1,5 @@
 <!--
+    Consolidate "Create Message" into "View Message"
 -->
 <?php
     //Loading the page title and action buttons.
@@ -23,7 +24,12 @@
 		//sends email to receiver is message type is urgent
 		if($type == 1){
 		$to = mysqli_fetch_assoc(mysqli_query($db_conn, "SELECT * FROM f20_user_table WHERE user_login_name = '$receiverName'"))['user_email'];
-         
+        
+
+
+/*      EMAILER HARD BAKED
+
+
          $message = $contents;
          
          $header = "From:abc@somedomain.com \r\n";
@@ -39,7 +45,9 @@
             echo "Message could not be sent...";
          }
 		}
-		
+		*/
+
+
         $insertMessage = "INSERT INTO f20_message_T (message_type, message_status, task_id, message_sender, message_receiver, message_subject, message_contents) 
                             VALUES ('$type', '$status', 1, '$sender', '$receiver', '$subject', '$contents')";
         $insertMessageQuery = mysqli_query($db_conn, $insertMessage);

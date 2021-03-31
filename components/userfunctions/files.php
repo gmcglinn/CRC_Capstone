@@ -1,3 +1,7 @@
+<!-- 
+    TOTALLY REWRITE THIS PAGE SAVING FORMATTING AND STYLING
+-->
+
 <?php
     if(!isset($_SESSION)) {
         session_start();
@@ -18,6 +22,54 @@
 <!-- User Search -->
 <div id="userSearch" class="w3-card-4 w3-padding w3-margin">
     <button class="w3-button w3-right w3-blue" type="button" onclick="window.location.href='../var/index.html'">Upload File</button>
+    
+    
+    
+    <?php
+    $target_dir = "userFiles/"; //want to take in current user as well and create folder for them
+                                //potentially creat them a directory at account creation?
+    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+    if(isset($_POST["submit"])) {
+    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+    if($check !== false) {
+        echo "File is an image - " . $check["mime"] . ".";
+        $uploadOk = 1;
+    } else {
+        echo "File is not an image.";
+        $uploadOk = 0;
+    }
+    }
+
+
+    if (file_exists($target_file)) {
+    echo "Sorry, file already exists.";
+    $uploadOk = 0;
+    }
+
+    if ($_FILES["fileToUpload"]["size"] > 500000) {
+    echo "Sorry, your file is too large.";
+    $uploadOk = 0;
+    }
+
+    
+    if($imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "pdf" ) {
+    echo "Sorry, only JPEG, PNG & pdf files are allowed.";
+    $uploadOk = 0;
+    }
+    if ($uploadOk == 0) {
+    echo "Sorry, your file was not uploaded.";
+    } else {
+    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+        echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
+    } else {
+        echo "Sorry, there was an error uploading your file.";
+    }
+    }
+    ?>
+
     <p>You may search by ID, owner, type, or status</p>
     <input type="text" id="userInput" onkeyup="search('fileTable', 'userInput')"></input>
     <h5>Files</h5>
