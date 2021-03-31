@@ -56,7 +56,7 @@
     <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=create&contentType=department'">
     <div class="w3-container w3-teal w3-padding-16 w3-border ">
         <div class="w3-left"><i class="fa fa-building w3-xxxlarge"></i></div>
-        <div class="w3-clear"><h5>Deparment</h5></div>
+        <div class="w3-clear"><h5>Department</h5></div>
     </div>
     </div>
     <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=create&contentType=course'">
@@ -109,7 +109,7 @@
 
 		<label class="w3-input" for="department">Department</label>
         <select class="w3-input" name="department" id="department" onchange="showCourse(this.value)">
-            <option value="">Select a department:</option>
+            <option value="">Select a Department:</option>
             <?php 
                 include_once('./backend/db_connector.php');
 

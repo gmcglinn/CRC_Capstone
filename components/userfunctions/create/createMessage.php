@@ -72,22 +72,22 @@ if($_SESSION['user_type'] == 1){
         <label for="type">Type</label>
         <select id="type" name="type" class="w3-input">
 		<option selected="" disabled="" hidden=""> Select a message type. </option>
-		<option value="1" id="1">urgent</option>
-		<option value="2" id="2">normal</option>
+		<option value="1" id="1">Urgent</option>
+		<option value="2" id="2">Normal</option>
 		</select>
         <br>
 		<label for="status">Status</label>
         <select id="status" name="status" class="w3-input">
 		<option selected="" disabled="" hidden=""> Select a status type. </option>
-		<option value="1" id="1">new</option>
-		<option value="2" id="2">read</option>
-		<option value="3" id="3">deleted</option>
+		<option value="1" id="1">New</option>
+		<option value="2" id="2">Read</option>
+		<option value="3" id="3">Deleted</option>
 		</select>
         <br>
-		<label for="subject">Message subject</label>
+		<label for="subject">Message Subject</label>
         <input id="subject" name="subject" type="text" class="w3-input" required>
         <br>
-        <label for="contents">Message contents</label>
+        <label for="contents">Message Contents</label>
         <textarea id="contents" name="contents" type="text" class="w3-input" required></textarea>
         <br>
         <button type="submit" class="w3-button w3-teal" name="messageCreate">Send</button>
@@ -107,17 +107,17 @@ if($_SESSION['user_type'] == 1){
         <label for="type">Type</label>
         <select id="type" name="type" class="w3-input">
 		<option selected="" disabled="" hidden=""> Select a message type. </option>
-		<option value="1" id="1">urgent</option>
-		<option value="2" id="2">normal</option>
+		<option value="1" id="1">Urgent</option>
+		<option value="2" id="2">Normal</option>
 		</select>
         <br>
 		<!--<label for="status">Status</label>-->
         <input id="status" name="status" type="hidden" class="w3-input" value="1" required readonly>
         <!-- <br> -->
-		<label for="subject">Message subject</label>
+		<label for="subject">Message Subject</label>
         <input id="subject" name="subject" type="text" class="w3-input" required>
         <br>
-        <label for="contents">Message contents</label>
+        <label for="contents">Message Contents</label>
         <textarea id="contents" name="contents" type="text" class="w3-input" required></textarea>
         <br>
         <button type="submit" class="w3-button w3-teal" name="messageCreate">Send</button>
