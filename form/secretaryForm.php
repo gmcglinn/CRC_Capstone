@@ -36,7 +36,7 @@
 
 <!-- Secretary Form -->
 <div class="w3-card-4 w3-margin w3-padding" style="background-color: whitesmoke;">
-    <form method="post" action="./dashboard.php?content=workflows&contentType=start">
+    <form name="secretaryForm" method="post" action="./dashboard.php?content=workflows&contentType=start">
         <h4>Appliction Start Form:</h4>
         <h5>Student Information</h5>
         <?php include_once('./stepsMetaData.php')?> 
