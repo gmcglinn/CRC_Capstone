@@ -8,10 +8,10 @@
         if($_SESSION['user_type'] == $GLOBALS['chair_type'] || $_SESSION['user_type'] == $GLOBALS['dean_type']){
 		    $initiatorName = $_SESSION['user_name'];
 		    $initiatorID = mysqli_fetch_assoc(mysqli_query($db_conn, "SELECT * FROM f20_user_table WHERE user_name = '$initiatorName'"))['UID'];
-		    $fname = $_POST['fname'];
-            $lname = $_POST['lname'];
-            $approval = $_POST['approval'];
-            $comments = $_POST['comments'];
+		    $fname = mysqli_real_escape_string($db_conn, $_POST['fname']);
+            $lname = mysqli_real_escape_string($db_conn, $_POST['lname']);
+            $approval = mysqli_real_escape_string($db_conn, $_POST['approval']);
+            $comments = mysqli_real_escape_string($db_conn, $_POST['comments']);
 		
             $insertApp = "INSERT INTO f20_app_table (ASID, ATID, UID, approval, fname, lname, comments, created) 
                             VALUES (2, '$initiatorID', '$approval', '$fname', '$lname', '$comments', '2020-11-28 21:47:51', '2020-11-10 21:47:51')";
