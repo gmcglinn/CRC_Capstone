@@ -11,9 +11,10 @@
 		    $fname = $_POST['fname'];
             $lname = $_POST['lname'];
             $approval = $_POST['approval'];
+            $comments = $_POST['comments'];
 		
-            $insertApp = "INSERT INTO f20_app_table (ASID, ATID, UID, approval, fname, lname, created) 
-                            VALUES (2, '$initiatorID', '$approval', '$fname', '$lname', '2020-11-28 21:47:51', '2020-11-10 21:47:51')";
+            $insertApp = "INSERT INTO f20_app_table (ASID, ATID, UID, approval, fname, lname, comments, created) 
+                            VALUES (2, '$initiatorID', '$approval', '$fname', '$lname', '$comments', '2020-11-28 21:47:51', '2020-11-10 21:47:51')";
             $insertAppQuery = mysqli_query($db_conn, $insertApp);
 
             //Database insert success
