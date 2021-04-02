@@ -40,6 +40,9 @@
                 <option value="Fall">Approve</option>
                 <option value="Spring">Decline</option>
             </select>
+        <br>
+	    <label for="comments">Comments</label>
+        <input id="comments" name="comments" type="text" class="w3-input">
         <?php
             //Load templates
             include_once('./backend/config.php');
