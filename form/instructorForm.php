@@ -58,7 +58,6 @@
             <input type="text" class="w3-input" name="instructorFirstName" id="instructorFirstName" required>
             <label class="w3-input" for="instructorLastName">Last name</label>
             <input type="text" class="w3-input" name="instructorLastName" id="instructorLastName" required>
-            <button type="button" name="continue" class="w3-button w3-teal" onclick="document.getElementById('studentInformation').style.display = 'none'; document.getElementById('internshipInformation').style.display = 'block';">Next</button>
         </div>
         <div id="instructorLearningOutcomes">
             <h5>Learning Outcomes</h5>
