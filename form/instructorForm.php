@@ -68,10 +68,9 @@
             </label>
             <input type="text" class="w3-input" name="outcomes1" id="outcomes1" required></input>
             <label class="w3-input" for="outcomes2">
-            3.) Explanation of course grading policies and method of determining final grade.
+                3.) Explanation of course grading policies and method of determining final grade.
             </label>
             <br>
-            <button type="button" name="back" class="w3-button w3-teal" onclick="document.getElementById('instructorInformation').style.display = 'block'; document.getElementById('internshipInformation').style.display = 'none';">Back</button>
         </div>
         <br>
             <?php

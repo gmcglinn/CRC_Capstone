@@ -85,7 +85,6 @@
                     echo("<button type='submit' name='studentSubmit' class='w3-button w3-teal'>Submit</button>");
                 }
             ?>            
-            <button type="button" name="back" class="w3-button w3-teal" onclick="document.getElementById('internshipInformation').style.display = 'block'; document.getElementById('employerInformation').style.display = 'none';">Back</button>
         </div>  
     </form>
 </div>
