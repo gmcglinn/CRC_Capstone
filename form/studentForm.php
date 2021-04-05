@@ -96,8 +96,6 @@
             <input type="text" class="w3-input" name="studentMiddleName" id="studentMiddleName" maxlength="1" placeholder="Enter the Student's Middle Initial.">
             <label class="w3-input" for="studentPhone">Phone number</label>
             <input type="tel" class="w3-input" name="studentPhone" id="studentPhone" placeholder="Enter the Student's Phone Number.">
-            <label class="w3-input" for="studentCredits">Credits registered</label>
-            <input type="number" name="studentCredits" id="studentCredits" maxlength="2" class="w3-input" placeholder="Enter the Number of Credits Registered." required>
             <br>
             <h5>Student Address</h5>
             <label class="w3-input" for="studentAddress">Street</label>

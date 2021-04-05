@@ -71,8 +71,7 @@
             3.) Explanation of course grading policies and method of determining final grade.
             </label>
             <br>
-            <button type="button" name="continue" class="w3-button w3-teal" onclick="document.getElementById('internshipInformation').style.display = 'none'; document.getElementById('employerInformation').style.display = 'block';">Next</button>
-            <button type="button" name="back" class="w3-button w3-teal" onclick="document.getElementById('studentInformation').style.display = 'block'; document.getElementById('internshipInformation').style.display = 'none';">Back</button>
+            <button type="button" name="back" class="w3-button w3-teal" onclick="document.getElementById('instructorInformation').style.display = 'block'; document.getElementById('internshipInformation').style.display = 'none';">Back</button>
         </div>
         <br>
             <?php
