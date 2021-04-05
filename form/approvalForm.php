@@ -1,60 +1,91 @@
 <?php
-    //Loading the page title and action buttons.
-    include_once('./components/userfunctions/create/create.php');
-    include_once('./backend/config.php');
-    include_once('./backend/db_connector.php');
-    
-    if (isset($_POST['appCreate'])){
-        if($_SESSION['user_type'] == $GLOBALS['chair_type'] || $_SESSION['user_type'] == $GLOBALS['dean_type']){
-		    $initiatorName = $_SESSION['user_name'];
-		    $initiatorID = mysqli_fetch_assoc(mysqli_query($db_conn, "SELECT * FROM f20_user_table WHERE user_name = '$initiatorName'"))['UID'];
-		    $fname = $_POST['fname'];
-            $lname = $_POST['lname'];
-            $approval = $_POST['approval'];
-		
-            $insertApp = "INSERT INTO f20_app_table (ASID, ATID, UID, approval, fname, lname, created) 
-                            VALUES (2, '$initiatorID', '$approval', '$fname', '$lname', '2020-11-28 21:47:51', '2020-11-10 21:47:51')";
-            $insertAppQuery = mysqli_query($db_conn, $insertApp);
 
-            //Database insert success
-            if (mysqli_errno($db_conn) == 0) {
-                echo("<div class='w3-panel w3-margin w3-green'><p>Workflow app created successfully.</p></div>");
-            } 
-		    else { echo("<div class='w3-panel w3-margin w3-red'><p>Error - Form could not be sent.</p></div>");}
+    //If this field is set then the user submitted the form to start the workflow.
+    if(isset($_POST['studentSubmit'])) {
+        //First we gather all the input field information.
+        $workflowID = mysqli_real_escape_string($_POST['workflowID']);
+        $firstname = mysqli_real_escape_string($_POST['firstName']);
+        $lastname = mysqli_real_escape_string($_POST['lastName']);
+        $approval = mysqli_real_escape_string($_POST['approval']);
+
+        //This creates an entry for the student's information in the database attached with the workflow ID.
+        $sql = "INSERT INTO f20_student_info (fw_id, student_first_name, student_last_name, student_middle_initial, 
+            student_phone, student_address, student_apt_num, student_city, student_state, student_zip, credits_registered) 
+            VALUES ('$workflowID','$firstname', '$lastname','$middlename','$phonenum','$address', '$aptnum', '$city', '$state','$zip', '$credits')";
+        $query = mysqli_query($db_conn, $sql);
+        if ($query) {
+            echo("<div class='w3-card w3-green'>Student Information Successfully Updated.</div>");
+        } 
+        else {
+            echo("<div class='w3-card w3-red'>Error. Student Information Update Unsuccessful .</div>");
         }
+        
+        //This updates the missing fields from the workflow in the database.
+        $sql = "UPDATE f20_application_info SET project_name = '$workflowType', academic_credits = '$workflowCredits', 
+            hours_per_wk = '$workflowHours' WHERE fw_id = '$workflowID'";
+        $query = mysqli_query($db_conn, $sql);
+        if (mysqli_errno($db_conn) == 0) {
+            echo("<div class='w3-card w3-green'>Student Information Successfully Updated.</div>");
+        } 
+        else {
+            echo("<div class='w3-card w3-red'>Student Information Successfully Updated.</div>");
+        }
+
+        //This updates the application utility table in the database.
+        $sql = "UPDATE f20_application_util SET rejected = '0', progress = '1', assigned_to = 'instructor@email.com' 
+            WHERE fw_id = '$workflowID'";
+        $query = mysqli_query($db_conn, $sql);
+        if (mysqli_errno($db_conn) == 0) {
+            echo("<div class='w3-card w3-green'>Student Information Successfully Updated.</div>");
+        } 
+        else {
+            echo("<div class='w3-card w3-red'>Student Information Successfully Updated.</div>");
+        }
+
+        //This creates an entry in the company info table of the database.
+        $sql = "INSERT INTO f20_company_info (fw_id, company_name, supervisor_email, supervisor_phone, supervisor_first_name,
+            supervisor_last_name, company_address, company_address2, company_city, company_state, company_zip) 
+            VALUES ('$workflowID','$employerOrganization', '$employerEmail', '$employerPhone', '$employerFirstName', '$employerLastName', '$employerStreet', '$employerBldNum', '$employerCity','$employerState', '$employerZip')";
+        $query = mysqli_query($db_conn, $sql);
+        if ($query) {
+            echo("<div class='w3-card w3-green'>Business/Organization Information Successfully Updated.</div>");
+        } 
+        else {
+            echo("<div class='w3-card w3-red'>Error. Business/Student Information Update Unsuccessful .</div>");
+        }
+    }
+    //If this field is set then the user came here from their list of active workflows.
+    else if(isset($_POST['wfID'])) {
+        $workflowID = $_POST['wfID'];
     }
 ?>
 
-<!-- Approval Form -->
-<div id="userForm" class="w3-card-4 w3-padding w3-margin">
-    <form method="post" action="./dashboard.php?content=create&contentType=app">
-        <label for="fname">First Name</label>
-        <input id="fname" name="fname" type="text" class="w3-input" required>
-        <br>
-	    <label for="lname">Last Name</label>
-        <input id="lname" name="lname" type="text" class="w3-input" required>
-        <br>
-        <label class="w3-input" for="approval">Approve or Decline</label>
-            <select class= "w3-input" name="approval" id="approval">
-                <option value="">Select:</option>
-                <option value="Fall">Approve</option>
-                <option value="Spring">Decline</option>
-            </select>
-        <?php
-            //Load templates
-            include_once('./backend/config.php');
-            include_once('./backend/db_connector.php');
-            $sql = "SELECT ATPID, title from f20_app_template_table";
-            $result = $db_conn->query($sql);
-            if ($result->num_rows > 0){
-                echo " <select class='w3-input' id='template' name='template'><option selected disabled hidden>Select a Workflow Template</option>";
-                while($row = $result->fetch_assoc()){        
-                    echo "<option value=".$row['ATPID']." id=".$row['ATPID'].">" .$row['title']. "</option>";
+<!-- Form that starts the internship workflow from the student's side.--> 
+<div class="w3-card-4 w3-margin w3-padding" style="background-color: whitesmoke;">
+    <form method="post" action="./dashboard.php?content=startInternApp">
+        <div id="approvalDecision">
+            <h5> Personal Information </h5>
+            <input type="hidden" name="workflowID" value="<?php echo $workflowID ?>">
+            <label class="w3-input" for="firstName">First name</label>
+            <input type="text" class="w3-input" name="firstName" id="firstName" required>
+            <br>
+            <label class="w3-input" for="studentLastName">Last name</label>
+            <input type="text" class="w3-input" name="lastName" id="lastName" required>
+            <br>
+            <h5> Approve or Decline Student Application </h5>
+            <label class="w3-input" for="approval"> Approve or Decline </label>
+                <select class="w3-input" name="approval" id="approval">
+                    <option value="approve">Approve</option>
+                    <option value="decline">Decline</option>
+            <?php
+                if(isset($_GET['content']) && $_GET['content'] = 'view') {
+                    echo("<button type='submit' name='studentSubmit' class='w3-button w3-teal' disabled>Submit</button>");
                 }
-            }
-            echo "</select>";
-            ?>
-        <br>
-        <button type="submit" class="w3-button w3-teal" name="appCreate">Submit</button>
+                else {
+                    echo("<button type='submit' name='studentSubmit' class='w3-button w3-teal'>Submit</button>");
+                }
+            ?>            
+            <button type="button" name="back" class="w3-button w3-teal" onclick="document.getElementById('internshipInformation').style.display = 'block'; document.getElementById('employerInformation').style.display = 'none';">Back</button>
+        </div>  
     </form>
 </div>
