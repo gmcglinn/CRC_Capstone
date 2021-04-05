@@ -2,6 +2,7 @@
     TOTALLY REWRITE THIS PAGE SAVING FORMATTING AND STYLING
 -->
 
+
 <?php
     if(!isset($_SESSION)) {
         session_start();
@@ -20,10 +21,14 @@
 ?>
 
 <!-- User Search -->
+
+<!--
+    ADMIN VERSION
+-->
 <div id="userSearch" class="w3-card-4 w3-padding w3-margin">
     <form action="upload.php" method="POST" enctype="multipart/form-data">
         <input type="file" name="file">
-        <button class="w3-button w3-right w3-blue" type="button" onclick="window.location.href='../var/index.html'">Upload File</button>
+        <button class="w3-button w3-right w3-blue" type="button" onclick="echo 'test'">Upload File</button>
     </form>
     
     
@@ -80,11 +85,26 @@
 	
 <!-- User Messages (non admins can only see their own messages)-->
 <div id="messages" class="w3-card-4 w3-padding w3-margin">
-	<form method="post" name="userCompose" action='./dashboard.php?content=create&contentType=message'>
-    <button class="w3-button w3-right w3-blue" type="button" onclick="window.location.href='../var/index.html'">Upload File</button>
+	<!--
+        <form method="post" name="userCompose" action='./dashboard.php?content=create&contentType=message'>
+-->
+
+
+
     <p>You may search by ID, owner, type, or status</p>
     <input type="text" id="userInput" onkeyup="search('fileTable', 'userInput')"></input>
     <h5>Files</h5>
+    <p>Select New File to Upload:</p>
+    
+    
+    <form action="components\userfunctions\uploadFileHandeler.php" method="POST" enctype="multipart/form-data">   
+        <input type="file" class="w3-left" name="file">
+        <button class="w3-button w3-left w3-blue" type="submit" name="submit">Upload</button>
+        
+    </form>
+
+    <p><br><br></p>
+
     <table id="fileTable" class="pagination w3-table-all w3-responsive" data-pagecount="8" style="max-width:fit-content;">
         <tr>
             <th class="w3-center">ID</th>

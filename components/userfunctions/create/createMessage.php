@@ -27,9 +27,11 @@
         
 
 
-/*      EMAILER HARD BAKED
 
 
+        /*
+         * remove this email hardbaked
+        */
          $message = $contents;
          
          $header = "From:abc@somedomain.com \r\n";
@@ -45,7 +47,7 @@
             echo "Message could not be sent...";
          }
 		}
-		*/
+		
 
 
         $insertMessage = "INSERT INTO f20_message_T (message_type, message_status, task_id, message_sender, message_receiver, message_subject, message_contents) 
