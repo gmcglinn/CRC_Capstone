@@ -134,11 +134,13 @@
                 3.) What do you expect to learn?
             </label>
             <input type="text" class="w3-input" name="outcomes1" id="outcomes1" required></input>
+            <br>
             <label class="w3-input" for="outcomes2">
                 1.) How is the proposal related to your major areas of interest?<br>
                 Describe the course work you have completed which provides appropriate background to the project.
             </label>
             <input type="text" class="w3-input" name="outcomes2" id="outcomes2" required></input>
+            <br>
             <label class="w3-input" for="outcomes3">
                 1.) What is the proposed method of study?<br>
                 Where appropriate, cite readings and practical experience.
