@@ -74,7 +74,7 @@
             <br>
             <h5> Approve or Decline Student Application </h5>
             <label class="w3-input" for="approval"> Approve or Decline </label>
-                <select class="w3-input" name="approval" id="approval">
+                <select class="w3-input" name="approval" id="approval" required>
                     <option value="approve">Approve</option>
                     <option value="decline">Decline</option>
             <?php

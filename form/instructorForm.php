@@ -63,13 +63,13 @@
         <div id="instructorLearningOutcomes">
             <h5>Learning Outcomes</h5>
             <label class="w3-input" for="outcomes1">
-                1.) What are the student learning outcomes?<br>
-                2.) If applicable, include any reading material and/or assignments.
+                1.) What are the student learning outcomes? If applicable, include any reading material and/or assignments.
             </label>
             <input type="text" class="w3-input" name="outcomes1" id="outcomes1" required></input>
             <label class="w3-input" for="outcomes2">
-                3.) Explanation of course grading policies and method of determining final grade.
+                2.) Explanation of course grading policies and method of determining final grade.
             </label>
+            <input type="text" class="w3-input" name="outcomes2" id="outcomes1" required></input>
             <br>
         </div>
         <br>
