@@ -60,7 +60,7 @@
             <input type="text" class="w3-input" name="instructorLastName" id="instructorLastName" required>
             <button type="button" name="continue" class="w3-button w3-teal" onclick="document.getElementById('studentInformation').style.display = 'none'; document.getElementById('internshipInformation').style.display = 'block';">Next</button>
         </div>
-        <div id="instructorLearningOutcomes" style="display:none;">
+        <div id="instructorLearningOutcomes">
             <h5>Learning Outcomes</h5>
             <label class="w3-input" for="outcomes1">
                 1.) What are the student learning outcomes?<br>
@@ -81,7 +81,6 @@
                     echo("<button type='submit' name='studentSubmit' class='w3-button w3-teal'>Submit</button>");
                 }
             ?>            
-            <button type="button" name="back" class="w3-button w3-teal" onclick="document.getElementById('internshipInformation').style.display = 'block'; document.getElementById('employerInformation').style.display = 'none';">Back</button>
         </div>  
     </form>
 </div>
