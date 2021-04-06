@@ -36,7 +36,7 @@
 <!-- Student Form -->
 <div id="userForm" class="w3-card-4 w3-padding w3-margin">
     <h5>Fieldwork Form</h5>
-    <form method="post" action="./dashboard.php?content=create&contentType=app">
+    <form name="studentForm" method="post" action="./dashboard.php?content=create&contentType=app">
         <h5>Project Proposal</h5>
         <br>
 		<label for="title">Project Title</label>

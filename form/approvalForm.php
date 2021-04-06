@@ -28,7 +28,7 @@
 
 <!-- Approval Form -->
 <div id="userForm" class="w3-card-4 w3-padding w3-margin">
-    <form method="post" action="./dashboard.php?content=create&contentType=app">
+    <form name="approvalForm" method="post" action="./dashboard.php?content=create&contentType=app">
         <label for="fname">First Name</label>
         <input id="fname" name="fname" type="text" class="w3-input" required>
         <br>

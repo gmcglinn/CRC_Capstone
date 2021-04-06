@@ -31,7 +31,7 @@
 <!-- Instructor Form -->
 <div id="userForm" class="w3-card-4 w3-padding w3-margin">
     <h5>Fieldwork Form</h5>
-    <form method="post" action="./dashboard.php?content=create&contentType=app">
+    <form name="instructorForm" method="post" action="./dashboard.php?content=create&contentType=app">
         <label for="fname">First Name</label>
         <input id="fname" name="fname" type="text" class="w3-input" required>
         <br>
