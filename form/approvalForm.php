@@ -8,12 +8,13 @@
         if($_SESSION['user_type'] == $GLOBALS['chair_type'] || $_SESSION['user_type'] == $GLOBALS['dean_type']){
 		    $initiatorName = $_SESSION['user_name'];
 		    $initiatorID = mysqli_fetch_assoc(mysqli_query($db_conn, "SELECT * FROM f20_user_table WHERE user_name = '$initiatorName'"))['UID'];
-		    $fname = $_POST['fname'];
-            $lname = $_POST['lname'];
-            $approval = $_POST['approval'];
+		    $fname = mysqli_real_escape_string($db_conn, $_POST['fname']);
+            $lname = mysqli_real_escape_string($db_conn, $_POST['lname']);
+            $approval = mysqli_real_escape_string($db_conn, $_POST['approval']);
+            $comments = mysqli_real_escape_string($db_conn, $_POST['comments']);
 		
-            $insertApp = "INSERT INTO f20_app_table (ASID, ATID, UID, approval, fname, lname, created) 
-                            VALUES (2, '$initiatorID', '$approval', '$fname', '$lname', '2020-11-28 21:47:51', '2020-11-10 21:47:51')";
+            $insertApp = "INSERT INTO f20_app_table (ASID, ATID, UID, approval, fname, lname, comments, created) 
+                            VALUES (2, '$initiatorID', '$approval', '$fname', '$lname', '$comments', '2020-11-28 21:47:51', '2020-11-10 21:47:51')";
             $insertAppQuery = mysqli_query($db_conn, $insertApp);
 
             //Database insert success
@@ -40,6 +41,9 @@
                 <option value="Fall">Approve</option>
                 <option value="Spring">Decline</option>
             </select>
+        <br>
+	    <label for="comments">Comments</label>
+        <input id="comments" name="comments" type="text" class="w3-input">
         <?php
             //Load templates
             include_once('./backend/config.php');
