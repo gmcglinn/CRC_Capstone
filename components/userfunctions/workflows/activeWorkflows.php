@@ -9,54 +9,81 @@
     <!-- Getting the current user's workflows from the database and printing them in a preview. -->
     <?php
         include_once('./backend/db_connector.php');
-        $user = $_SESSION['user_id'];
 
-        $sql = "SELECT * FROM f20_step_details_table
-                    JOIN f20_app_details_table
-                        ON f20_step_details_table.SID = f20_app_details_table.SID
-                    JOIN f20_step_table
-                        ON f20_app_details_table.SID = f20_step_table.SID
-                    JOIN f20_app_table
-                        ON f20_app_details_table.AID = f20_app_table.AID
-                    JOIN f20_app_type_table
-                        ON f20_app_table.ATID = f20_app_type_table.ATID
-                    JOIN f20_app_status_table
-                        ON f20_app_table.ASID = f20_app_status_table.ASID
-                WHERE f20_step_details_table.UID = $user AND f20_app_table.ASID = 2";
+        //Find user type
+        $user = $_SESSION['user_id'];
+        $type = $_SESSION['user_type'];
+        $where_sql = "";
+        
+        //Find corresponding column from wf user id table
+        if($type == 2) {
+            //statement that grabs corresponding active wf ids
+            $where_sql = "m.CRC_ID";  
+        }
+        elseif($type == 3){
+            $where_sql = "m.RCRG_ID";
+        }
+        elseif($type == 4){
+            $where_sql = "m.DN_ID";
+        }
+        elseif($type == 5){
+            $where_sql = "m.CHR_ID";
+        }
+        elseif($type == 6) {
+            $where_sql = "m.SCRTY_ID";
+        }
+        elseif($type == 7) {
+            $where_sql = "m.FCLTY_ID";
+        }
+        elseif($type == 8) {
+            $where_sql = "m.STDNT_ID";
+        }
+        elseif($type == 9) {
+            $where_sql = "m.EMP_ID";
+        }
+
+        $sql= "SELECT * FROM s21_active_workflow_ids as m
+        INNER JOIN s21_active_workflow_info as n
+	    ON n.WF_ID=m.WF_ID
+        INNER JOIN s21_active_workflow_status as s
+	    ON s.WF_ID=m.WF_ID
+        INNER JOIN s21_course_workflow_steps as t
+	    ON t.ATPID=n.ATPID
+        WHERE ";
+        
+        $sql.= $where_sql."=$user";
 
         $query = mysqli_query($db_conn, $sql);
         $count = mysqli_num_rows($query);
         
         if($count > 0) {
+            $rowNum = 1;
             while($result = mysqli_fetch_array($query)) {
-                $stepLocation = $result['location'];
-                $rowNum = 1;
-
                 echo('<div class="w3-row w3-card-4 w3-margin">'
                     .'<div class="w3-quarter w3-border" style="height: 90px; padding-left: 10px;">'
                     . '<p>Title: '
-                    . $result['20']
+                    . $result['title']
                     . '<br>Priority: '
-                    . $result['25'] 
-                    . '<br>Status: '
-                    . $result['28']
+                    . $result['priority'] 
+                    . '<br>Status: In Progress'
+                    //. $result['28']
                     . '</p></div>');
 
-                $workflowID = $result['AID'];
+                $workflowID = $result['WF_ID'];
 
                 echo('<div class="w3-half w3-padding w3-border" style="height: 90px;">');
                 //The instructions field comes from the app_table and determines what order the
                 //participants recieve the workflow in.
-                $order = $result['21'];
+                $order = $result['instructions'];
                 $order = explode("=>", $order);
                 for($i = 0; $i < sizeof($order); ++$i) {
                     //When printing the workflow visualizer, the first thing to print is the skeleton.
                     if($i == 0) {
     ?>
-                        <div class="circleList" id="circleList">
-                            <div class="circle" id="participant<?php echo $i + 1; ?>"><strong><?php echo $i + 1; ?></strong></div>
+                        <div class="circleList" id="circleList rowNum<?php echo $rowNum; ?>">
+                            <div class="circle" id="participant<?php echo $i + 1; ?> rowNum<?php echo $rowNum; ?>"><strong><?php echo $i + 1; ?></strong></div>
                         </div>
-                        <div class="labelList" id="labelList">
+                        <div class="labelList" id="labelList rowNum<?php echo $rowNum; ?>">
                             <div class="usertype"><?php echo $order[$i]; ?></div>
                         </div>
     <?php
@@ -65,50 +92,67 @@
                     else {
     ?>
                         <script>
-                            document.getElementById('circleList').innerHTML += "<div class='line'></div><div class='circle' id='participant<?php echo $i + 1; ?>'><?php echo $i + 1; ?></div>";
-                            document.getElementById('labelList').innerHTML += "<div class='spacer'></div><div id='labelContainer' class='userType'><?php echo $order[$i]; ?></div>";
+                            document.getElementById('circleList rowNum<?php echo $rowNum; ?>').innerHTML += "<div class='line'></div><div class='circle' id='participant<?php echo $i + 1; ?> rowNum<?php echo $rowNum; ?>'><?php echo $i + 1; ?> </div>";
+                            document.getElementById('labelList rowNum<?php echo $rowNum; ?>').innerHTML += "<div class='spacer'></div><div id='labelContainer' class='userType'><?php echo $order[$i]; ?></div>";
                         </script>
     <?php
                     }
                 }
                 echo('</div>');
+                //$query = mysqli_query($db_conn, $sql);
+                $instructions = explode("=>", $result['instructions']);
+                $status = '';
 
-                //When the visualizer has loaded the sequence of users, we can change the color of each step based on it's completion status.
-                $sql = "SELECT * FROM f20_app_details_table
-                            JOIN f20_step_table
-                                ON f20_app_details_table.SID = f20_step_table.SID
-                            WHERE f20_app_details_table.AID = $workflowID";
-                $query = mysqli_query($db_conn, $sql);
-                
-                while($row = mysqli_fetch_array($query)) {
-                    //If the step's status is 1 (Approved) then the visualizer for that step should be lawngreen.
-                    if($row['SSID'] == '1') {
+                for ($s = 0; $s < sizeof($instructions); ++$s){
+                    if ($instructions[$s] == 'Recreg') {
+                        $status = $result['records_status'];
+                    } elseif ($instructions[$s] == 'Student') {
+                        $status = $result['student_status'];
+                    } elseif ($instructions[$s] == 'Dean') {
+                        $status = $result['dean_status'];
+                    } elseif ($instructions[$s] == 'Chair') {
+                        $status = $result['chair_status'];
+                    } elseif ($instructions[$s] == 'Secretary') {
+                        $status = $result['secretary_status'];
+                    } elseif ($instructions[$s] == 'Faculty') {
+                        $status = $result['faculty_status'];
+                    } elseif ($instructions[$s] == 'Employer') {
+                        $status = $result['supervisor_status'];
+                    } elseif ($instructions[$s] == 'Admin') {
+                        $status = $result['admin_status'];
+                    }
+                  //}
+                    if ($status == '1') {
                         echo("<script>
-                            document.getElementById('participant" . $row['step_order'] . "').style.backgroundColor = 'lawngreen';
+                            document.getElementById('participant" . (string)($s+1) . ' rowNum' . $rowNum . "').style.backgroundColor = 'lawngreen';
                         </script>");
                     }
-                    //If the step's status is 2 (In-progress) then the visualizer for that step should be cyan.
-                    else if($row['SSID'] == '2') {
+                    elseif ($status == '2') {
                         echo("<script>
-                            document.getElementById('participant" . $row['step_order'] . "').style.backgroundColor = 'cyan';
+                            document.getElementById('participant" . (string)($s+1) . ' rowNum' . $rowNum . "').style.backgroundColor = 'cyan';
                         </script>");
                     }
-                    //If the step's status is 3 (Rejected) then the visualizer for that step should be red.
-                    else if($row['SSID'] == '3') {
+                    elseif ($status == '3') {
                         echo("<script>
-                            document.getElementById('participant" . $row['step_order'] . "').style.backgroundColor = 'red';
+                            document.getElementById('participant" . (string)($s+1) . ' rowNum' . $rowNum . "').style.backgroundColor = 'red';
+                        </script>");
+                    } elseif ($status == '4') {
+                        echo("<script>
+                            document.getElementById('participant" . (string)($s+1) . ' rowNum' . $rowNum . "').style.backgroundColor = 'gray';
                         </script>");
                     }
                 }
-                echo('<div class="w3-quarter w3-center w3-padding-24 w3-border" style="height: 90px;" >'
-                    . '<form action="./dashboard.php?content=workflows&contentType=active&viewForm=true" method="post" >'
+               
+                echo('<div class="w3-quarter w3-center w3-padding-24 w3-border" style="height: 90px;">'
+                . '<form action="./dashboard.php?content=workflows&contentType=active&viewForm=true" method="post" >'
                     . '<input type="hidden" name="stepLocation" value="'
-                    . $stepLocation
+                    
                     . '"></input>'
                     . '<button class="w3-button w3-teal" type="submit">View</button>'
                     . '</div></div>');
+                    ++$rowNum;
             }
-            ++$rowNum;
+            //++$rowNum;
         }
         else {
             echo('<div class="w3-row w3-card-4 w3-margin w3-padding">'
