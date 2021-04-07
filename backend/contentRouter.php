@@ -108,10 +108,21 @@
 
             if ( isset($_GET['formType'])) {
             
-            if ($_GET['formType'] == 'secretary') {
+                if ($_GET['formType'] == 'secretary') {
                     include_once("./form/secretaryForm.php");
                 }
-
+                else if ($_GET['formType'] == 'student') {
+                    include_once("./form/studentForm.php");
+                }
+                else if ($_GET['formType'] == 'student') {
+                    include_once("./form/studentForm.php");
+                }
+                else if ($_GET['formType'] == 'faculty') {
+                    include_once("./form/instructorForm.php");
+                } 
+                else if ($_GET['formType'] == 'dean' || $_GET['formType'] == 'chair') {
+                    include_once("./form/approvalForm.php");
+                }           
             }
         }
     }

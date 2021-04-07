@@ -49,11 +49,7 @@
             <label class="w3-input" for="studentEmail">Email</label>
             <input type="email" class="w3-input" name="studentEmail" id="studentEmail" placeholder="Enter the Student's Email." required>
             <br>
-            <?php
-                if(isset($_GET['content']) && $_GET['content'] = 'view') {
-                    echo("<button type='submit' name='studentSubmit' class='w3-button w3-teal' disabled>Submit</button>");
-                }
-            ?>
+            
         <!-- Select field for the department -->
         <label class="w3-input" for="department">Department</label>
         <select class="w3-input" name="department" id="department" onchange="showCourse(this.value)">
@@ -70,7 +66,13 @@
                     echo("<button type='submit' name='studentSubmit' class='w3-button w3-teal'>Submit</button>");
                 }
             ?>
-        </select>            
+        </select> 
+        <br>
+        <?php
+                if(isset($_GET['content']) && $_GET['content'] = 'view') {
+                    echo("<button type='submit' name='studentSubmit' class='w3-button w3-teal'>Submit</button>");
+                }
+            ?>           
         </div>  
     </form>
 </div>
