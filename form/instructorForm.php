@@ -78,16 +78,14 @@
             </label>
             <input type="text" class="w3-input" name="outcomes2" id="outcomes1" required></input>
             <br>
-        </div>
         <br>
-            <?php
-                if(isset($_GET['content']) && $_GET['content'] = 'view') {
-                    echo("<button type='submit' name='studentSubmit' class='w3-button w3-teal' disabled>Submit</button>");
-                }
-                else {
-                    echo("<button type='submit' name='studentSubmit' class='w3-button w3-teal'>Submit</button>");
-                }
-            ?>            
-        </div>  
+        <?php
+            if(isset($_GET['content']) && $_GET['content'] = 'view') {
+                echo("<button type='submit' name='studentSubmit' class='w3-button w3-teal'>Submit</button>");
+            }
+            else {
+                echo("<button type='submit' name='studentSubmit' class='w3-button w3-teal'>Submit</button>");
+            }
+        ?>            
     </form>
 </div>
