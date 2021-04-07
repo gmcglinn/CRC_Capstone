@@ -1,35 +1,84 @@
 <?php
-    //Loading the page title and action buttons.
-    include_once('./components/userfunctions/create/create.php');
-    include_once('./backend/config.php');
-    include_once('./backend/db_connector.php');
-    
-    if (isset($_POST['appCreate'])){
-        if($_SESSION['user_type'] == $GLOBALS['student_type']){
-		    $initiatorName = $_SESSION['user_name'];
-		    $initiatorID = mysqli_fetch_assoc(mysqli_query($db_conn, "SELECT * FROM f20_user_table WHERE user_name = '$initiatorName'"))['UID'];
-		    $title = mysqli_real_escape_string($db_conn, $_POST['title']);
-		    $organization = mysqli_real_escape_string($db_conn, $_POST['organization']);
-		    $orgStreet = mysqli_real_escape_string($db_conn, $_POST['orgStreet']);
-		    $orgAptNum = mysqli_real_escape_string($db_conn, $_POST['orgAptNum']);
-            $orgCity = mysqli_real_escape_string($db_conn, $_POST['orgCity']);
-            $orgState = mysqli_real_escape_string($db_conn, $_POST['orgState']);
-            $orgZipCode = mysqli_real_escape_string($db_conn, $_POST['orgzipCode']);
-            $outcomes1 = mysqli_real_escape_string($db_conn, $_POST['outcomes1']);
-            $outcomes2 = mysqli_real_escape_string($db_conn, $_POST['outcomes2']);
-            $outcomes3 = mysqli_real_escape_string($db_conn, $_POST['outcomes3']);
-		
+    //If this field is set then the user submitted the form to start the workflow.
+    if(isset($_POST['studentSubmit'])) {
+        //First we gather all the input field information.
+        $workflowID = mysqli_real_escape_string($_POST['workflowID']);
+        $firstname = mysqli_real_escape_string($_POST['studentFirstName']);
+        $lastname = mysqli_real_escape_string($_POST['studentLastName']);
+        $middlename = mysqli_real_escape_string($_POST['studentMiddleName']);
+        $phonenum = mysqli_real_escape_string($_POST['studentPhone']);
+        $address = mysqli_real_escape_string($_POST['studentAddress']);
+        $aptnum = mysqli_real_escape_string($_POST['studentAptNum']);
+        $city = mysqli_real_escape_string($_POST['studentCity']);
+        $state = mysqli_real_escape_string($_POST['studentState']);
+        $zip = mysqli_real_escape_string($_POST['studentZip']);
+        $credits = mysqli_real_escape_string($_POST['studentCredits']);
+        $workflowType = mysqli_real_escape_string($_POST['appType']);
+        $workflowCredits = mysqli_real_escape_string($_POST['appCredits']);
+        $workflowHours = mysqli_real_escape_string($_POST['appHours']);
+        $outcome1 = mysqli_real_escape_string($_POST['outcomes1']);
+        $outcome2 = mysqli_real_escape_string($_POST['outcomes2']);
+        $outcome3 = mysqli_real_escape_string($_POST['outcomes3']);
+        $employerOrganization = mysqli_real_escape_string($_POST['employerOrganization']);
+        $employerFirstName = mysqli_real_escape_string($_POST['employerFirstName']);
+        $employerLastName = mysqli_real_escape_string($_POST['employerLastName']);
+        $employerEmail = mysqli_real_escape_string($_POST['employerEmail']);
+        $employerPhone = mysqli_real_escape_string($_POST['employerPhone']);
+        $employerStreet = mysqli_real_escape_string($_POST['employerStreet']);
+        $employerBldNum = mysqli_real_escape_string($_POST['employerBldNum']);
+        $employerCity = mysqli_real_escape_string($_POST['employerCity']);
+        $employerState = mysqli_real_escape_string($_POST['employerState']);
+        $employerZipcode = mysqli_real_escape_string($_POST['employerZipcode']);
 
-            $insertApp = "INSERT INTO f20_app_table (ASID, ATID, UID, title, organization, orgStreet, orgAptNum, orgCity, orgstate, orgZipCode, outcomes1, outcomes2, outcomes3, created) 
-                            VALUES (2, '$priority', '$initiatorID', '$title', '$organization', '$orgStreet', '$orgAptNum', '$orgCity', '$orgState', '$orgZipCode', '$outcomes1', '$outcomes2', '$outcomes3' , '2020-11-28 21:47:51', '2020-11-10 21:47:51')";
-            $insertAppQuery = mysqli_query($db_conn, $insertApp);
-
-            //Database insert success
-            if (mysqli_errno($db_conn) == 0) {
-                echo("<div class='w3-panel w3-margin w3-green'><p>Workflow app created successfully.</p></div>");
-            } 
-		    else { echo("<div class='w3-panel w3-margin w3-red'><p>Error - Form could not be sent.</p></div>");}
+        //This creates an entry for the student's information in the database attached with the workflow ID.
+        $sql = "INSERT INTO f20_student_info (fw_id, student_first_name, student_last_name, student_middle_initial, 
+            student_phone, student_address, student_apt_num, student_city, student_state, student_zip, credits_registered) 
+            VALUES ('$workflowID','$firstname', '$lastname','$middlename','$phonenum','$address', '$aptnum', '$city', '$state','$zip', '$credits')";
+        $query = mysqli_query($db_conn, $sql);
+        if ($query) {
+            echo("<div class='w3-card w3-green'>Student Information Successfully Updated.</div>");
+        } 
+        else {
+            echo("<div class='w3-card w3-red'>Error. Student Information Update Unsuccessful .</div>");
         }
+        
+        //This updates the missing fields from the workflow in the database.
+        $sql = "UPDATE f20_application_info SET project_name = '$workflowType', academic_credits = '$workflowCredits', 
+            hours_per_wk = '$workflowHours' WHERE fw_id = '$workflowID'";
+        $query = mysqli_query($db_conn, $sql);
+        if (mysqli_errno($db_conn) == 0) {
+            echo("<div class='w3-card w3-green'>Student Information Successfully Updated.</div>");
+        } 
+        else {
+            echo("<div class='w3-card w3-red'>Student Information Successfully Updated.</div>");
+        }
+
+        //This updates the application utility table in the database.
+        $sql = "UPDATE f20_application_util SET rejected = '0', progress = '1', assigned_to = 'instructor@email.com' 
+            WHERE fw_id = '$workflowID'";
+        $query = mysqli_query($db_conn, $sql);
+        if (mysqli_errno($db_conn) == 0) {
+            echo("<div class='w3-card w3-green'>Student Information Successfully Updated.</div>");
+        } 
+        else {
+            echo("<div class='w3-card w3-red'>Student Information Successfully Updated.</div>");
+        }
+
+        //This creates an entry in the company info table of the database.
+        $sql = "INSERT INTO f20_company_info (fw_id, company_name, supervisor_email, supervisor_phone, supervisor_first_name,
+            supervisor_last_name, company_address, company_address2, company_city, company_state, company_zip) 
+            VALUES ('$workflowID','$employerOrganization', '$employerEmail', '$employerPhone', '$employerFirstName', '$employerLastName', '$employerStreet', '$employerBldNum', '$employerCity','$employerState', '$employerZip')";
+        $query = mysqli_query($db_conn, $sql);
+        if ($query) {
+            echo("<div class='w3-card w3-green'>Business/Organization Information Successfully Updated.</div>");
+        } 
+        else {
+            echo("<div class='w3-card w3-red'>Error. Business/Student Information Update Unsuccessful .</div>");
+        }
+    }
+    //If this field is set then the user came here from their list of active workflows.
+    else if(isset($_POST['wfID'])) {
+        $workflowID = $_POST['wfID'];
     }
 ?>
 
@@ -73,32 +122,59 @@
                 c) What do you expect to learn?
             </label>
             <input type="text" class="w3-input" name="outcomes1" id="outcomes1" required></input>
+            <br>
             <label class="w3-input" for="outcomes2">
-                2.) How is the proposal related to your major areas of interest? Describe the course work you have completed which provides appropriate background to the project.
+                1.) How is the proposal related to your major areas of interest?<br>
+                Describe the course work you have completed which provides appropriate background to the project.
             </label>
             <input type="text" class="w3-input" name="outcomes2" id="outcomes2" required></input>
+            <br>
             <label class="w3-input" for="outcomes3">
-                3.) What is the proposed method of study? Where appropriate, cite readings and practical experience.
+                1.) What is the proposed method of study?<br>
+                Where appropriate, cite readings and practical experience.
             </label>
             <input type="text" class="w3-input" name="outcomes3" id="outcomes3" required></input>
             <br>
-    
-		<?php
-			//Load templates
-			include_once('./backend/config.php');
-			include_once('./backend/db_connector.php');
-			$sql = "SELECT ATPID, title from f20_app_template_table";
-			$result = $db_conn->query($sql);
-			if ($result->num_rows > 0){
-				echo " <select class='w3-input' id='template' name='template'><option selected disabled hidden>Select a Workflow Template</option>";
-				while($row = $result->fetch_assoc()){
-			
-					echo "<option value=".$row['ATPID']." id=".$row['ATPID'].">" .$row['title']. "</option>";
-				}
-			}
-			echo "</select>";
-        ?>
-		<br>
-        <button type="submit" class="w3-button w3-teal" name="appCreate">Submit</button>
+            <button type="button" name="continue" class="w3-button w3-teal" onclick="document.getElementById('internshipInformation').style.display = 'none'; document.getElementById('employerInformation').style.display = 'block';">Next</button>
+            <button type="button" name="back" class="w3-button w3-teal" onclick="document.getElementById('studentInformation').style.display = 'block'; document.getElementById('internshipInformation').style.display = 'none';">Back</button>
+        </div>
+        <div id="employerInformation" style="display:none;">
+            <h5>Employer Information</h5>
+            <label class="w3-input" for="employerOrganization">Name of Organization: </label>
+            <input type="text" class="w3-input" name="employerOrganization" id="employerOrganization" placeholder="Enter the Organization or Business's Name.">
+            <label class="w3-input" for="employerFirstName">First name</label>
+            <input type="text" class="w3-input" name="employerFirstName" id="employerFirstName" placeholder="Enter the Employer's First Name." required>
+            <label class="w3-input" for="lastName">Last name</label>
+            <input type="text" class="w3-input" name="employerLastName" id="employerLastName" placeholder="Enter the Employer's Last Name." required>
+            <label class="w3-input" for="employerEmail">Email </label>
+            <input type="email" class="w3-input" name="employerEmail" id="employerEmail" placeholder="Enter the Employer's Email.">
+            <label class="w3-input" for="employerPhone">Phone number</label>
+            <input type="tel" class="w3-input" name="employerPhone" id="employerPhone" maxlength=10 placeholder="Enter the Employer's Phone.">
+            <br>
+            <h5>Organization/Business Location</h5>
+            <label class="w3-input" for="employerStreet">Street</label>
+            <input type="text" class="w3-input" name="employerStreet" id="employerStreet" required>
+            <label class="w3-input" for="employerBldNum">Building/Suite#</label>
+            <input type="text" class="w3-input" name="employerBldNum" id="employerBldNum">
+            <label class="w3-input" for="employerCity">City</label>
+            <input type="text" class="w3-input" name="employerCity" id="employerCity" required>
+            <label class="w3-input" for="employerState">State</label>
+            <select class="w3-input" name="employerState" id="employerState" required>
+                <option value="">Select the State.</option>
+                <?php include('./backend/states.php') ?>
+            </select>
+            <label class="w3-input" for="employerZipcode">Zip</label>
+            <input type="text" name="employerZipcode" id="employerZipcode" class="w3-input" required>
+            <br>
+            <?php
+                if(isset($_GET['content']) && $_GET['content'] = 'view') {
+                    echo("<button type='submit' name='studentSubmit' class='w3-button w3-teal' disabled>Submit</button>");
+                }
+                else {
+                    echo("<button type='submit' name='studentSubmit' class='w3-button w3-teal'>Submit</button>");
+                }
+            ?>            
+            <button type="button" name="back" class="w3-button w3-teal" onclick="document.getElementById('internshipInformation').style.display = 'block'; document.getElementById('employerInformation').style.display = 'none';">Back</button>
+        </div>  
     </form>
 </div>

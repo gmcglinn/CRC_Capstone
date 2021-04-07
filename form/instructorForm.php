@@ -1,30 +1,50 @@
 <?php
-    //Loading the page title and action buttons.
-    include_once('./components/userfunctions/create/create.php');
-    include_once('./backend/config.php');
-    include_once('./backend/db_connector.php');
-    
-    if (isset($_POST['appCreate'])){
-        if($_SESSION['user_type'] == $GLOBALS['faculty_type']){
-		    $initiatorName = $_SESSION['user_name'];
-		    $initiatorID = mysqli_fetch_assoc(mysqli_query($db_conn, "SELECT * FROM f20_user_table WHERE user_name = '$initiatorName'"))['UID'];
-		    $fname = mysqli_real_escape_string($db_conn, $_POST['fname']);
-            $lname = mysqli_real_escape_string($db_conn, $_POST['lname']);
-            $gradeMethod = mysqli_real_escape_string($db_conn, $_POST['gradeMethod']);
-            $outcomes1 = mysqli_real_escape_string($db_conn, $_POST['outcomes1']);
-            $outcomes2 = mysqli_real_escape_string($db_conn, $_POST['outcomes2']);
-		
+    //If this field is set then the user submitted the form to start the workflow.
+    if(isset($_POST['studentSubmit'])) {
+        //First we gather all the input field information.
+        $workflowID = mysqli_real_escape_string($_POST['workflowID']);
+        $firstname = mysqli_real_escape_string($_POST['instructorFirstName']);
+        $lastname = mysqli_real_escape_string($_POST['instructorLastName']);
+        $outcome1 = mysqli_real_escape_string($_POST['outcomes1']);
+        $outcome2 = mysqli_real_escape_string($_POST['outcomes2']);
 
-            $insertApp = "INSERT INTO f20_app_table (ASID, ATID, UID, title, organization, orgStreet, orgAptNum, orgCity, orgstate, orgZipCode, outcomes1, outcomes2, outcomes3, created) 
-                            VALUES (2, '$initiatorID', '$fname', '$lname', '$outcomes1', '$outcomes2' , '2020-11-28 21:47:51', '2020-11-10 21:47:51')";
-            $insertAppQuery = mysqli_query($db_conn, $insertApp);
-
-            //Database insert success
-            if (mysqli_errno($db_conn) == 0) {
-                echo("<div class='w3-panel w3-margin w3-green'><p>Workflow app created successfully.</p></div>");
-            } 
-		    else { echo("<div class='w3-panel w3-margin w3-red'><p>Error - Form could not be sent.</p></div>");}
+        //This creates an entry for the student's information in the database attached with the workflow ID.
+        $sql = "INSERT INTO f20_faculty_info (fw_id, faculty_first_name, faculty_last_name ) 
+            VALUES ('$workflowID','$firstname', '$lastname')";
+        $query = mysqli_query($db_conn, $sql);
+        if ($query) {
+            echo("<div class='w3-card w3-green'>Faculty Information Successfully Updated.</div>");
+        } 
+        else {
+            echo("<div class='w3-card w3-red'>Error. Faculty Information Update Unsuccessful .</div>");
         }
+        
+        //This updates the missing fields from the workflow in the database.
+        $sql = "UPDATE f20_application_info SET project_name = '$workflowType', academic_credits = '$workflowCredits', 
+            hours_per_wk = '$workflowHours' WHERE fw_id = '$workflowID'";
+        $query = mysqli_query($db_conn, $sql);
+        if (mysqli_errno($db_conn) == 0) {
+            echo("<div class='w3-card w3-green'>Faculty Information Successfully Updated.</div>");
+        } 
+        else {
+            echo("<div class='w3-card w3-red'>Faculty Information Successfully Updated.</div>");
+        }
+
+        //This updates the application utility table in the database.
+        $sql = "UPDATE f20_application_util SET rejected = '0', progress = '1', assigned_to = 'instructor@email.com' 
+            WHERE fw_id = '$workflowID'";
+        $query = mysqli_query($db_conn, $sql);
+        if (mysqli_errno($db_conn) == 0) {
+            echo("<div class='w3-card w3-green'>Student Information Successfully Updated.</div>");
+        } 
+        else {
+            echo("<div class='w3-card w3-red'>Student Information Successfully Updated.</div>");
+        }
+
+    }
+    //If this field is set then the user came here from their list of active workflows.
+    else if(isset($_POST['wfID'])) {
+        $workflowID = $_POST['wfID'];
     }
 ?>
 
@@ -52,27 +72,22 @@
                 2.) If applicable, include any reading material and/or assignments.
             </label>
             <input type="text" class="w3-input" name="outcomes1" id="outcomes1" required></input>
+            <br>
             <label class="w3-input" for="outcomes2">
-                3.) Explanation of course grading policies and method of determining final grade.
+                2.) Explanation of course grading policies and method of determining final grade.
             </label>
-            <input type="text" class="w3-input" name="outcomes2" id="outcomes2" required></input>
-		
-        <?php
-			//Load templates
-			include_once('./backend/config.php');
-			include_once('./backend/db_connector.php');
-			$sql = "SELECT ATPID, title from f20_app_template_table";
-			$result = $db_conn->query($sql);
-			if ($result->num_rows > 0){
-				echo " <select class='w3-input' id='template' name='template'><option selected disabled hidden>Select a Workflow Template</option>";
-				while($row = $result->fetch_assoc()){
-			
-					echo "<option value=".$row['ATPID']." id=".$row['ATPID'].">" .$row['title']. "</option>";
-				}
-			}
-			echo "</select>";
-        ?>
-		<br>
-        <button type="submit" class="w3-button w3-teal" name="appCreate">Submit</button>
+            <input type="text" class="w3-input" name="outcomes2" id="outcomes1" required></input>
+            <br>
+        </div>
+        <br>
+            <?php
+                if(isset($_GET['content']) && $_GET['content'] = 'view') {
+                    echo("<button type='submit' name='studentSubmit' class='w3-button w3-teal' disabled>Submit</button>");
+                }
+                else {
+                    echo("<button type='submit' name='studentSubmit' class='w3-button w3-teal'>Submit</button>");
+                }
+            ?>            
+        </div>  
     </form>
 </div>
