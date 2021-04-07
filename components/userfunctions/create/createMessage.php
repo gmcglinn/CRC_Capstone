@@ -8,7 +8,10 @@
 	}
     include_once('./backend/config.php');
     include_once('./backend/db_connector.php');
+
+    include('./backend/emailPlugin.php');
     
+
     if (isset($_POST['messageCreate'])) {
 		$senderName = $_POST['sender'];
 		$senderID = mysqli_fetch_assoc(mysqli_query($db_conn, "SELECT * FROM f20_user_table WHERE user_login_name = '$senderName'"))['UID'];
@@ -28,25 +31,10 @@
 
 
 
+         //test email function
+         sendMail('mcglinng1@hawkmail.newpaltz.edu','TEST EMAIL','<html><h1>This is a test <br></h1><p>hello world</p></html>');
 
-        /*
-         * remove this email hardbaked
-        */
-         $message = $contents;
-         
-         $header = "From:abc@somedomain.com \r\n";
-         $header .= "Cc:afgh@somedomain.com \r\n";
-         $header .= "MIME-Version: 1.0\r\n";
-         $header .= "Content-type: text/html\r\n";
-         
-         $retval = mail ($to,$subject,$message,$header);
-         
-         if( $retval == true ) {
-            echo "Message sent successfully...";
-         }else {
-            echo "Message could not be sent...";
-         }
-		}
+        
 		
 
 
