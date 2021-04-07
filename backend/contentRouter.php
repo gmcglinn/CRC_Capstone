@@ -82,9 +82,12 @@
             if($_GET['contentType'] == "active") {
                 include_once("./components/userfunctions/workflows/activeWorkflows.php");
 
+            if (isset($_GET['viewForm'])) {
+                
                 if($_GET['viewForm'] == 'true') {
                     include_once("./form/chooseForm.php");
-                }
+                    }
+                } 
             }
             else if($_GET['contentType'] == "new") {
                 include_once("./components/userfunctions/workflows/newWorkflows.php");
@@ -103,9 +106,13 @@
         else {
             include_once("./components/userfunctions/workflows/workflows.php");
 
+            if ( isset($_GET['formType'])) {
+            
             if ($_GET['formType'] == 'secretary') {
                     include_once("./form/secretaryForm.php");
                 }
+
+            }
         }
     }
     //If the content requested is the view page.
