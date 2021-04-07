@@ -15,6 +15,8 @@
 		$thisUser = $_SESSION['user_id'];
 ?>
 
+
+
 <!-- Admin Messages (admin can see all messages)-->
 <div id="messages" class="w3-card-4 w3-padding w3-margin">
     <button class="w3-button w3-right w3-blue" type="button" onclick="window.location.href='./dashboard.php?content=create&contentType=message'">Admin Compose Message</button>
