@@ -100,8 +100,8 @@
                         </script>");
                     }
                 }
-                echo('<div class="w3-quarter w3-center w3-padding-24 w3-border" style="height: 90px;">'
-                    . '<form action="form/chooseForm.php" method="post" >'
+                echo('<div class="w3-quarter w3-center w3-padding-24 w3-border" style="height: 90px;" >'
+                    . '<form action="./dashboard.php?content=workflows&contentType=active&viewForm=true" method="post" >'
                     . '<input type="hidden" name="stepLocation" value="'
                     . $stepLocation
                     . '"></input>'

@@ -81,6 +81,14 @@
         if(isset($_GET['contentType'])) {
             if($_GET['contentType'] == "active") {
                 include_once("./components/userfunctions/workflows/activeWorkflows.php");
+
+                if($_GET['viewForm'] == 'true') {
+                    include_once("./form/chooseForm.php");
+
+                    if ($_GET['formtype'] == 'secretary') {
+                        include_once("./form/secretaryForm.php");
+                    }
+                }
             }
             else if($_GET['contentType'] == "new") {
                 include_once("./components/userfunctions/workflows/newWorkflows.php");
