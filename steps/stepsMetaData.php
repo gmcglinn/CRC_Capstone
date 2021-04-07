@@ -116,20 +116,16 @@
                 //Load templates
                 include_once('./backend/config.php');
                 include_once('./backend/db_connector.php');
-                $sql = "SELECT DISTINCT `form_type` FROM `s21_course_workflow_steps`";
+                $sql = "SELECT  `workflow_title` FROM `s21_course_workflow_steps`";
                 $result = $db_conn->query($sql);
                 if ($result->num_rows > 0){
                         echo " <select class='w3-input' id='template' name='form_type'><option selected disabled hidden>Select a Workflow Template</option>";
                         while($row = $result->fetch_assoc()){
                                 echo $row['form_type'];
-                                echo "<option value=".$row['form_type']." id=".$row['form_type'].">" .$row['form_type']. "</option>";
+                                echo "<option value=".$row['workflow_title']." id=".$row['form_type'].">" .$row['workflow_title']. "</option>";
                         }
                 }
                 echo "</select>";
-
-                if($_GET['workflowSelect'] == 'internship') {
-                        include_once('0000000009.php');
-                }
 
                 ?>
 
