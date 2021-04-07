@@ -84,10 +84,6 @@
 
                 if($_GET['viewForm'] == 'true') {
                     include_once("./form/chooseForm.php");
-
-                    if ($_GET['formtype'] == 'secretary') {
-                        include_once("./form/secretaryForm.php");
-                    }
                 }
             }
             else if($_GET['contentType'] == "new") {
@@ -101,10 +97,15 @@
             }
             else if($_GET['contentType'] == "viewWorkflow") {
                 include_once("./components/userfunctions/workflows/viewWorkflow.php");
-            }
+            } 
+
         }
         else {
             include_once("./components/userfunctions/workflows/workflows.php");
+
+            if ($_GET['formType'] == 'secretary') {
+                    include_once("./form/secretaryForm.php");
+                }
         }
     }
     //If the content requested is the view page.
