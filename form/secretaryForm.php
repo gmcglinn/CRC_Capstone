@@ -52,6 +52,17 @@
             <?php
                 if(isset($_GET['content']) && $_GET['content'] = 'view') {
                     echo("<button type='submit' name='studentSubmit' class='w3-button w3-teal' disabled>Submit</button>");
+        <!-- Select field for the department -->
+        <label class="w3-input" for="department">Department</label>
+        <select class="w3-input" name="department" id="department" onchange="showCourse(this.value)">
+            <option value="">Select a department:</option>
+            <?php 
+                $sql = "SELECT * FROM `f20_academic_dept_info`";
+                $query = mysqli_query($db_conn, $sql);
+                if ($query) {
+                    while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+                        echo("<option value='" . $row['dept_code'] . "'>" . $row['dept_name'] . "</option>");
+                    }
                 }
                 else {
                     echo("<button type='submit' name='studentSubmit' class='w3-button w3-teal'>Submit</button>");

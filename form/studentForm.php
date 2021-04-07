@@ -82,56 +82,44 @@
     }
 ?>
 
-<!-- Form that starts the internship workflow from the student's side.--> 
-<div class="w3-card-4 w3-margin w3-padding" style="background-color: whitesmoke;">
-    <form method="post" action="./dashboard.php?content=startInternApp">
-        <div id="studentInformation">
-            <h5>Student Information</h5>
-            <input type="hidden" name="workflowID" value="<?php echo $workflowID ?>">
-            <label class="w3-input" for="studentFirstName">First name</label>
-            <input type="text" class="w3-input" name="studentFirstName" id="studentFirstName" placeholder="Enter the Student's First Name." required>
-            <label class="w3-input" for="studentLastName">Last name</label>
-            <input type="text" class="w3-input" name="studentLastName" id="studentLastName" placeholder="Enter the Student's Last Name." required>
-            <label class="w3-input" for="studentMiddleName">Middle Initial</label>
-            <input type="text" class="w3-input" name="studentMiddleName" id="studentMiddleName" maxlength="1" placeholder="Enter the Student's Middle Initial.">
-            <label class="w3-input" for="studentPhone">Phone number</label>
-            <input type="tel" class="w3-input" name="studentPhone" id="studentPhone" placeholder="Enter the Student's Phone Number.">
-            <br>
-            <h5>Student Address</h5>
-            <label class="w3-input" for="studentAddress">Street</label>
-            <input type="text" class="w3-input" name="studentAddress" id="studentAddress" placeholder="Enter the Student's street address." required>
-            <label class="w3-input" for="studentAptNum">Apartment Number</label>
-            <input type="text" class="w3-input" name="studentAptNum" id="studentAptNum" placeholder="Enter the Apartment or suite">
-            <label class="w3-input" for="studentCity">City</label>
-            <input type="text" class="w3-input" name="studentCity" id="studentCity" placeholder="Enter the Student's City." required>
-            <label class="w3-input" for="studentState">State</label>
-            <select class="w3-input" name="studentState" id="studentState" required>
-                <option value="">Select the Student's State.</option>
-                <!-- File that contains the list of states. -->
-                <?php include('./backend/states.php') ?>
-            </select>
-            <label class="w3-input" for="studentZip">Zip</label>
-            <input type="text" class="w3-input" name="studentZip" id="studentZip" placeholder="Enter the Student's Zip Code." required>
-            <br>
-            <button type="button" name="continue" class="w3-button w3-teal" onclick="document.getElementById('studentInformation').style.display = 'none'; document.getElementById('internshipInformation').style.display = 'block';">Next</button>
-        </div>
-        <div id="internshipInformation" style="display:none;">
-            <h5>Internship/Fieldwork Information</h5>
-            <label class="w3-input" for="appType">Internship/Fieldwork Type</label>
-            <select class="w3-input" name="appType" id="appType" required>
-                <option value="Internship">Internship</option>
-                <option value="Independent Study">Independent Study</option>
-            </select>
-            <label class="w3-input" for="appCredits">Academic credits</label>
-            <input type="number" class="w3-input" name="appCredits" id="appCredits" step="1" min="1">
-            <label class="w3-input" for="appHours">Number of Hours/Week</label>
-            <input type="number" class="w3-input" name="appHours" id="appHours" min="0" step="1">
-            <br>
-            <h5>Learning Outcomes</h5>
-            <label class="w3-input" for="outcomes1">
-                1.) What are your responsibilities on site?<br>
-                2.) What special project will you be working on?<br>
-                3.) What do you expect to learn?
+<!-- Student Form -->
+<div id="userForm" class="w3-card-4 w3-padding w3-margin">
+    <h5>Fieldwork Form</h5>
+    <form name="studentForm" method="post" action="./dashboard.php?content=create&contentType=app">
+        <h5>Project Proposal</h5>
+        <br>
+		<label for="title">Project Title</label>
+        <input id="title" name="title" type="text" class="w3-input" required>
+        <br>
+		<label for="organization">Name of Organization</label>
+        <input id="organization" name="organization" type="text" class="w3-input" required>
+        <br>
+		<label for="orgStreet">Street</label>
+        <input id="orgStreet" name="orgStreet" type="text" class="w3-input" placeholder="Enter the Organization's street address." required>
+        <br>
+        <label for="orgAptNum">Apt#</label>
+        <input id="orgAptNum" name="orgAptNum" type="text" class="w3-input" placeholder="Enter the Apartment Number or Suite(if applicable)" >
+        <br>
+        <label for="orgCity">City</label>
+        <input id="orgCity" name="orgCity" type="text" class="w3-input" placeholder="Enter the Organization's City." required>
+        <br>
+        <label for="orgState">State</label>
+        <input id="orgState" name="orgState" type="text" class="w3-input" placeholder="Enter the Organization's State." required>
+        <br>
+        <label for="orgZipCode">Zip Code</label>
+        <input id="orgZipCode" name="orgZipCode" type="text" class="w3-input" placeholder="Enter the Organization's Zip Code." required>
+        <br>
+        <label for="supervisorName">Supervisor</label>
+        <input id="supervisorName" name="supervisorName" type="text" class="w3-input" placeholder="Enter your Supervisor's Name." required>
+        <br>
+        <label for="supervisorNum">Supervisor's Phone Number</label>
+        <input id="supervisorNum" name="supervisorNum" type="text" class="w3-input" placeholder="Enter your Supervisor's Number." required>
+        <br>
+        <h5>Learning Outcomes</h5>
+        <label class="w3-input" for="outcomes1">
+                1a) What are your responsibilities on site?<br>
+                b) What special project will you be working on?<br>
+                c) What do you expect to learn?
             </label>
             <input type="text" class="w3-input" name="outcomes1" id="outcomes1" required></input>
             <br>

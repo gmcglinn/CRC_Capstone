@@ -48,21 +48,28 @@
     }
 ?>
 
-<!Instructor Form--> 
-<div class="w3-card-4 w3-margin w3-padding" style="background-color: whitesmoke;">
-    <form method="post" action="./dashboard.php?content=startInternApp">
-        <div id="instructorInformation">
-            <h5>Instructor Information</h5>
-            <input type="hidden" name="workflowID" value="<?php echo $workflowID ?>">
-            <label class="w3-input" for="instructotFirstName">First name</label>
-            <input type="text" class="w3-input" name="instructorFirstName" id="instructorFirstName" required>
-            <label class="w3-input" for="instructorLastName">Last name</label>
-            <input type="text" class="w3-input" name="instructorLastName" id="instructorLastName" required>
-        </div>
-        <div id="instructorLearningOutcomes">
-            <h5>Learning Outcomes</h5>
-            <label class="w3-input" for="outcomes1">
-                1.) What are the student learning outcomes? If applicable, include any reading material and/or assignments.
+<!-- Instructor Form -->
+<div id="userForm" class="w3-card-4 w3-padding w3-margin">
+    <h5>Fieldwork Form</h5>
+    <form name="instructorForm" method="post" action="./dashboard.php?content=create&contentType=app">
+        <label for="fname">First Name</label>
+        <input id="fname" name="fname" type="text" class="w3-input" required>
+        <br>
+	    <label for="lname">Last Name</label>
+        <input id="lname" name="lname" type="text" class="w3-input" required>
+        <br>
+        <label class="w3-input" for="gradeMethod">Grade Method</label>
+        <select name="gradeMethod" class="w3-input">
+            <option value="">Select a grade method:</option>
+            <option value="Letter Grades">Letter Grades</option>
+            <option value="Pass/Fail">Pass/Fail</option>
+        </select>
+        <br>
+        <h5>Instructor - Learning Outcomes</h5>
+        <br>
+        <label class="w3-input" for="outcomes1">
+                1.) What are the student learning outcomes?<br>
+                2.) If applicable, include any reading material and/or assignments.
             </label>
             <input type="text" class="w3-input" name="outcomes1" id="outcomes1" required></input>
             <br>
