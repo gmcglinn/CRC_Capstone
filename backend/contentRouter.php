@@ -81,6 +81,13 @@
         if(isset($_GET['contentType'])) {
             if($_GET['contentType'] == "active") {
                 include_once("./components/userfunctions/workflows/activeWorkflows.php");
+
+            if (isset($_GET['viewForm'])) {
+                
+                if($_GET['viewForm'] == 'true') {
+                    include_once("./form/chooseForm.php");
+                    }
+                } 
             }
             else if($_GET['contentType'] == "new") {
                 include_once("./components/userfunctions/workflows/newWorkflows.php");
@@ -93,10 +100,30 @@
             }
             else if($_GET['contentType'] == "viewWorkflow") {
                 include_once("./components/userfunctions/workflows/viewWorkflow.php");
-            }
+            } 
+
         }
         else {
             include_once("./components/userfunctions/workflows/workflows.php");
+
+            if ( isset($_GET['formType'])) {
+            
+                if ($_GET['formType'] == 'secretary') {
+                    include_once("./form/secretaryForm.php");
+                }
+                else if ($_GET['formType'] == 'student') {
+                    include_once("./form/studentForm.php");
+                }
+                else if ($_GET['formType'] == 'student') {
+                    include_once("./form/studentForm.php");
+                }
+                else if ($_GET['formType'] == 'faculty') {
+                    include_once("./form/instructorForm.php");
+                } 
+                else if ($_GET['formType'] == 'dean' || $_GET['formType'] == 'chair') {
+                    include_once("./form/approvalForm.php");
+                }           
+            }
         }
     }
     //If the content requested is the view page.

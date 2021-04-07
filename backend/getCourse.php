@@ -16,7 +16,7 @@
     echo("<option value=''>Select a course.</option>");
 
     while($row = mysqli_fetch_array($result)) {
-        echo("<option value='$row[course_number]'>$row[course_number]</option>");
+        echo("<option value='$row[course_number]'>$row[dept_code] $row[course_number]</option>");
     }
     mysqli_close($db_conn);
 ?>

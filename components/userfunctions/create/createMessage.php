@@ -1,4 +1,5 @@
 <!--
+    Consolidate "Create Message" into "View Message"
 -->
 <?php
     //Loading the page title and action buttons.
@@ -7,7 +8,10 @@
 	}
     include_once('./backend/config.php');
     include_once('./backend/db_connector.php');
+
+    include('./backend/emailPlugin.php');
     
+
     if (isset($_POST['messageCreate'])) {
 		$senderName = $_POST['sender'];
 		$senderID = mysqli_fetch_assoc(mysqli_query($db_conn, "SELECT * FROM f20_user_table WHERE user_login_name = '$senderName'"))['UID'];
@@ -23,23 +27,17 @@
 		//sends email to receiver is message type is urgent
 		if($type == 1){
 		$to = mysqli_fetch_assoc(mysqli_query($db_conn, "SELECT * FROM f20_user_table WHERE user_login_name = '$receiverName'"))['user_email'];
-         
-         $message = $contents;
-         
-         $header = "From:abc@somedomain.com \r\n";
-         $header .= "Cc:afgh@somedomain.com \r\n";
-         $header .= "MIME-Version: 1.0\r\n";
-         $header .= "Content-type: text/html\r\n";
-         
-         $retval = mail ($to,$subject,$message,$header);
-         
-         if( $retval == true ) {
-            echo "Message sent successfully...";
-         }else {
-            echo "Message could not be sent...";
-         }
-		}
+        
+
+
+
+         //test email function
+         sendMail('mcglinng1@hawkmail.newpaltz.edu','TEST EMAIL','<html><h1>This is a test <br></h1><p>hello world</p></html>');
+
+        
 		
+
+
         $insertMessage = "INSERT INTO f20_message_T (message_type, message_status, task_id, message_sender, message_receiver, message_subject, message_contents) 
                             VALUES ('$type', '$status', 1, '$sender', '$receiver', '$subject', '$contents')";
         $insertMessageQuery = mysqli_query($db_conn, $insertMessage);
@@ -72,22 +70,22 @@ if($_SESSION['user_type'] == 1){
         <label for="type">Type</label>
         <select id="type" name="type" class="w3-input">
 		<option selected="" disabled="" hidden=""> Select a message type. </option>
-		<option value="1" id="1">urgent</option>
-		<option value="2" id="2">normal</option>
+		<option value="1" id="1">Urgent</option>
+		<option value="2" id="2">Normal</option>
 		</select>
         <br>
 		<label for="status">Status</label>
         <select id="status" name="status" class="w3-input">
 		<option selected="" disabled="" hidden=""> Select a status type. </option>
-		<option value="1" id="1">new</option>
-		<option value="2" id="2">read</option>
-		<option value="3" id="3">deleted</option>
+		<option value="1" id="1">New</option>
+		<option value="2" id="2">Read</option>
+		<option value="3" id="3">Deleted</option>
 		</select>
         <br>
-		<label for="subject">Message subject</label>
+		<label for="subject">Message Subject</label>
         <input id="subject" name="subject" type="text" class="w3-input" required>
         <br>
-        <label for="contents">Message contents</label>
+        <label for="contents">Message Contents</label>
         <textarea id="contents" name="contents" type="text" class="w3-input" required></textarea>
         <br>
         <button type="submit" class="w3-button w3-teal" name="messageCreate">Send</button>
@@ -107,17 +105,17 @@ if($_SESSION['user_type'] == 1){
         <label for="type">Type</label>
         <select id="type" name="type" class="w3-input">
 		<option selected="" disabled="" hidden=""> Select a message type. </option>
-		<option value="1" id="1">urgent</option>
-		<option value="2" id="2">normal</option>
+		<option value="1" id="1">Urgent</option>
+		<option value="2" id="2">Normal</option>
 		</select>
         <br>
 		<!--<label for="status">Status</label>-->
         <input id="status" name="status" type="hidden" class="w3-input" value="1" required readonly>
         <!-- <br> -->
-		<label for="subject">Message subject</label>
+		<label for="subject">Message Subject</label>
         <input id="subject" name="subject" type="text" class="w3-input" required>
         <br>
-        <label for="contents">Message contents</label>
+        <label for="contents">Message Contents</label>
         <textarea id="contents" name="contents" type="text" class="w3-input" required></textarea>
         <br>
         <button type="submit" class="w3-button w3-teal" name="messageCreate">Send</button>

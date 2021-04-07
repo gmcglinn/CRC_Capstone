@@ -40,8 +40,8 @@
         <label for="type">Priority</label>
         <select id="type" name="type" class="w3-input">
 		<option selected="" disabled="" hidden=""> Select a priority. </option>
-		<option value="1" id="1">urgent</option>
-		<option value="2" id="2">normal</option>
+		<option value="1" id="1">Urgent</option>
+		<option value="2" id="2">Normal</option>
 		</select>
         <br>
 		<label for="deadline">Deadline</label>

@@ -44,7 +44,7 @@
         <br>
         <label for="type">User Type</label>
         <select id="type" name="type" class="w3-input" required>
-            <option value="">Select a user type.</option>
+            <option value="">Select a User Type.</option>
             <?php
                 $sql = "SELECT * FROM f20_user_role_table";
                 $query = mysqli_query($db_conn, $sql);

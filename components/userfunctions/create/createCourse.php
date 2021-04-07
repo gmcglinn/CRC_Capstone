@@ -47,7 +47,7 @@
             ?>
         </select>
         <br>
-        <label for="classnumber">Class number:</label>
+        <label for="classnumber">Class Number:</label>
         <input id="classnumber" name="classnumber" type="text" class="w3-input" maxlength="3" size="3" required />
         <br>
         <button type="submit" class="w3-button w3-teal" name="courseCreate">Create</button>

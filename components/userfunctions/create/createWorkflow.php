@@ -10,13 +10,13 @@
 		
 		if (isset($_POST['hiddeninput'])) {
 			$newWorkflowOrder = str_replace(',', '=>', $_POST['hiddeninput']);
-			$title = $_POST['workflowTitle'];
+			$workflow_title = $_POST['workflowTitle'];
 			$course_number = $_POST['course_number'];
 			$form_type = $_POST['form_type'];
 
-
-			$sql = "INSERT INTO f20_course_workflow_steps (TSID, title, instructions, form_type, course_number) 
-				VALUES (1, '$title', '$newWorkflowOrder', '$form_type', '$course_number')";
+            //Insert into Dattabase
+			$sql = "INSERT INTO s21_course_workflow_steps (TSID, workflow_title, instructions, form_type, course_number) 
+				VALUES (1, '$workflow_title', '$newWorkflowOrder', '$form_type', '$course_number')";
 
 			mysqli_query($db_conn, $sql);
         	//Database insert success
@@ -30,7 +30,8 @@
         	else {
             	echo("<div class='w3-panel w3-margin w3-red'><p>Failed to Create Workflow.</p></div>");
 
-        	}	
+        	}
+
 		}
 		else {
 			echo("<div class='w3-panel w3-margin w3-red'><p>Failed to Create Workflow. No Entry for workflow order</p></div>");
@@ -55,7 +56,7 @@
     <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=create&contentType=department'">
     <div class="w3-container w3-teal w3-padding-16 w3-border ">
         <div class="w3-left"><i class="fa fa-building w3-xxxlarge"></i></div>
-        <div class="w3-clear"><h5>Deparment</h5></div>
+        <div class="w3-clear"><h5>Department</h5></div>
     </div>
     </div>
     <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=create&contentType=course'">
@@ -108,7 +109,11 @@
 
 		<label class="w3-input" for="department">Department</label>
         <select class="w3-input" name="department" id="department" onchange="showCourse(this.value)">
+<<<<<<< HEAD
             <option value="">Select a department:</option>
+=======
+            <option value="">Select a Department:</option>
+>>>>>>> b04d6b42fa2031ce0e6b3749528b649fd566ff26
             <?php 
                 include_once('./backend/db_connector.php');
 
