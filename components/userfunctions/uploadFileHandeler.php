@@ -1,4 +1,18 @@
 <?php
+if(!isset($_SESSION)) {
+    session_start();
+}
+//User has not signed in.
+if(!isset($_SESSION['user_type'])) {
+    header('Location: ./index.php');
+}
+
+include_once('./backend/config.php');
+    include_once('./backend/db_connector.php');
+    if($_SESSION['user_type'] == 1){
+		$thisUser = $_SESSION['user_id'];
+
+
 if (isset($_POST['submit'])){
     $file = $_FILES['file'];
     
@@ -15,10 +29,19 @@ if (isset($_POST['submit'])){
     
     if(in_array($fileActualExt, $allowedFileTypes)){
         if($fileError === 0){
-            if($fileSize < 100000){
+            if($fileSize < 100000){//filesize limit
                 $fileNameUnique = uniqid('', true).".".$fileActualExt;
                 $fileDestination = '../../userfiles/'.$fileNameUnique;
-                move_uploaded_file($fileTmpName, $fileDestination);
+                if(move_uploaded_file($fileTmpName, $fileDestination)){
+                    //MYSQL upload filename and attach username
+                    $tempUser = $_SESSION['user_name'];
+                    $insertMessage = "INSERT INTO f20_file_upload (file, owner, file_type) 
+                            VALUES ('$fileDestination', '$tempUser', '$fileType')";
+                    $insertMessageQuery = mysqli_query($db_conn, $insertMessage);
+
+                }else{
+                    echo "An unexpected error occured, please try again";
+                }
             }else{
                 echo "File exceeds upload size limit";
             }
