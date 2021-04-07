@@ -34,7 +34,7 @@
          //test email function
          sendMail('mcglinng1@hawkmail.newpaltz.edu','TEST EMAIL','<html><h1>This is a test <br></h1><p>hello world</p></html>');
 
-        
+        }
 		
 
 
