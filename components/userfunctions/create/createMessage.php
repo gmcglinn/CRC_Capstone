@@ -28,11 +28,8 @@
 		if($type == 1){
 		$to = mysqli_fetch_assoc(mysqli_query($db_conn, "SELECT * FROM f20_user_table WHERE user_login_name = '$receiverName'"))['user_email'];
         
-
-
-
          //test email function
-         sendMail('mcglinng1@hawkmail.newpaltz.edu','TEST EMAIL','<html><h1>This is a test <br></h1><p>hello world</p></html>');
+         sendMail("mcglinng1@hawkmail.newpaltz.edu","TEST EMAIL","<html><h1>This is a test <br></h1><p>hello world</p></html>");
 
         }
 		
