@@ -93,6 +93,7 @@
 ?>
 
 <div class="w3-card-4 w3-margin w3-padding" style="background-color: whitesmoke;">
+    <h4>Secretary Form</h4>
         <form method="post">
                 <label for="title">Title</label>
                 <input id="title" name="title" type="text" class="w3-input" required>

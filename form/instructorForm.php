@@ -50,13 +50,8 @@
 
 <!-- Instructor Form -->
 <div id="userForm" class="w3-card-4 w3-padding w3-margin">
-    <h5>Fieldwork Form</h5>
+    <h4>Instructor Form</h4>
     <form name="instructorForm" method="post" action="./dashboard.php?content=create&contentType=app">
-        <label for="fname">First Name</label>
-        <input id="fname" name="fname" type="text" class="w3-input" required>
-        <br>
-	    <label for="lname">Last Name</label>
-        <input id="lname" name="lname" type="text" class="w3-input" required>
         <br>
         <label class="w3-input" for="gradeMethod">Grade Method</label>
         <select name="gradeMethod" class="w3-input">
@@ -65,7 +60,7 @@
             <option value="Pass/Fail">Pass/Fail</option>
         </select>
         <br>
-        <h5>Instructor - Learning Outcomes</h5>
+        <h5>Learning Outcomes</h5>
         <br>
         <label class="w3-input" for="outcomes1">
                 1.) What are the student learning outcomes?<br>
