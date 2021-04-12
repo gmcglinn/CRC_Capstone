@@ -3,10 +3,8 @@
     if(isset($_POST['studentSubmit'])) {
         //First we gather all the input field information.
         $workflowID = mysqli_real_escape_string($_POST['workflowID']);
-        $firstname = mysqli_real_escape_string($_POST['instructorFirstName']);
-        $lastname = mysqli_real_escape_string($_POST['instructorLastName']);
         $outcome1 = mysqli_real_escape_string($_POST['outcomes1']);
-        $outcome2 = mysqli_real_escape_string($_POST['outcomes2']);
+    
 
         //This creates an entry for the student's information in the database attached with the workflow ID.
         $sql = "INSERT INTO f20_faculty_info (fw_id, faculty_first_name, faculty_last_name ) 
@@ -54,11 +52,11 @@
     <form name="supervisorForm" method="post" action="./dashboard.php?content=create&contentType=app">
         <h5>Learning Outcomes</h5>
         <br>
-        <label class="w3-input" for="outcomes1">
+        <label class="w3-input" for="outcome1">
                 1.) What are the student learning outcomes?<br>
                 2.) If applicable, include any reading material and/or assignments.
             </label>
-            <input type="text" class="w3-input" name="outcomes1" id="outcomes1" required></input>
+            <input type="text" class="w3-input" name="outcome1" id="outcome1" required></input>
         <br>
         <?php
             if(isset($_GET['content']) && $_GET['content'] = 'view') {
