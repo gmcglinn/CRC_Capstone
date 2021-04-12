@@ -1,30 +1,29 @@
 <?php
     if (isset($_POST['startInternshipWF'])) {
-        session_start();
         //make default values None
         //put all in try catch block for exception handling
         //error handling (no such email was found)
         $studentEmail = mysqli_real_escape_string($db_conn, $_POST['studentEmail']);
-        //$dept_code = mysqli_real_escape_string($db_conn, $_POST['dept_code']);
+        $dept_code = mysqli_real_escape_string($db_conn, $_POST['dept_code']);
         //$semester = mysqli_real_escape_string($db_conn, $_POST['semester']);
         //$year = mysqli_real_escape_string($db_conn, $_POST['year']);
         //$gradeMethod = mysqli_real_escape_string($db_conn, $_POST['gradeMethod']);
         $title = mysqli_real_escape_string($db_conn, $_POST['title']);
         $deadline = mysqli_real_escape_string($db_conn, $_POST['deadline']);
-        $form_type = mysqli_real_escape_string($db_conn, $_POST['form_type']);
+        $ATPID = mysqli_real_escape_string($db_conn,  $_POST['ATPID']);
         $priority = mysqli_real_escape_string($db_conn, $_POST['priority']);
         $deadline = mysqli_real_escape_string($db_conn, $_POST['deadline']);
-
         $wf_id = bin2hex(random_bytes(32));  //duplication is unlikely with this one. 1 in 20billion apparently
-        $newappsql = "INSERT INTO s21_active_workflow_info(WF_ID, title, student_email, semester, year, grade_mode, priority, deadline) 
-                        VALUES ('$wf_id','$title','$studentEmail', '$semester', '$priority', '$deadline');";
         
-        //get instructions
-        $sql = "SELECT * FROM s21_course_workflow_steps WHERE course_number = $course_number AND form_type = '$form_type' ";
+        $newappsql = "INSERT INTO s21_active_workflow_info(WF_ID, ATPID, title, dept_code, student_email, priority, deadline) 
+            VALUES ('$wf_id','$ATPID', '$title', '$dept_code','$studentEmail', '$priority', '$deadline');";
+
+        //get workflow steps info
+        $sql = "SELECT * FROM s21_course_workflow_steps WHERE ATPID = '$ATPID'";
         $result = mysqli_query($db_conn, $sql);
         $row = mysqli_fetch_assoc($result);
+
         $instructions= $row['instructions'];
-        
         $participants = explode("=>", $instructions);
 
         //get department participant emails
@@ -38,7 +37,6 @@
         
         //get participant ids
         $partial_sql = "SELECT `UID` FROM f20_user_table WHERE `user_email` = ";
-
         foreach($participants as $p) {
                 $missing_sql = "";
                 if ($p == 'Dean') {
@@ -71,7 +69,6 @@
                                 VALUES ('$wf_id');";
         //insert into db
         mysqli_query($db_conn, $default_workflow_status_sql);
-
         mysqli_query($db_conn, $newappsql);
         
         if (mysqli_errno($db_conn) == 0) {
@@ -122,18 +119,19 @@
                 $row = mysqli_fetch_assoc($result);
                 $dept_code = $row['dept_code'];
                 
-                $sql = "SELECT  `workflow_title` FROM `s21_course_workflow_steps` WHERE `dept_code` = '$dept_code'";
+                $sql = "SELECT `workflow_title`, `ATPID` FROM `s21_course_workflow_steps` WHERE `dept_code` = '$dept_code'";
                 
                 $result = $db_conn->query($sql);
                 
                 if ($result->num_rows > 0){
-                        echo " <select class='w3-input' id='template' name='form_type'><option selected disabled hidden>Select a Workflow Template</option>";
+                        echo " <select class='w3-input' id='template' name='ATPID'><option selected disabled hidden>Select a Workflow Template</option>";
                         while($row = $result->fetch_assoc()){
-                                echo $row['form_type'];
-                                echo "<option value=".$row['workflow_title']." id=".$row['form_type'].">" .$row['workflow_title']. "</option>";
+                            echo($row['workflow_title']);
+                            echo "<option value=".$row['ATPID']. ">" .$row['workflow_title']. "</option>";
                         }
                 }
                 echo "</select>";
+                echo "<input type=hidden name=dept_code value=$dept_code>";
 
                 ?>
 
