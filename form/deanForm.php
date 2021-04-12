@@ -30,16 +30,16 @@
 <div class="w3-card-4 w3-margin w3-padding" style="background-color: whitesmoke;">
     <h4>Dean Form</h4>
     <form method="post" action="./dashboard.php?content=startInternApp">
-        <div id="approvalDecision">
+        <div id="deanApprovalDecision">
             <h5> Approve or Decline Student Application </h5>
-            <label class="w3-input" for="approval"> Choose: </label>
-                <select class="w3-input" name="approval" id="approval" required>
-                    <option value="approve">Approve</option>
-                    <option value="decline">Decline</option>
+            <label class="w3-input" for="deanApproval"> Choose: </label>
+                <select class="w3-input" name="deanApproval" id="deanApproval" required>
+                    <option value="deanApprove">Approve</option>
+                    <option value="deanDecline">Decline</option>
                 </select>
             
-            <label class="w3-input" for="comments">Comments:</label>
-            <input type="text" class="w3-input" name="comments" id="comments" placeholder="Provide Any Comments (if necessary)">
+            <label class="w3-input" for="deanComments">Comments:</label>
+            <input type="text" class="w3-input" name="deanComments" id="deanComments" placeholder="Provide Any Comments (if necessary)">
             <br>
             <?php
                 if(isset($_GET['content']) && $_GET['content'] = 'view') {
