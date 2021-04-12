@@ -76,7 +76,7 @@
 
 <!-- Student Form -->
 <div id="userForm" class="w3-card-4 w3-padding w3-margin">
-    <h4>Fieldwork Form</h4>
+    <h4>Student Form</h4>
     <form name="studentForm" method="post" action="./dashboard.php?content=create&contentType=app">
         <h5>Project Proposal</h5>
 		<label for="title">Project Title</label>

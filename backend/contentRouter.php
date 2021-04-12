@@ -121,7 +121,10 @@
                     include_once("./form/instructorForm.php");
                 } 
                 else if ($_GET['formType'] == 'dean' || $_GET['formType'] == 'chair') {
-                    include_once("./form/approvalForm.php");
+                    include_once("./form/deanForm.php");
+                } 
+                else if ($_GET['formType'] == 'chair' || $_GET['formType'] == 'chair') {
+                    include_once("./form/chairForm.php");
                 }           
             }
         }
