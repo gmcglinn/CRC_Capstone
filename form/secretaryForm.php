@@ -1,78 +1,144 @@
-
 <?php
-    //If this field is set then the user submitted the form to start the workflow.
-    if(isset($_POST['studentSubmit'])) {
-        //First we gather all the input field information.
-        $workflowID = mysqli_real_escape_string($_POST['workflowID']);
-        $firstname = mysqli_real_escape_string($_POST['studentFirstName']);
-        $lastname = mysqli_real_escape_string($_POST['studentLastName']);
-        $studentEmail = mysqli_real_escape_string($_POST['studentEmail']);
+    if (isset($_POST['startInternshipWF'])) {
+        //make default values None
+        //put all in try catch block for exception handling
+        //error handling (no such email was found)
+        $studentEmail = mysqli_real_escape_string($db_conn, $_POST['studentEmail']);
+        $dept_code = mysqli_real_escape_string($db_conn, $_POST['dept_code']);
+        $course_number = mysqli_real_escape_string($db_conn, $_POST['course_number']);
+        $semester = mysqli_real_escape_string($db_conn, $_POST['semester']);
+        $year = mysqli_real_escape_string($db_conn, $_POST['year']);
+        $gradeMethod = mysqli_real_escape_string($db_conn, $_POST['gradeMethod']);
+        $title = mysqli_real_escape_string($db_conn, $_POST['title']);
+        $deadline = mysqli_real_escape_string($db_conn, $_POST['deadline']);
+        $form_type = mysqli_real_escape_string($db_conn, $_POST['form_type']);
+        $priority = mysqli_real_escape_string($db_conn, $_POST['priority']);
+        $deadline = mysqli_real_escape_string($db_conn, $_POST['deadline']);
 
-        //This creates an entry for the student's information in the database attached with the workflow ID.
-        $sql = "INSERT INTO f20_student_info (fw_id, student_first_name, student_last_name, student_email) 
-            VALUES ('$workflowID','$firstname', '$lastname', '$studentEmail')";
-        $query = mysqli_query($db_conn, $sql);
-        if ($query) {
-            echo("<div class='w3-card w3-green'>Student Information Successfully Updated.</div>");
-        } 
-        else {
-            echo("<div class='w3-card w3-red'>Error. Student Information Update Unsuccessful .</div>");
+        $wf_id = bin2hex(random_bytes(32));  //duplication is unlikely with this one. 1 in 20billion apparently
+        $newappsql = "INSERT INTO s21_active_workflow_info(WF_ID, title, dept_code, course_number, student_email, semester, year, grade_mode, priority, deadline) 
+                        VALUES ('$wf_id','$title', '$dept_code', '$course_number','$studentEmail', '$semester', '$year', '$gradeMethod', '$priority', '$deadline');";
+        
+        //get instructions
+        $sql = "SELECT * FROM s21_course_workflow_steps WHERE course_number = $course_number AND form_type = '$form_type' ";
+        $result = mysqli_query($db_conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+        $instructions= $row['instructions'];
+        
+        $participants = explode("=>", $instructions);
+
+        //get department participant emails
+        $sql = "SELECT `chair_email`,`dean_email`,`secretary_email` FROM `f20_academic_dept_info` WHERE `dept_code` = '$dept_code' ";
+        $result = mysqli_query($db_conn, $sql);
+        $dept_emails = mysqli_fetch_assoc($result);
+
+        //sql prep to insert into active_workflow_ids
+        $columns  = "INSERT INTO s21_active_workflow_ids(WF_ID ";
+        $values = " VALUES('{$wf_id}' ";
+        
+        //get participant ids
+        $partial_sql = "SELECT `UID` FROM f20_user_table WHERE `user_email` = ";
+
+        foreach($participants as $p) {
+                $missing_sql = "";
+                if ($p == 'Dean') {
+                        $missing_sql =  "'{$dept_emails['dean_email']}'";
+                        $columns.= ',DN_ID ';     
+                }
+                elseif ($p == 'Chair') {
+                        $missing_sql = "'{$dept_emails['chair_email']}'";
+                        $columns.= ',CHR_ID ';
+                } elseif ($p == 'Secretary') {
+                        $missing_sql = "'{$dept_emails['secretary_email']}'";
+                        $columns.= ',SCRTY_ID ';
+                } elseif ($p == 'Student') {
+                        $missing_sql = "'{$studentEmail}'";
+                        $columns.= ',STDNT_ID ';
+                }
+
+                $sql = $partial_sql.$missing_sql;
+                $result = mysqli_query($db_conn, $sql);
+                $row = mysqli_fetch_assoc($result);
+
+                $values.= ",{$row['UID']} ";
+
         }
 
-        //This updates the application utility table in the database.
-        $sql = "UPDATE f20_application_util SET rejected = '0', progress = '1', assigned_to = 'instructor@email.com' 
-            WHERE fw_id = '$workflowID'";
-        $query = mysqli_query($db_conn, $sql);
+        $wf_ids_sql = $columns.")".$values.");";
+
+        //are intitally set to not started
+        $default_workflow_status_sql = "INSERT INTO s21_active_workflow_status(WF_ID) 
+                                VALUES ('$wf_id');";
+        //insert into db
+        mysqli_query($db_conn, $default_workflow_status_sql);
+
+        mysqli_query($db_conn, $newappsql);
+        
         if (mysqli_errno($db_conn) == 0) {
-            echo("<div class='w3-card w3-green'>Student Information Successfully Updated.</div>");
-        } 
-        else {
-            echo("<div class='w3-card w3-red'>Student Information Successfully Updated.</div>");
+            mysqli_query($db_conn, $wf_ids_sql);
+
+            if (mysqli_errno($db_conn) == 0) {
+
+                echo("<div class='w3-card w3-green w3-margin w3-padding'>Application Successfully Started.</div>");
+            }
+            else {
+                echo("<div class='w3-card w3-red w3-margin w3-padding'>Error starting application application.</div>");
+            }
         }
-    }
-    //If this field is set then the user came here from their list of active workflows.
-    else if(isset($_POST['wfID'])) {
-        $workflowID = $_POST['wfID'];
+        else {
+            echo("<div class='w3-card w3-red w3-margin w3-padding'>Error starting application.</div>");
+        }
+
+        //get instructions
+
+
     }
 ?>
 
-<!-- Form that starts the internship workflow from the student's side.--> 
 <div class="w3-card-4 w3-margin w3-padding" style="background-color: whitesmoke;">
-    <form method="post" action="./dashboard.php?content=startInternApp">
-        <div id="studentInformation">
-            <h5>Student Information</h5>
-            <input type="hidden" name="workflowID" value="<?php echo $workflowID ?>">
-            <label class="w3-input" for="studentFirstName">First name</label>
-            <input type="text" class="w3-input" name="studentFirstName" id="studentFirstName" placeholder="Enter the Student's First Name." required>
-            <label class="w3-input" for="studentLastName">Last name</label>
-            <input type="text" class="w3-input" name="studentLastName" id="studentLastName" placeholder="Enter the Student's Last Name." required>
-            <label class="w3-input" for="studentEmail">Email</label>
-            <input type="email" class="w3-input" name="studentEmail" id="studentEmail" placeholder="Enter the Student's Email." required>
-            <br>
-            
-        <!-- Select field for the department -->
-        <label class="w3-input" for="department">Department</label>
-        <select class="w3-input" name="department" id="department" onchange="showCourse(this.value)">
-            <option value="">Select a department:</option>
-            <?php 
-                $sql = "SELECT * FROM `f20_academic_dept_info`";
-                $query = mysqli_query($db_conn, $sql);
-                if ($query) {
-                    while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-                        echo("<option value='" . $row['dept_code'] . "'>" . $row['dept_name'] . "</option>");
-                    }
+        <form method="post">
+                <label for="title">Title</label>
+                <input id="title" name="title" type="text" class="w3-input" required>
+                <br>
+                <label for="priority">Priority</label>
+                <select id="type" name="priority" class="w3-input">
+        		<option selected="" disabled="" hidden=""> Select a priority. </option>
+        		<option value="urgent" id="1">urgent</option>
+        		<option value="normal" id="2">normal</option>
+        		</select>
+                <br>
+		        <label for="deadline">Deadline</label>
+                <input id="deadline" name="deadline" type="datetime-local" class="w3-input" required>
+                <br>
+                <label for="form_type">Workflow Template</label>
+                
+                <?php
+                //Load templates
+                include_once('./backend/config.php');
+                include_once('./backend/db_connector.php');
+                $sql = "SELECT  `workflow_title` FROM `s21_course_workflow_steps`";
+                $result = $db_conn->query($sql);
+                if ($result->num_rows > 0){
+                        echo " <select class='w3-input' id='template' name='form_type'><option selected disabled hidden>Select a Workflow Template</option>";
+                        while($row = $result->fetch_assoc()){
+                                echo $row['form_type'];
+                                echo "<option value=".$row['workflow_title']." id=".$row['form_type'].">" .$row['workflow_title']. "</option>";
+                        }
                 }
-                else {
-                    echo("<button type='submit' name='studentSubmit' class='w3-button w3-teal'>Submit</button>");
-                }
-            ?>
-        </select> 
-        <br>
-        <?php
-                if(isset($_GET['content']) && $_GET['content'] = 'view') {
-                    echo("<button type='submit' name='studentSubmit' class='w3-button w3-teal'>Submit</button>");
-                }
-            ?>           
-        </div>  
-    </form>
+                echo "</select>";
+
+                ?>
+
+                <br>
+                <h5>Student Information</h5>
+                <input type="hidden" name="workflowID" value="<?php echo $workflowID ?>">
+                <label class="w3-input" for="studentFirstName">First name</label>
+                <input type="text" class="w3-input" name="studentFirstName" id="studentFirstName" placeholder="Enter the Student's First Name." required>
+                <label class="w3-input" for="studentLastName">Last name</label>
+                <input type="text" class="w3-input" name="studentLastName" id="studentLastName" placeholder="Enter the Student's Last Name." required>
+                <label class="w3-input" for="studentEmail">Email</label>
+                <input type="email" class="w3-input" name="studentEmail" id="studentEmail" placeholder="Enter the Student's Email." required>
+                <br>
+                <button class="w3-button w3-teal" type="submit" name="startInternshipWF">Start</button>
+        </form>
 </div>
