@@ -84,9 +84,9 @@
 
 <!-- Form that starts the internship workflow from the student's side.--> 
 <div class="w3-card-4 w3-margin w3-padding" style="background-color: whitesmoke;">
-    <form method="post" action="./dashboard.php?content=startInternApp">
+    <form method="post">
         <div id="studentInformation">
-            <h5>Student Information</h5>
+            <h5>Student nformation</h5>
             <input type="hidden" name="workflowID" value="<?php echo $workflowID ?>">
             <label class="w3-input" for="studentFirstName">First name</label>
             <input type="text" class="w3-input" name="studentFirstName" id="studentFirstName" placeholder="Enter the Student's First Name." required>

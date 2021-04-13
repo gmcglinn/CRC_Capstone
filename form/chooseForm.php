@@ -1,9 +1,11 @@
+<?php
+$_SESSION['WF_ID'] = $_POST['WF_ID'];
+?>
 <header class="w3-container" style="padding-top:22px">
    <h2>Form Selection:</h2>
    <h3>Select your form.</h3>
 
 </header>
-
 <!-- Action Panel -->
 <div class="w3-row-padding w3-margin-bottom">
     <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=workflows&formType=secretary'"/>
