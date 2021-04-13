@@ -125,6 +125,9 @@
                 } 
                 else if ($_GET['formType'] == 'chair' || $_GET['formType'] == 'chair') {
                     include_once("./form/chairForm.php");
+                } 
+                else if ($_GET['formType'] == 'supervisor' || $_GET['formType'] == 'chair') {
+                    include_once("./form/supervisorForm.php");
                 }           
             }
         }
