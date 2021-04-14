@@ -38,6 +38,14 @@
       if(($_SESSION['user_type'] == $GLOBALS['admin_type'] || $_SESSION['user_type'] == $GLOBALS['secretary_type'])) {
         echo("<a href='./dashboard.php?content=workflows' id='workflowsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-share-alt fa-fw'></i>  Workflows</a>");
       }
+
+      //April 14 showing creation of new types of customization
+      if(($_SESSION['user_type'] == $GLOBALS['admin_type'] || $_SESSION['user_type'] == $GLOBALS['secretary_type'])) {
+        echo("<a href='./dashboard.php?content=forms' id='workflowsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-share-alt fa-fw'></i>  Forms</a>");
+      }
+      if(($_SESSION['user_type'] == $GLOBALS['admin_type'] || $_SESSION['user_type'] == $GLOBALS['secretary_type'])) {
+        echo("<a href='./dashboard.php?content=courses' id='workflowsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-share-alt fa-fw'></i>  Courses</a>");
+      } 
     ?>
       
     <a href='./dashboard.php?content=messages' id='messagesBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-comment fa-fw'></i>  Messages</a>

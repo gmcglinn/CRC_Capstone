@@ -99,6 +99,59 @@
             include_once("./components/userfunctions/workflows/workflows.php");
         }
     }
+
+    //TEMP BANDAID SOLUTION TO FORMS
+    else if($_GET['content'] == "forms") {
+        //If the user requested the a specific section of the workflows page.
+        if(isset($_GET['contentType'])) {
+            if($_GET['contentType'] == "active") {
+                include_once("./components/userfunctions/forms/activeWorkflows.php");
+            }
+            else if($_GET['contentType'] == "new") {
+                include_once("./components/userfunctions/forms/newWorkflows.php");
+            }
+            else if($_GET['contentType'] == "start") {
+                include_once("./components/userfunctions/forms/startWorkflow.php");
+            }
+            else if($_GET['contentType'] == "completed") {
+                include_once("./components/userfunctions/forms/completedWorkflows.php");
+            }
+            else if($_GET['contentType'] == "viewWorkflow") {
+                include_once("./components/userfunctions/forms/viewWorkflow.php");
+            }
+        }
+        else {
+            include_once("./components/userfunctions/forms/workflows.php");
+        }
+    }
+
+    //TEMP BANDAID SOLUTION TO COURSES
+    else if($_GET['content'] == "courses") {
+        //If the user requested the a specific section of the workflows page.
+        if(isset($_GET['contentType'])) {
+            if($_GET['contentType'] == "active") {
+                include_once("./components/userfunctions/courses/activeWorkflows.php");
+            }
+            else if($_GET['contentType'] == "new") {
+                include_once("./components/userfunctions/courses/newWorkflows.php");
+            }
+            else if($_GET['contentType'] == "start") {
+                include_once("./components/userfunctions/courses/startWorkflow.php");
+            }
+            else if($_GET['contentType'] == "completed") {
+                include_once("./components/userfunctions/courses/completedWorkflows.php");
+            }
+            else if($_GET['contentType'] == "viewWorkflow") {
+                include_once("./components/userfunctions/courses/viewWorkflow.php");
+            }
+        }
+        else {
+            include_once("./components/userfunctions/courses/workflows.php");
+        }
+    }
+
+
+
     //If the content requested is the view page.
     else if($_GET['content'] == "view") {
         //If the user requested the a specific section of the view page.
