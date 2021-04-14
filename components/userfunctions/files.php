@@ -97,7 +97,7 @@
     <p>Select New File to Upload:</p>
     
     
-    <form action="components\userfunctions\uploadFileHandeler.php" method="POST" enctype="multipart/form-data">   
+    <form action="components\userfunctions\uploadFileHandler.php" method="POST" enctype="multipart/form-data">   
         <input type="file" class="w3-left" name="file">
         <button class="w3-button w3-left w3-blue" type="submit" name="submit">Upload</button>
         
