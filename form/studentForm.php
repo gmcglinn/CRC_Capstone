@@ -147,7 +147,7 @@
     <label for= supervisorNum >Supervisor's Phone Number</label>
     <input id= supervisorNum  name= supervisorNum  type= text  class= 'w3-input'  <?php echo("$state placeholder = {$row['company_name']} ");  ?>>
     <br>
-    <label for= supervisoEmail >Supervisor's Email</label>
+    <label for= supervisorEmail >Supervisor's Email</label>
     <input id= supervisorEmail  name= supervisorEmail  type= text  class= 'w3-input' <?php echo("$state placeholder = {$row['company_name']} ");  ?>>
     <br>
     <h5>Learning Outcomes</h5>
