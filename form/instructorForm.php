@@ -2,59 +2,63 @@
     //If this field is set then the user submitted the form to start the workflow.
     if(isset($_POST['studentSubmit'])) {
         //First we gather all the input field information.
-        $workflowID = mysqli_real_escape_string($_POST['workflowID']);
-        $firstname = mysqli_real_escape_string($_POST['instructorFirstName']);
-        $lastname = mysqli_real_escape_string($_POST['instructorLastName']);
-        $outcome1 = mysqli_real_escape_string($_POST['outcomes1']);
-        $outcome2 = mysqli_real_escape_string($_POST['outcomes2']);
+        $WF_ID = mysqli_real_escape_string($db_conn, $_SESSION['WF_ID']);
+        $user_id = $_SESSION['user_id'];
+        $gradeMethod = mysqli_real_escape_string($_POST['grade_method']);
+        $outcomes1 = mysqli_real_escape_string($_POST['outcomes_1']);
+        $outcomes2 = mysqli_real_escape_string($_POST['outcomes_2']);
 
         //This creates an entry for the student's information in the database attached with the workflow ID.
-        $sql = "INSERT INTO f20_faculty_info (fw_id, faculty_first_name, faculty_last_name ) 
-            VALUES ('$workflowID','$firstname', '$lastname')";
-        $query = mysqli_query($db_conn, $sql);
+        $new_form_sql = "INSERT INTO s21_instructor_form (WF_ID, grade_method, outcomes_1, outcomes_2) 
+            VALUES ('$WF_ID','$gradeMethod', '$outcomes1', '$outcomes2')";
+        $update_status_sql = "UPDATE s21_active_workflow_status SET faculty_status = 1 WHERE WF_ID='$WF_ID' ";
+        $query = mysqli_query($db_conn, $new_form_sql);
         if ($query) {
-            echo("<div class='w3-card w3-green'>Faculty Information Successfully Updated.</div>");
+            $query = mysqli_query($db_conn, $update_status_sql);
+
+            if ($query) {
+                echo("<div class='w3-card w3-green w3-margin w3-padding'>Instructor Information Successfully Updated.</div>");
+
+            } else  {
+
+                echo("<div class='w3-card w3-red w3-margin w3-padding'> Instructor Information Update Unsuccessful .</div>");              
+            }
         } 
         else {
             echo("<div class='w3-card w3-red'>Error. Faculty Information Update Unsuccessful .</div>");
         }
         
-        //This updates the missing fields from the workflow in the database.
-        $sql = "UPDATE f20_application_info SET project_name = '$workflowType', academic_credits = '$workflowCredits', 
-            hours_per_wk = '$workflowHours' WHERE fw_id = '$workflowID'";
-        $query = mysqli_query($db_conn, $sql);
-        if (mysqli_errno($db_conn) == 0) {
-            echo("<div class='w3-card w3-green'>Faculty Information Successfully Updated.</div>");
-        } 
-        else {
-            echo("<div class='w3-card w3-red'>Faculty Information Successfully Updated.</div>");
-        }
-
-        //This updates the application utility table in the database.
-        $sql = "UPDATE f20_application_util SET rejected = '0', progress = '1', assigned_to = 'instructor@email.com' 
-            WHERE fw_id = '$workflowID'";
-        $query = mysqli_query($db_conn, $sql);
-        if (mysqli_errno($db_conn) == 0) {
-            echo("<div class='w3-card w3-green'>Student Information Successfully Updated.</div>");
-        } 
-        else {
-            echo("<div class='w3-card w3-red'>Student Information Successfully Updated.</div>");
-        }
+        
 
     }
     //If this field is set then the user came here from their list of active workflows.
     else if(isset($_POST['wfID'])) {
         $workflowID = $_POST['wfID'];
     }
+    else {
+        $WF_ID = $_SESSION['WF_ID'];
+        $sql = "SELECT * FROM s21_instructor_form WHERE WF_ID = '$WF_ID'";
+        $result = mysqli_query($db_conn, $sql);
+
+        $row = mysqli_fetch_array($result);
+        $state = 'required';
+
+        if ($_SESSION['user_type'] != 7) {
+        //$row = array_map(function($item) { return ""; }, $row);
+        $state = "disabled";
+        }
+        echo $WF_ID;
+    }
 ?>
 
 <!-- Instructor Form -->
-<div id="userForm" class="w3-card-4 w3-padding w3-margin">
+<div id=userForm class="w3-card-4 w3-padding w3-margin">
     <h4>Instructor Form</h4>
+    
     <form name="instructorForm" method="post" action="./dashboard.php?content=create&contentType=app">
         <br>
         <label class="w3-input" for="gradeMethod">Grade Method</label>
-        <select name="gradeMethod" class="w3-input">
+        <select name="gradeMethod" class="w3-input" <?php echo("$state placeholder = {$row['grade_method']}"); ?> >
             <option value="">Select a grade method:</option>
             <option value="Letter Grades">Letter Grades</option>
             <option value="Pass/Fail">Pass/Fail</option>
@@ -66,12 +70,12 @@
                 1.) What are the student learning outcomes?<br>
                 2.) If applicable, include any reading material and/or assignments.
             </label>
-            <input type="text" class="w3-input" name="outcomes1" id="outcomes1" required></input>
+            <input type="text" class="w3-input" name="outcomes1" id="outcomes1" <?php echo("$state placeholder = {$row['outcomes_1']}");  ?>> </input>
             <br>
             <label class="w3-input" for="outcomes2">
                 2.) Explanation of course grading policies and method of determining final grade.
             </label>
-            <input type="text" class="w3-input" name="outcomes2" id="outcomes1" required></input>
+            <input type="text" class="w3-input" name="outcomes2" id="outcomes1" <?php echo("$state placeholder = {$row['outcomes_2']}");  ?> ></input>
             <br>
         <br>
         <?php
