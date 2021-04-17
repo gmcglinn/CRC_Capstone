@@ -1,0 +1,36 @@
+MySQL commands for FORM table
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `form_T`
+--
+
+CREATE TABLE `form_T` (
+  `form_id` varchar(10) NOT NULL,
+  `form_status` int(10) NOT NULL,
+  `form_title` varchar(255) NOT NULL,
+  `form_instructions` varchar(555) NOT NULL,
+  `form_server` varchar(255) NOT NULL,
+  `form_modifier` varchar(10) NOT NULL,
+  `form_changed` date NOT NULL,
+  `form_owner` varchar(10) NOT NULL,
+  `form_created` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `form_T`
+--
+
+INSERT INTO `form_T` (`form_id`, `form_status`, `form_title`, `form_instructions`, `form_server`, `form_modifier`, `form_changed`, `form_owner`, `form_created`) VALUES
+('0001', 1, 'report', 'Has a label with a link to the file and two button: download and upload', '/form/form_0001_server.php', '002', '2020-11-08', '002', '2020-11-05'),
+('0002', 1, 'travel', 'Has 5 elements:\r\n    • Element #1: label for Form title;\r\n    • Element #2: textbox for Traveler’s name; \r\n    • Element #3: radio buttons (of 2) for Travel Mode;\r\n    • Element #4: select/dropdowns (of 2) for the Total Cost. \r\n    • Element #5: textbox for for the Customer to sign\r\n', '/form/form_0002_server.php', '003', '2020-11-08', '003', '2020-11-10');
+
+
+SELECT * FROM `form_T`
+
+DROP TABLE `form_T`;
+
+ALTER TABLE `form_T`
+  ADD PRIMARY KEY (`form_id`),
+  ADD UNIQUE KEY `form_id` (`form_id`);
+

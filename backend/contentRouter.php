@@ -137,24 +137,21 @@
     else if($_GET['content'] == "forms") {
         //If the user requested the a specific section of the workflows page.
         if(isset($_GET['contentType'])) {
-            if($_GET['contentType'] == "active") {
-                include_once("./components/userfunctions/forms/activeWorkflows.php");
+            if($_GET['contentType'] == "create") {
+                include_once("./components/userfunctions/forms/createNewForm.php");
             }
-            else if($_GET['contentType'] == "new") {
-                include_once("./components/userfunctions/forms/newWorkflows.php");
+            else if($_GET['contentType'] == "delete") {
+                include_once("./components/userfunctions/forms/deleteForm.php");
             }
-            else if($_GET['contentType'] == "start") {
-                include_once("./components/userfunctions/forms/startWorkflow.php");
+            else if($_GET['contentType'] == "edit") {
+                include_once("./components/userfunctions/forms/editForm.php");
             }
-            else if($_GET['contentType'] == "completed") {
-                include_once("./components/userfunctions/forms/completedWorkflows.php");
-            }
-            else if($_GET['contentType'] == "viewWorkflow") {
-                include_once("./components/userfunctions/forms/viewWorkflow.php");
+            else if($_GET['contentType'] == "view") {
+                include_once("./components/userfunctions/forms/viewAllForms.php");
             }
         }
         else {
-            include_once("./components/userfunctions/forms/workflows.php");
+            include_once("./components/userfunctions/forms/forms.php");
         }
     }
 
