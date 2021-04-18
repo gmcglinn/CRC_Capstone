@@ -142,12 +142,14 @@
                         </script>");
                     }
                 }
-               
                 echo('<div class="w3-quarter w3-center w3-padding-24 w3-border" style="height: 90px;">'
                     . '<form action="./dashboard.php?content=workflows&contentType=active&viewForm=true" method="post" >'
                     . '<input type="hidden" name="WF_ID" value='
                     . $result['WF_ID']
                     . '></input>'
+                    .'<input type="hidden" name="order" value='
+                    . $result['instructions']
+                    .'></input>'
                     . '<button class="w3-button w3-teal" type="submit">View</button>'
                     . '</div></div>');
                     ++$rowNum;
