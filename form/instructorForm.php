@@ -47,7 +47,6 @@
         //$row = array_map(function($item) { return ""; }, $row);
         $state = "disabled";
         }
-        echo $WF_ID;
     }
 ?>
 
@@ -58,11 +57,7 @@
     <form name="instructorForm" method="post" action="./dashboard.php?content=create&contentType=app">
         <br>
         <label class="w3-input" for="gradeMethod">Grade Method</label>
-        <select name="gradeMethod" class="w3-input" <?php echo("$state placeholder = {$row['grade_method']}"); ?> >
-            <option value="">Select a grade method:</option>
-            <option value="Letter Grades">Letter Grades</option>
-            <option value="Pass/Fail">Pass/Fail</option>
-        </select>
+        <input name="gradeMethod" class="w3-input" <?php echo("$state placeholder = '{$row['grade_method']}'"); ?> > </input>
         <br>
         <h5>Learning Outcomes</h5>
         <br>
@@ -70,12 +65,12 @@
                 1.) What are the student learning outcomes?<br>
                 2.) If applicable, include any reading material and/or assignments.
             </label>
-            <input type="text" class="w3-input" name="outcomes1" id="outcomes1" <?php echo("$state placeholder = {$row['outcomes_1']}");  ?>> </input>
+            <input type="text" class="w3-input" name="outcomes1" id="outcomes1" <?php echo("$state placeholder = '{$row['outcomes_1']}'");  ?>> </input>
             <br>
             <label class="w3-input" for="outcomes2">
                 2.) Explanation of course grading policies and method of determining final grade.
             </label>
-            <input type="text" class="w3-input" name="outcomes2" id="outcomes1" <?php echo("$state placeholder = {$row['outcomes_2']}");  ?> ></input>
+            <input type="text" class="w3-input" name="outcomes2" id="outcomes1" <?php echo("$state placeholder = '{$row['outcomes_2']}'");  ?> ></input>
             <br>
         <br>
         <?php
