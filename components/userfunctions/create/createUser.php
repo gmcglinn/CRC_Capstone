@@ -3,7 +3,7 @@
     include_once('./components/userfunctions/create/create.php');
     include_once('./backend/config.php');
     include_once('./backend/db_connector.php');
-    include_once('./backend/emailplugin.php');
+    include_once('./backend/emailPlugin.php');
     
     if (isset($_POST['userCreate'])) {
         $userName = mysqli_real_escape_string($db_conn, $_POST['name']);
