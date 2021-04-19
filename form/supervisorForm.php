@@ -27,8 +27,8 @@
         }
     }
     //If this field is set then the user came here from their list of active workflows.
-    else if(isset($_POST['wfID'])) {
-        $workflowID = $_POST['wfID'];
+    else if(isset($_POST['WF_ID'])) {
+        $workflowID = $_POST['WF_ID'];
     } 
     else {
         $WF_ID = $_SESSION['WF_ID'];
