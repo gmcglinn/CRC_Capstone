@@ -3,6 +3,7 @@
     include_once('./components/userfunctions/create/create.php');
     include_once('./backend/config.php');
     include_once('./backend/db_connector.php');
+    include_once('./backend/emailplugin.php');
     
     if (isset($_POST['userCreate'])) {
         $userName = mysqli_real_escape_string($db_conn, $_POST['name']);
@@ -15,9 +16,33 @@
                             VALUES ($userType, 1,'$userEmail', '$userLoginName', '$userPass', '$userName')";
         $insertUserQuery = mysqli_query($db_conn, $insertUser);
 
+
+
         //Database insert success
         if (mysqli_errno($db_conn) == 0) {
             echo("<div class='w3-panel w3-margin w3-green'><p>User Successfully Created.</p></div>");
+            $message = "<html>
+
+            <p>You have had an account created for you to access the CRC Workflow System.</p>
+        
+            <p>Your login credentials:</p>
+            <p>username: ".$userName."<br>
+                password: ".$userPass."</p>
+        
+            <p>Please login to change your password: https://cs.newpaltz.edu/p/s21-02/s21-v1/index.php</p>
+        
+            <hr>
+        
+            Career Resource Center<br>
+            CRC@cs.newpaltz.edu<br>
+            (845) 257-XXXX<br>
+            <br>
+            <br>
+            Please do not reply to this email as it is sent from an unattended mailbox.
+        
+        </html>"
+            sendMail($userEmail, "CRC Workflow Account Created", $message)
+
         } 
         //Database detected duplicate entry
         else if (mysqli_errno($db_conn) == 1062) {  
