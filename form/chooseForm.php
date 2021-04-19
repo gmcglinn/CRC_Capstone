@@ -1,6 +1,6 @@
 <?php
 $_SESSION['WF_ID'] = $_POST['WF_ID'];
-
+echo $_POST['WF_ID'];
 ?>
 <header class="w3-container" style="padding-top:22px">
    <h2>Form Selection:</h2>
