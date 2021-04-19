@@ -4,7 +4,7 @@
         Form Accepted
         Message Received
         Form Completed
-        Account Created
+        *Account Created
         User Prompted for Response
         On Approval per step
 
@@ -32,9 +32,9 @@
         
         
         if(mail($email_to, $subject, $message, $headers)) //if email sent successfully, mail() returns true value
-            echo 'successfully sent email';
+            echo ('successfully sent email');
         else
-            echo 'failure to send email';
+            echo ('failure to send email');
     }
 
 
