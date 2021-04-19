@@ -11,6 +11,7 @@ include_once('./backend/config.php');
     include_once('./backend/db_connector.php');
     if($_SESSION['user_type'] == 1){
 		$thisUser = $_SESSION['user_id'];
+    }
 
 
 if (isset($_POST['submit'])){
@@ -31,7 +32,7 @@ if (isset($_POST['submit'])){
         if($fileError === 0){
             if($fileSize < 100000){//filesize limit
                 $fileNameUnique = uniqid('', true).".".$fileActualExt;
-                $fileDestination = '../../userfiles/'.$fileNameUnique;
+                $fileDestination = '../../files/'.$fileNameUnique;
                 if(move_uploaded_file($fileTmpName, $fileDestination)){
                     //MYSQL upload filename and attach username
                     $tempUser = $_SESSION['user_name'];

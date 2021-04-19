@@ -78,11 +78,11 @@
  
 <!-- Create Workflow -->
 <div id="workflowForm" class="w3-card-4 w3-padding w3-margin" style="display: block;">
-    <h5>Create Course Template</h5>
-    <p>You can create a custom Course template here.</p>
+    <h5>Create a New Course </h5>
+    <p>(Workflow Template)</p>
     <form id="subform" method="post">
 	<div class =row>
-        <label for="workflowTitle">Course Template Title</label>
+        <label for="workflowTitle">Course (Workflow) Template Title:</label>
         <input class="w3-input" type="text" name="workflowTitle"></input>
         
         <label for="form_type">Course Type:</label>
