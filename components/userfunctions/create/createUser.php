@@ -40,7 +40,7 @@
             <br>
             Please do not reply to this email as it is sent from an unattended mailbox.
         
-        </html>"
+        </html>";
             sendMail($userEmail, "CRC Workflow Account Created", $message)
 
         } 
