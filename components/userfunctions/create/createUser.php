@@ -41,7 +41,7 @@
             Please do not reply to this email as it is sent from an unattended mailbox.
         
         </html>";
-            sendMail($userEmail, "CRC Workflow Account Created", $message)
+            sendMail($userEmail, "CRC Workflow Account Created", $message);
 
         } 
         //Database detected duplicate entry
