@@ -2,13 +2,11 @@
 include_once('./backend/db_connector.php');
 
 if(isset($_POST['formCreate'])) {	
-	$form_structure = mysqli_real_escape_string($db_conn, $_POST['formStructure']);
+	$form_structure = $_POST['formStructure'];
 	$form_name = mysqli_real_escape_string($db_conn, $_POST['formName']);
 	$user_access_type = mysqli_real_escape_string($db_conn, $_POST['user_type']);
-
+	
 	$sql = "INSERT INTO `s21_form_templates`(`title`, `instructions`,  `user_access_role`) VALUES ('$form_name', '$form_structure', '$user_access_type')";
-
-	echo ($sql);
 	$result = mysqli_query($db_conn, $sql);
 
 	if ($result) {
@@ -117,7 +115,17 @@ if(isset($_POST['formCreate'])) {
 
 	function UpdateHiddenInput() {
 		values = fieldNames.slice(0, fieldNames.length);
-		document.getElementById("formStructure").value = values;
+		obj = {}
+		
+
+		for (let i = 0; i < values.length; i++) {
+			obj[values[i]] = "";
+		}
+		
+		parsed_vals =  JSON.stringify(obj);
+
+		document.getElementById("formStructure").value = parsed_vals;
+		console.log(parsed_vals);
 	}
 	
 </script>
