@@ -26,7 +26,7 @@
             <p>You have had an account created for you to access the CRC Workflow System.</p>
         
             <p>Your login credentials:</p>
-            <p>username: ".$userName."<br>
+            <p>username: ".$userLoginName."<br>
                 password: ".$userPass."</p>
         
             <p>Please login to change your password: https://cs.newpaltz.edu/p/s21-02/s21-v1/index.php</p>

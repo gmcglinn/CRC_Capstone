@@ -19,40 +19,46 @@
     <h5>Dashboard</h5>
   </div>
 
-  <!-- Sidebar Content-->
+  <!-- Sidebar Content
+  Dr Pham wants all to have: 
+  Home, Search, Messages, Files, Settings, Signout
+  Admin = All tabs
+  Secretary = Workflows (Create/View)
+  All other users = View (My) Workflow
+  -->
   
   <div class="w3-bar-block">
     <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
     <a href="./dashboard.php?content=home" id="homeBar" class="w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  Home</a>
-    
+    <a href='./dashboard.php?content=search' id='searchBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-search fa-fw'></i>  Search</a>
     <?php
-      //Displaying the search option for all users except employer and student.
-      if(!($_SESSION['user_type'] == $GLOBALS['student_type']) && !($_SESSION['user_type'] == $GLOBALS['employer_type'])) {
-          echo("<a href='./dashboard.php?content=search' id='searchBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-search fa-fw'></i>  Search</a>");
-      }
-      //Displaying the create option for all users except employer and student.
-      if(!($_SESSION['user_type'] == $GLOBALS['student_type']) && !($_SESSION['user_type'] == $GLOBALS['employer_type'])) {
+
+      //Displaying the create option for all users except employer
+      if(!($_SESSION['user_type'] == $GLOBALS['employer_type'])) {
           echo("<a href='./dashboard.php?content=create' id='createBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-plus fa-fw'></i>  Create</a>");
       }
-      //Displaying the workflows option for all users except admin.
+      //Displaying the workflows option for users involved in only their own Workflows.
+      if(!($_SESSION['user_type'] == $GLOBALS['secretary_type'] || $_SESSION['user_type'] == $GLOBALS['admin_type'])) {
+        echo("<a href='./dashboard.php?content=workflows' id='workflowsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-share-alt fa-fw'></i>  View My Workflow</a>");
+      }
+      //Displaying the workflows options for users involved in administrating workflows.
       if(($_SESSION['user_type'] == $GLOBALS['admin_type'] || $_SESSION['user_type'] == $GLOBALS['secretary_type'])) {
-        echo("<a href='./dashboard.php?content=workflows' id='workflowsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-share-alt fa-fw'></i>  Workflows</a>");
+        echo("<a href='./dashboard.php?content=workflows' id='workflowsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-wrench fa-fw'></i>  Workflows (Create/View)</a>");
       }
 
-      //April 14 showing creation of new types of customization
+      //April 14 showing creation of new types of customization Forms, Courses
       if(($_SESSION['user_type'] == $GLOBALS['admin_type'] || $_SESSION['user_type'] == $GLOBALS['secretary_type'])) {
-        echo("<a href='./dashboard.php?content=forms' id='workflowsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-share-alt fa-fw'></i>  Forms</a>");
+        echo("<a href='./dashboard.php?content=forms' id='workflowsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-wrench fa-fw'></i>  Forms</a>");
       }
       if(($_SESSION['user_type'] == $GLOBALS['admin_type'] || $_SESSION['user_type'] == $GLOBALS['secretary_type'])) {
-        echo("<a href='./dashboard.php?content=courses' id='workflowsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-share-alt fa-fw'></i>  Courses</a>");
+        echo("<a href='./dashboard.php?content=courses' id='workflowsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-wrench fa-fw'></i>  Courses</a>");
       } 
+
+
+
     ?>
       
     <a href='./dashboard.php?content=messages' id='messagesBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-comment fa-fw'></i>  Messages</a>
-
-    <!-- The History sidebar navigation is hidden for the final presentation. [Not Implemented] -->
-    <!-- <a href='./dashboard.php?content=history' id='historyBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-history fa-fw'></i>  History</a> -->
-
     <a href='./dashboard.php?content=files' id='filesBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-files-o fa-fw'></i>  Files</a>
     <a href='./dashboard.php?content=settings' id='settingsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-cog fa-fw'></i>  Settings</a>
     <a href='./backend/logout.php' class='w3-bar-item w3-button w3-padding'><i class='fa fa-sign-out fa-fw'></i>  Sign-Out</a><br><br>
