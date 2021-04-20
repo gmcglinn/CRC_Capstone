@@ -13,10 +13,11 @@
 			$workflow_title = $_POST['workflowTitle'];
 			$course_number = $_POST['course_number'];
 			$form_type = $_POST['form_type'];
+            $form_assignments = $_POST['formAssignments'];
 
             //Insert into Dattabase
-			$sql = "INSERT INTO s21_course_workflow_steps (TSID, workflow_title, instructions, form_type, course_number) 
-				VALUES (1, '$workflow_title', '$newWorkflowOrder', '$form_type', '$course_number')";
+			$sql = "INSERT INTO s21_course_workflow_steps (TSID, workflow_title, instructions, form_assignments, form_type, course_number) 
+				VALUES (1, '$workflow_title', '$newWorkflowOrder', '$form_assignments','$form_type', '$course_number')";
 
 			mysqli_query($db_conn, $sql);
         	//Database insert success
@@ -75,7 +76,7 @@
 
 <!-- Create Workflow -->
 <div id="workflowForm" class="w3-card-4 w3-padding w3-margin" style="display: block;">
-    <h5>Create Workflow Template</h5>
+    <h5 onload="LoadFormOptions()">Create Workflow Template</h5>
     <p>You can create a custom workflow template here.</p>
     <form id="subform" method="post">
 	<div class =row>
@@ -109,11 +110,7 @@
 
 		<label class="w3-input" for="department">Department</label>
         <select class="w3-input" name="department" id="department" onchange="showCourse(this.value)">
-<<<<<<< HEAD
-            <option value="">Select a department:</option>
-=======
             <option value="">Select a Department:</option>
->>>>>>> b04d6b42fa2031ce0e6b3749528b649fd566ff26
             <?php 
                 include_once('./backend/db_connector.php');
 
@@ -155,14 +152,19 @@
         <p>Click the circle with a "+" to add another participant.</p>
         <div class="w3-padding w3-border">
             <div id="circleList" class="circleList">
-                <div class="circle" onclick="addParticipant()">+</div>
+                <div class="circle" onclick="addParticipant(event)">+</div>
             </div>
             <div id="labelList" class="labelList">
                 <div id="labelContainer" class="userType" style="border: 1px solid black;"></div>
             </div>
+            <br>
+            <div id="formList" class="formList">
+                <div id="formContainer" class="formType" style="border: 1px solid black;"></div>
+            </div>
         </div>
         <br>
         <input type="submit" value="Create Workflow Template" class="w3-button w3-teal" name="workflowCreate"></input>
+        <input id=formAssignments name=formAssignments type="hidden"> </input>
     </form>
 </div>
 
@@ -294,32 +296,73 @@
         //Removing fixed-size box from the visualizer (may need work - doesn't reset if the user changes position).
         document.getElementById(event.target.id).style.border = "none";
     }
+
 </script>
 
 <!-- Script for adding more participants to the workflow. -->
 <script> 
-    function addParticipant()
-    {
+    var options = "";
+
+    window.onload = function LoadFormOptions() {
+        fetch("backend/getForms.php", {
+            method:'POST',
+             headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            },
+        })
+        .then(response => response.text())
+        .then(data => data.split("=>"))
+        .then( forms => {
+
+            for (let i =  0; i < forms.length - 1; i++) {
+                options += "<option value='" + forms[i] + "'>" + forms[i] +  "</option>";
+            }
+        });
+    }
+
+    function addParticipant(event) {   
+        event.preventDefault();
         //Find how many participants there are.
         numParticipants = Math.ceil(document.getElementById('circleList').children.length/2);
+        num =  numParticipants;
 
         if(numParticipants < 9) {
             //Add a line, circle, and label.
             document.getElementById('circleList').innerHTML += "<div class='line'></div><div class='circle'>" + numParticipants + "</div>";
+            
             document.getElementById('labelList').innerHTML += "<div class='spacer'></div><div id='labelContainer" + numParticipants + "' class='userType' style='border: 1px solid black;' ondrop='drop(event)' ondragover='allowDrop(event)'></div>";
-        
-            //Participant list is full
-            if(numParticipants == 8)
-            {
-                //Remove the + circle
-                circleList = document.getElementById('circleList');
-                circleList.removeChild(circleList.children[0]);
-                circleList.removeChild(circleList.children[0]);
-                //Remove the label from the + circle
-                labelList = document.getElementById('labelList');
-                labelList.removeChild(labelList.children[0]);
-                labelList.removeChild(labelList.children[0]);
-            }
+            
+            document.getElementById('formList').innerHTML += "<div class='spacer'></div><div id='formContainer' class='formType' ><select id =form"+ num +  " onChange= 'UpdateFormAssignments(" + num + ");'> <option>Select Form</option>"+ options + " </select> </div>";
         }
-	} 
+        if(numParticipants == 8) {
+            //Remove the + circle
+            circleList = document.getElementById('circleList');
+            circleList.removeChild(circleList.children[0]);
+            circleList.removeChild(circleList.children[0]);
+            //Remove the label from the + circle
+            labelList = document.getElementById('labelList');
+            labelList.removeChild(labelList.children[0]);
+            labelList.removeChild(labelList.children[0]);
+        }   
+    } 
+
+</script>
+
+<script>
+    form_assignments = {};
+
+    function UpdateFormAssignments(num) {
+        container_check = document.getElementById("labelContainer"+num).children;
+        
+        if(container_check.length != 0) {
+            user_role = document.getElementById("labelContainer"+num).children[0].innerText
+            user_form = document.getElementById("form"+num).value
+            form_assignments[user_role] = user_form;
+            
+            parsed_vals = JSON.stringify(form_assignments);
+            document.getElementById('formAssignments').value = parsed_vals;
+       }
+        
+    }
+
 </script>
