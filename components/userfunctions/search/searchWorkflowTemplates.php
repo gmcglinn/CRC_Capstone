@@ -1,4 +1,9 @@
 <?php
+
+
+//USELESS?
+
+
     include_once('./backend/config.php');
     include_once('./backend/db_connector.php');
     //Loading the page title and action buttons.

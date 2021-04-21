@@ -19,12 +19,13 @@
 
 
     if(isset($_POST['remove'])) {
+        
         include_once('./backend/db_connector.php');
-        $workflowID = mysqli_real_escape_string($db_conn, $_POST['TID']);
-
-        $sql = "UPDATE s21_form_templates SET ASID = 3 WHERE AID = '$workflowID'";
+        $TID = mysqli_real_escape_string($db_conn, $_POST['TID']);
+        
+        $sql = "DELETE FROM s21_form_templates WHERE TID = '$TID'";
         if ($db_conn->query($sql) === TRUE) {
-            echo("<div class='w3-panel w3-margin w3-green'><p>Successfully Terminated this Workflow</p></div>");
+            echo("<div class='w3-panel w3-margin w3-green'><p>Successfully Terminated this Form Congratulations</p></div>");
         } 
         else {
             echo("<div class='w3-panel w3-margin w3-red'><p>Error removing record: " . $db_conn->error . "</p></div>");
@@ -43,7 +44,7 @@
 
         //Gather data passed to this page.
         $TID = mysqli_real_escape_string($db_conn, $_POST['TID']);
-
+        
         //Find all data related to the workflow.
         $sql = "SELECT * FROM s21_form_templates";
         $query = mysqli_query($db_conn, $sql);
@@ -52,14 +53,14 @@
 
         
 ?>
-
+        
 
 <!-- View Forms -->
 
 
 <div id="formForm" class="w3-card-4 w3-padding w3-margin">
     <div class="w3-right" id="actionButtons">
-        <button type="button" class="w3-button w3-blue" name="editForm" style="margin-right: 5px;" onclick="enableEdit()">Edit</button>
+        
         
     </div>
 
@@ -90,18 +91,52 @@
         <input id="title" name="formChangedDate" type="text" class="w3-input" value="<?php echo $row[5]; ?>" readonly>
 
         
+
+        
         </select>
 
         <label for="created" class="w3-input">Created:</label>
         <input id="created" name="created" type="text" class="w3-input" value="<?php echo $row['created']; ?>" readonly>
         <br>
-        <div id="editButtons" style="display: none;">
-            <button type="submit" class="w3-button w3-blue" name="saveWorkflowChanges">Save</button>
-            <button type="button" class="w3-button w3-red" onclick="disableEdit()">Cancel</button>
-        </div>
+        <button type="button" class="w3-button w3-red" name="removeForm" onclick="removeEntry('<?php echo $TID ?>')">Remove</button>
+        
     </form>
     
 </div>
+
+
+<!-- Modal Pop-up to warn of deletion -->
+<div id="warningHolder" class="w3-modal w3-center">
+    <div class="w3-modal-content">
+        <div class="w3-container w3-orange">
+            <p>Warning!!</p>
+            <p>Removing a form will terminate the entirety of a form, proceed with caution</p>
+            <p>Are you sure?
+                <br>
+                <form method="post" action="./dashboard.php?content=forms&contentType=removeForm">
+                    <input id="removeData" name="TID" type="hidden">
+                    <button class="w3-button w3-red" type="submit" name="remove">Yes</button>
+                    <button class="w3-button w3-blue" type="button" onclick="document.getElementById('warningHolder').style.display='none'">No</button>
+                </form>
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Remove from database Script -->
+<script>
+    function removeEntry(TID)
+    {
+        
+        
+        
+        //Display the warning modal.
+        document.getElementById('warningHolder').style.display='block';
+        //Replace hidden input data to prepare for if the user chooses to submit.
+        document.getElementById('removeData').value = TID;
+    }
+</script>
+
 
 <?php 
     }
