@@ -161,7 +161,7 @@
             </div>
         </div>
         <br>
-        <input type="submit" value="Create Workflow Template" class="w3-button w3-teal" name="workflowCreate"></input>
+        <input type="submit" value="Create Course (Workflow Template)" class="w3-button w3-teal" name="workflowCreate"></input>
     </form>
 </div>
 
