@@ -83,5 +83,29 @@
             </td>
         </tr>
         <?php } ?>
+        <tr>
+        <td>Student Form</td>
+        <td>" " </td>
+        <td>" "</td>
+        <td> " " </td>
+        <td>
+        <form method="post" action="./dashboard.php?content=workflows&formType=student">
+                    <input type="hidden" name="TID" value="<?php echo $TID;?>">
+                    <button type="submit" name="viewForm" class="w3-button w3-blue">View</button>
+        </form>
+        </td>
+        </tr>
+        <tr>
+        <td>Chair Form</td>
+        <td>" " </td>
+        <td>" "</td>
+        <td> " " </td>
+        <td>
+        <form method="post" action="./dashboard.php?content=workflows&formType=chair">
+                    <input type="hidden" name="TID" value="<?php echo $TID;?>">
+                    <button type="submit" name="viewForm" class="w3-button w3-blue">View</button>
+        </form>
+        </td>
+        </tr>
     </table>
 </div>
