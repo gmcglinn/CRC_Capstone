@@ -84,7 +84,7 @@
         </tr>
         <?php } ?>
         <tr>
-        <td>Student Form</td>
+        <td>Student Standard Form</td>
         <td>" " </td>
         <td>" "</td>
         <td> " " </td>
@@ -96,7 +96,7 @@
         </td>
         </tr>
         <tr>
-        <td>Chair Form</td>
+        <td>Chair Standard Form</td>
         <td>" " </td>
         <td>" "</td>
         <td> " " </td>
