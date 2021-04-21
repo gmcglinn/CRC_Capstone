@@ -76,14 +76,14 @@
 
 <!-- Create Workflow -->
 <div id="workflowForm" class="w3-card-4 w3-padding w3-margin" style="display: block;">
-    <h5 onload="LoadFormOptions()">Create Workflow Template</h5>
-    <p>You can create a custom workflow template here.</p>
+    <h5 onload="LoadFormOptions()">Create Course (Workflow Template)</h5>
+    <p>You can create a custom course (workflow template) here.</p>
     <form id="subform" method="post">
 	<div class =row>
-        <label for="workflowTitle">Workflow Template Title</label>
+        <label for="workflowTitle">Course Title (Workflow Template Title)</label>
         <input class="w3-input" type="text" name="workflowTitle"></input>
         
-        <label for="form_type">Workflow Type:</label>
+        <label for="form_type">Course Type (Workflow Type):</label>
         <select name="form_type" class="w3-input">
             <option value="internship">Internship/Fieldwork (General)</option>
             <option value="transferCred">Transfer Credit Evaluation (Not Implemented)</option>

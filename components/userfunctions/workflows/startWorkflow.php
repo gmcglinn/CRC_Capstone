@@ -130,7 +130,7 @@
     <h4>Start A Workflow</h4>
         <form method="post">
            <div class='w3-input'>
-           <label for="form_type">Workflow Template</label>
+           <label for="form_type">Course (Workflow Template)</label>
             <select class="w3-input" name="ATPID" id="wf_title" onchange="showFormUsers(this.value)">
             <option value="">Select a Workflow:</option>
             <?php

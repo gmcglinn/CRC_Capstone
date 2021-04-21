@@ -7,8 +7,8 @@ $title = $_POST['workflowTitle'];
 $stmt = "INSERT INTO f20_app_template_table (TSID, title, instructions) 
 			VALUES (1, '$title', '$newWorkflowOrder')";
 $prepare = $db_conn->query($stmt);
-echo "Added workflow template '$title'.";
-echo "New workflow template order: <br>";
+echo "Added Course (workflow template) '$title'.";
+echo "New Course Order (workflow template order): <br>";
 echo $newWorkflowOrder;
 mysqli_query($prepare, $stmt);
 
