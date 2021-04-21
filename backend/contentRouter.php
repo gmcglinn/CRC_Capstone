@@ -158,6 +158,9 @@
             else if($_GET['contentType'] == "delete") {
                 include_once("./components/userfunctions/forms/deleteForms.php");
             }
+            else if($_GET['contentType'] == "editSingle") {
+                include_once("./components/userfunctions/forms/editSingle.php");
+            }
         }
         else {
             include_once("./components/userfunctions/forms/forms.php");

@@ -90,10 +90,6 @@
         <input id="title" name="formChangedDate" type="text" class="w3-input" value="<?php echo $row[5]; ?>" readonly>
 
         
-        </select>
-
-        <label for="created" class="w3-input">Created:</label>
-        <input id="created" name="created" type="text" class="w3-input" value="<?php echo $row['created']; ?>" readonly>
         <br>
         <div id="editButtons" style="display: none;">
             <button type="submit" class="w3-button w3-blue" name="saveWorkflowChanges">Save</button>

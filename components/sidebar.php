@@ -34,25 +34,35 @@
     <?php
 
       //Displaying the create option for all users except employer
-      if(!($_SESSION['user_type'] == $GLOBALS['employer_type'])) {
-          echo("<a href='./dashboard.php?content=create' id='createBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-plus fa-fw'></i>  Create</a>");
+      // if(!($_SESSION['user_type'] == $GLOBALS['employer_type'])) {
+      //     echo("<a href='./dashboard.php?content=create' id='createBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-plus fa-fw'></i>  Create</a>");
+      // }
+
+      if(($_SESSION['user_type'] == $GLOBALS['admin_type'])) {
+        echo("<a href='./dashboard.php?content=workflows' id='workflowsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-share-alt fa-fw'></i>  Users</a>");
       }
+
       //Displaying the workflows option for users involved in only their own Workflows.
       if(!($_SESSION['user_type'] == $GLOBALS['secretary_type'] || $_SESSION['user_type'] == $GLOBALS['admin_type'])) {
         echo("<a href='./dashboard.php?content=workflows' id='workflowsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-share-alt fa-fw'></i>  View My Workflow</a>");
       }
+      //Create Workflow
+      if(($_SESSION['user_type'] == $GLOBALS['secretary_type'])) {
+        echo("<a href='./dashboard.php?content=workflows' id='workflowsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-share-alt fa-fw'></i>  Create Workflow</a>");
+      }
       //Displaying the workflows options for users involved in administrating workflows.
-      if(($_SESSION['user_type'] == $GLOBALS['admin_type'] || $_SESSION['user_type'] == $GLOBALS['secretary_type'])) {
-        echo("<a href='./dashboard.php?content=workflows' id='workflowsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-wrench fa-fw'></i>  Workflows (Create/View)</a>");
+      if(($_SESSION['user_type'] == $GLOBALS['admin_type'])) {
+        echo("<a href='./dashboard.php?content=courses' id='workflowsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-wrench fa-fw'></i>  Courses (Workflow Templates)</a>");
+      }
+      //Displaying the workflow option for user involved in administrating workflows.
+      if(($_SESSION['user_type'] == $GLOBALS['admin_type'])) {
+        echo("<a href='./dashboard.php?content=workflows' id='workflowsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-wrench fa-fw'></i>  Workflows</a>");
       }
 
       //April 14 showing creation of new types of customization Forms, Courses
       if(($_SESSION['user_type'] == $GLOBALS['admin_type'] || $_SESSION['user_type'] == $GLOBALS['secretary_type'])) {
         echo("<a href='./dashboard.php?content=forms' id='workflowsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-wrench fa-fw'></i>  Forms</a>");
       }
-      if(($_SESSION['user_type'] == $GLOBALS['admin_type'] || $_SESSION['user_type'] == $GLOBALS['secretary_type'])) {
-        echo("<a href='./dashboard.php?content=courses' id='workflowsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-wrench fa-fw'></i>  Courses</a>");
-      } 
 
 
 
