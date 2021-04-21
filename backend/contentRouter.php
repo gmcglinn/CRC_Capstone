@@ -150,7 +150,7 @@
                 include_once("./components/userfunctions/forms/viewAllForms.php");
             }
             else if($_GET['contentType'] == "viewForm") {
-                include_once("./components/userfunctions/view/viewForms.php");
+                include_once("./components/userfunctions/forms/viewForm.php");
             }
             else if($_GET['contentType'] == "removeForm") {
                 include_once("./components/userfunctions/forms/removeForm.php");
