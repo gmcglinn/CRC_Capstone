@@ -175,7 +175,7 @@ function showFormUsers(str) {
         .then(response => response.text())
         .then( formUsers => {
         	console.log(formUsers);
-        	document.getElementById('formUsers').innerHTML = formUsers;
+        	document.getElementById('').outerHTML = formUsers;
 
     });
 }

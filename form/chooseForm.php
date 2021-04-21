@@ -1,53 +1,33 @@
 <?php
-$_SESSION['WF_ID'] = $_POST['WF_ID'];
-echo $_POST['WF_ID'];
-?>
-<header class="w3-container" style="padding-top:22px">
+include_once('../backend/config.php');
+include_once('../backend/db_connector.php');
+
+$wf_id= $_GET['q'];
+$sql = "SELECT form_assignments FROM s21_active_workflow_info AS s JOIN s21_course_workflow_steps AS s2 ON s.ATPID = s2.ATPID WHERE WF_ID = '$wf_id' ";
+
+$result = mysqli_query($db_conn, $sql);
+$row = mysqli_fetch_assoc($result);
+
+$forms = $row['form_assignments'];
+$forms = json_decode($forms, True);
+
+$form_list_html = "
+<header class='w3-container' style='padding-top:22px'>
    <h2>Form Selection:</h2>
    <h3>Select your form.</h3>
 
 </header>
-<!-- Action Panel -->
-<div class="w3-row-padding w3-margin-bottom">
-    <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=workflows&formType=secretary'"/>
-    <div class="w3-container w3-blue w3-padding-16 w3-border">
-        <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
-        <div class="w3-clear"><h5>Secretary Form</h5></div>
-    </div>
-    </div>
 
-    <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=workflows&formType=student'"/>
-    <div class="w3-container w3-deep-orange w3-padding-16 w3-border ">
-        <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
-        <div class="w3-clear"><h5>Student Form</h5></div>
-    </div>
-    </div>
+<div class='w3-row-padding w3-margin-bottom'> ";
+foreach ($forms as $key => $value) {
+    $form_list_html.="<div class='w3-quarter' onClick=displayForm('$wf_id',". $_SESSION['user_id'].")>
+                      <div class='w3-container w3-blue w3-padding-16 w3-border'>
+                        <div class='w3-left'><i class='fa fa-users w3-xxxlarge'></i></div>
+                        <div class='w3-clear'><h5>$value</h5></div>
+                    </div>
+                    </div>";
+    }
 
-    <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=workflows&formType=faculty'"/>
-    <div class="w3-container w3-green w3-padding-16 w3-border">
-        <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
-        <div class="w3-clear"><h5>Instructor Form</h5></div>
-    </div>
-    </div>
-
-    <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=workflows&formType=dean'"/>
-    <div class="w3-container w3-red w3-padding-16 w3-border">
-        <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
-        <div class="w3-clear"><h5>Dean Form</h5></div>
-    </div>
-    </div>
-
-    <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=workflows&formType=chair'"/>
-    <div class="w3-container w3-blue-grey w3-padding-16 w3-border">
-        <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
-        <div class="w3-clear"><h5>Chair Form</h5></div>
-    </div>
-    </div>
-
-    <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=workflows&formType=supervisor'"/>
-    <div class="w3-container w3-teal w3-padding-16 w3-border">
-        <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
-        <div class="w3-clear"><h5>Supervisor Form</h5></div>
-    </div>
-    </div>
-</div>
+$form_list_html.="</div>";
+echo($form_list_html);
+?>
