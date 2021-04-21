@@ -47,7 +47,7 @@
 		<label for="deadline">Deadline</label>
         <input id="deadline" name="deadline" type="datetime-local" class="w3-input" required>
         <br>
-		<label for="template">Workflow Template</label>
+		<label for="template">Course (Workflow Template)</label>
 		<?php
 			//Load templates
 			include_once('./backend/config.php');

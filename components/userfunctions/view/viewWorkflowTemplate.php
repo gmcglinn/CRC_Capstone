@@ -183,7 +183,7 @@
     <div class="w3-modal-content">
         <div class="w3-container w3-orange">
             <p>Warning!!</p>
-            <p>'Removing' a workflow template will change its status to deleted!<br>A user with the appropriate permission will then need to reactivate the workflow template.</p>
+            <p>'Removing' a course (workflow template) will change its status to deleted!<br>A user with the appropriate permission will then need to reactivate the workflow template.</p>
             <p>Are you sure?
                 <br>
                 <form method="post" action="./dashboard.php?content=view&contentType=workflowTemplate">
