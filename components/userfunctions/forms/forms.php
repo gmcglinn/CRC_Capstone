@@ -20,7 +20,7 @@
 
 <!-- Content Title -->
 <header class="w3-container" style="padding-top:22px">
-    <h5><b><i class="fa fa-share-alt"></i>  Forms Dashboard</b></h5>
+    <h5><b><i class="fa fa-wrench"></i>  Forms Dashboard</b></h5>
 </header>
 
 <!-- Action Panel -->
@@ -45,7 +45,7 @@
     </div>
     
     
-    <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=forrms&contentType=delete'">
+    <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=forms&contentType=delete'">
     <div class="w3-container w3-teal w3-padding-16 w3-border">
         <div class="w3-left"><i class="fa fa-minus w3-xxxlarge"></i></div>
         <div class="w3-clear"><h5>Delete Form</h5></div>

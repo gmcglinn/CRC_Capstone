@@ -235,7 +235,7 @@
     <div class="w3-modal-content">
         <div class="w3-container w3-orange">
             <p>Warning!!</p>
-            <p>'Removing' a workflow will change its status to terminated!<br>A user with the appropriate permission will then need to restart the workflow.</p>
+            <p>Removing a workflow will change its status to terminated!<br>A user with the appropriate permission will then need to restart the workflow.</p>
             <p>Are you sure?
                 <br>
                 <form method="post" action="./dashboard.php?content=view&contentType=workflow">

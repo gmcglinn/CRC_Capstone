@@ -140,14 +140,23 @@
             if($_GET['contentType'] == "create") {
                 include_once("./components/userfunctions/forms/createNewForm.php");
             }
-            else if($_GET['contentType'] == "delete") {
-                include_once("./components/userfunctions/forms/deleteForm.php");
-            }
+            // else if($_GET['contentType'] == "delete") {
+            //     include_once("./components/userfunctions/forms/deleteForm.php");
+            // }
             else if($_GET['contentType'] == "edit") {
                 include_once("./components/userfunctions/forms/editForm.php");
             }
             else if($_GET['contentType'] == "view") {
                 include_once("./components/userfunctions/forms/viewAllForms.php");
+            }
+            else if($_GET['contentType'] == "viewForm") {
+                include_once("./components/userfunctions/view/viewForms.php");
+            }
+            else if($_GET['contentType'] == "removeForm") {
+                include_once("./components/userfunctions/forms/removeForm.php");
+            }
+            else if($_GET['contentType'] == "delete") {
+                include_once("./components/userfunctions/forms/deleteForms.php");
             }
         }
         else {
