@@ -4,7 +4,7 @@
 ?>
 
 <!-- Active Workflows -->
-<div class="w3-container">
+<div class="w3-container" id='wf-container'>
     <h5>Active Workflows</h5>
     <!-- Getting the current user's workflows from the database and printing them in a preview. -->
     <?php
@@ -143,14 +143,9 @@
                     }
                 }
                 echo('<div class="w3-quarter w3-center w3-padding-24 w3-border" style="height: 90px;">'
-                    . '<form action="./dashboard.php?content=workflows&contentType=active&viewForm=true" method="post" >'
-                    . '<input type="hidden" name="WF_ID" value='
+                    .'<button class="w3-button w3-teal" type="submit" value='
                     . $result['WF_ID']
-                    . '></input>'
-                    .'<input type="hidden" name="order" value='
-                    . $result['instructions']
-                    .'></input>'
-                    . '<button class="w3-button w3-teal" type="submit">View</button>'
+                    .' onClick=showFormUsers(this.value)>View</button>'
                     . '</div></div>');
                     ++$rowNum;
             }
@@ -162,3 +157,40 @@
         }
     ?>
 </div>
+
+<div id="form">
+    
+</div>
+
+<script>
+function showFormUsers(str) {
+    fetch("form/chooseForm.php?q="+str, {
+            method:'POST',
+             headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            },
+        })
+        .then(response => response.text())
+        .then(forms => {
+            document.getElementById('wf-container').innerHTML = forms;
+
+    });
+}
+</script>
+
+<script>
+function displayForm(str, x) {
+    fetch("form/displayForm.php?q="+str+"&u="+x, {
+            method:'POST',
+             headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            },
+        })
+        .then(response => response.text())
+        .then(forms => {
+            console.log("Here");
+            document.getElementById('form').innerHTML = forms;
+
+    });
+}
+</script>
