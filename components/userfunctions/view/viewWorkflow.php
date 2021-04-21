@@ -33,7 +33,7 @@
                     `UID` = $initiator,
                     title = '$title',
                     created = '$created',
-                    deadline = '$deadline'                     
+                    deadline = '$deadline'
                 WHERE AID = $workflowID";
         if ($db_conn->query($sql) === TRUE) {
             echo("<div class='w3-panel w3-margin w3-green'><p>Successfully Edited this Workflow.</p></div>");
