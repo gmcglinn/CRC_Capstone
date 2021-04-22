@@ -54,9 +54,8 @@
         $sql.= $where_sql."=$user";
 
         $query = mysqli_query($db_conn, $sql);
-        $count = mysqli_num_rows($query);
         
-        if($count > 0) {
+        if($query) {
             $rowNum = 1;
             while($result = mysqli_fetch_array($query)) {
                 echo('<div class="w3-row w3-card-4 w3-margin">'

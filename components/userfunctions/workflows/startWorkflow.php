@@ -126,10 +126,10 @@
     }
 ?>
 
-<div class="w3-card-4 w3-margin w3-padding" style="background-color: whitesmoke;">
+<div id='wf-start' class="w3-card-4 w3-margin w3-padding" style="background-color: whitesmoke;">
     <h4>Start A Workflow</h4>
         <form method="post">
-           <div class='w3-input'>
+           <div class='w3-container'>
            <label for="form_type">Course (Workflow Template)</label>
             <select class="w3-input" name="ATPID" id="wf_title" onchange="showFormUsers(this.value)">
             <option value="">Select a Workflow:</option>
@@ -157,8 +157,7 @@
             <input id="deadline" name="deadline" type="datetime-local" class="w3-input" >
             <br>
         	</div>
-            <div class="w3-input" for="form_users" id="formUsers" type="hidden"></div>
-            <br>
+            <div for="form_users" id="formUsers" type="hidden"></div>
             <button class="w3-button w3-teal" type="submit" name="startWF">Start</button>
         </form>
 </div>
@@ -174,9 +173,7 @@ function showFormUsers(str) {
         })
         .then(response => response.text())
         .then( formUsers => {
-        	console.log(formUsers);
-        	document.getElementById('').outerHTML = formUsers;
-
+        	document.getElementById('formUsers').innerHTML = formUsers;
     });
 }
 </script>
