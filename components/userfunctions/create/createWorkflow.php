@@ -304,7 +304,7 @@
     var options = "";
 
     window.onload = function LoadFormOptions() {
-        fetch("backend/getForms.php", {
+        fetch("backend/formUtils/getFormTitles.php", {
             method:'POST',
              headers: {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
