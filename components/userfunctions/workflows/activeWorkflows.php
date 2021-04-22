@@ -3,6 +3,12 @@
     include_once('./components/userfunctions/workflows/workflows.php')
 ?>
 
+<?php 
+if (isset($_POST['formData'])) {
+    echo('hello');
+}
+?>
+
 <!-- Active Workflows -->
 <div class="w3-container" id='wf-container'>
     <h5>Active Workflows</h5>
@@ -163,7 +169,7 @@
 
 <script>
 function showFormUsers(str) {
-    fetch("form/chooseForm.php?q="+str, {
+    fetch("./backend/formUtils/displayWFforms.php?q="+str, {
             method:'POST',
              headers: {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -179,7 +185,7 @@ function showFormUsers(str) {
 
 <script>
 function displayForm(str, x) {
-    fetch("form/displayForm.php?q="+str+"&u="+x, {
+    fetch("./backend/formUtils/displayForm.php?q="+str+"&u="+x, {
             method:'POST',
              headers: {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'

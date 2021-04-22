@@ -165,7 +165,7 @@
 <script>
 
 function showFormUsers(str) {
-	fetch("backend/getFormUsers.php?q="+str, {
+	fetch("backend/formUtils/getFormUsers.php?q="+str, {
             method:'POST',
              headers: {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
