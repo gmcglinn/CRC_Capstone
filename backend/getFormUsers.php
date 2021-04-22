@@ -17,7 +17,7 @@
             	<br>";
 		}
 
-		$html_inputs.="<input type='hidden' name='form_assignments' value='".$row['form_assignments']."'>";
+		$html_inputs.="<input type='hidden' name='form_assignments' value='".$row['form_assignments']."'><br>";
 		echo($html_inputs);
 	}
 
