@@ -38,8 +38,14 @@
       //     echo("<a href='./dashboard.php?content=create' id='createBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-plus fa-fw'></i>  Create</a>");
       // }
 
+
+      //Displaying admin only tools
+      if($_SESSION['user_type'] == $GLOBALS['admin_type']) {
+        echo("<a href='./dashboard.php?content=adminTools' id='adminToolsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-diamond fa-fw'></i>  Admin Tools</a>");
+      }
+
       if(($_SESSION['user_type'] == $GLOBALS['admin_type'])) {
-        echo("<a href='./dashboard.php?content=workflows' id='workflowsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-share-alt fa-fw'></i>  Users</a>");
+        echo("<a href='./dashboard.php?content=users' id='usersBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-male fa-fw'></i>  Users</a>");
       }
 
       //Displaying the workflows option for users involved in only their own Workflows.
@@ -52,7 +58,7 @@
       }
       //Displaying the workflows options for users involved in administrating workflows.
       if(($_SESSION['user_type'] == $GLOBALS['admin_type'])) {
-        echo("<a href='./dashboard.php?content=courses' id='workflowsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-wrench fa-fw'></i>  Courses (Workflow Templates)</a>");
+        echo("<a href='./dashboard.php?content=courses' id='courseBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-wrench fa-fw'></i>  Courses (Workflow Templates)</a>");
       }
       //Displaying the workflow option for user involved in administrating workflows.
       if(($_SESSION['user_type'] == $GLOBALS['admin_type'])) {
@@ -90,6 +96,14 @@
     else if(tempURL[1] == "files")
     {
         document.getElementById('filesBar').className += " w3-blue";
+    }
+    else if(tempURL[1] == "adminTools")
+    {
+        document.getElementById('adminToolsBar').className += " w3-blue";
+    }
+    else if(tempURL[1] == "users")
+    {
+        document.getElementById('usersBar').className += " w3-blue";
     }
     else if(tempURL[1] == "workflows" || tempURL[1] == "workflows&contentType")
     {

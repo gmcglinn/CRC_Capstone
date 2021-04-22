@@ -192,6 +192,21 @@
         }
     }
 
+    else if($_GET['content'] == "adminTools") {
+        //If the user requested the a specific section of the search page.
+        if(isset($_GET['contentType'])) {
+            if($_GET['contentType'] == "user") {
+                include_once("./components/userfunctions/search/searchUser.php");
+            }
+            else if($_GET['contentType'] == "workflows") {
+                include_once("./components/userfunctions/search/searchWorkflow.php");
+            }
+        }
+        else {
+            include_once("./components/userfunctions/adminTools/adminTools.php");
+        }
+    }
+
 
 
     //If the content requested is the view page.
