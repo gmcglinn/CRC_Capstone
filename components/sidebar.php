@@ -30,7 +30,6 @@
   <div class="w3-bar-block">
     <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
     <a href="./dashboard.php?content=home" id="homeBar" class="w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  Home</a>
-    <a href='./dashboard.php?content=search' id='searchBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-search fa-fw'></i>  Search</a>
     <?php
 
       //Displaying the create option for all users except employer
@@ -70,8 +69,9 @@
         echo("<a href='./dashboard.php?content=forms' id='formsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-wrench fa-fw'></i>  Forms</a>");
       }
 
-
-
+      if(($_SESSION['user_type'] == $GLOBALS['secretary_type'] || $_SESSION['user_type'] == $GLOBALS['admin_type'])) {
+        echo("<a href='./dashboard.php?content=search' id='searchBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-search fa-fw'></i>  Search</a>");
+      }
     ?>
       
     <a href='./dashboard.php?content=messages' id='messagesBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-comment fa-fw'></i>  Messages</a>
