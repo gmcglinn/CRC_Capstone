@@ -1,6 +1,7 @@
 <?php
     //Loading the page title and action buttons.
-    include_once('./components/userfunctions/create/create.php');
+    include_once('./components/userfunctions/miscFunc/users.php');
+    
     include_once('./backend/config.php');
     include_once('./backend/db_connector.php');
     include_once('./backend/emailPlugin.php');
