@@ -13,8 +13,12 @@ $form_structure = json_decode($row['form_info'], True);
 $html_form = "<div class='w3-card-4 w3-padding w3-margin'>";
 
 $form_title = $form_structure['form_title'];
+
 $html_form.= "<h3>$form_title</h3>";
-$html_form.= "<form action=window.location.href='./dashboard.php?content=workflows&contentType=active'>";
+$html_form.= "<form method='POST' action='./dashboard.php?content=workflows&contentType=active'>";
+$html_form.= "<input name='form_title' value='$form_title' hidden/>";
+$html_form.= "<input name='wf_id' value='$wf_id' hidden/>";
+
 
 foreach ($form_structure as $key => $value) {
 	if($key != 'form_title') {
@@ -26,16 +30,15 @@ foreach ($form_structure as $key => $value) {
 
 		if ($row['user_access_role'] == $_SESSION['user_type']) {
 			$state = '';
-
 		}
 
 		$html_form.="<label class='w3-margin'>  $key </label>";
-		$html_form.="<input type=text class='w3-input w3-margin' $state value=$value>";
+		$html_form.="<input type=text class='w3-input w3-margin' name='$key' $state value='$value'>";
 	}
 }
 
 if ($row['user_access_role'] == $_SESSION['user_type']) {
-	$html_form.= "<button class='w3-button w3-teal' type='submit' name='formData' onClick= 'window.location.href='./dashboard.php?content=workflows&contentType=active'>Submit</button>";
+	$html_form.= "<button class='w3-button w3-teal' type='submit' name='formData' >Submit</button>";
 
 }
 
