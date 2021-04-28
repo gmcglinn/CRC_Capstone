@@ -14,11 +14,9 @@
 			$course_number = $_POST['course_number'];
 			$form_type = $_POST['form_type'];
             $form_assignments = $_POST['formAssignments'];
-
             //Insert into Dattabase
 			$sql = "INSERT INTO s21_course_workflow_steps (TSID, workflow_title, instructions, form_assignments, form_type, course_number) 
 				VALUES (1, '$workflow_title', '$newWorkflowOrder', '$form_assignments','$form_type', '$course_number')";
-
 			mysqli_query($db_conn, $sql);
         	//Database insert success
         	if (mysqli_errno($db_conn) == 0) {
@@ -79,35 +77,14 @@
     <h5 onload="LoadFormOptions()">Create Course (Workflow Template)</h5>
     <p>You can create a custom course (workflow template) here.</p>
     <form id="subform" method="post">
-	<div class =row>
         <label for="workflowTitle">Course Title (Workflow Template Title)</label>
-        <input class="w3-input" type="text" name="workflowTitle"></input>
+        <input class="w3-input" type="text" name="workflowTitle" required></input>
         
         <label for="form_type">Course Type (Workflow Type):</label>
         <select name="form_type" class="w3-input">
             <option value="internship">Internship/Fieldwork (General)</option>
             <option value="transferCred">Transfer Credit Evaluation (Not Implemented)</option>
         </select>
-        
-        <script>
-            function showCourse(str) {
-                if (str == "") {
-                    document.getElementById("course").innerHTML = "";
-                    return;
-                } 
-                else {
-                    var xmlhttp = new XMLHttpRequest();
-                    xmlhttp.onreadystatechange = function() {
-                        if (this.readyState == 4 && this.status == 200) {
-                            document.getElementById("course").innerHTML = this.responseText;
-                        }
-                    };
-                    xmlhttp.open("GET","./backend/getCourse.php?q="+str,true);
-                    xmlhttp.send();
-                }
-            }
-        </script>
-
 		<label class="w3-input" for="department">Department</label>
         <select class="w3-input" name="department" id="department" onchange="showCourse(this.value)">
             <option value="">Select a Department:</option>
@@ -128,49 +105,49 @@
         <select class="w3-input" name="course_number" id="course">
             <option value="">Select a course:</option>
         </select>
-
-        <h2>Participant List</h2>
-        <p>Drag and Drop participants to their appropriate order</p>
-
-        <?php
-            $userLabels = array('Records & Registration', 'Career Resource Center', 'Dean', 'Chair', 'Secretary', 'Student', 'Employer', 'Faculty [Advisor/Instructor]');
-            $userTypes = array('Recreg', 'Crc', 'Dean', 'Chair', 'Secretary', 'Student', 'Employer', 'Faculty');
-            $length = count($userTypes);
-            for ($i=0; $i < $length; $i++) {
-        ?>
-            <label for=""><?php echo $userLabels[$i]; ?></label>
-            <div id='labelContOrig<?php echo $i; ?>' class='labelContainer' ondrop='drop(event)' ondragover='allowDrop(event)'>
-                <strong id='<?php echo $userTypes[$i]; ?>' draggable='true' ondragstart='drag(event)'><?php echo $userTypes[$i]; ?></strong>
-            </div>
-			
-        <?php
-            }
-		?>	
-	</div>	
-        <!-- Workflow visualizer -->
-        <h2>Workflow Order</h2>
-        <p>Click the circle with a "+" to add another participant.</p>
-        <div class="w3-padding w3-border">
-            <div id="circleList" class="circleList">
-                <div class="circle" onclick="addParticipant(event)">+</div>
-            </div>
-            <div id="labelList" class="labelList">
-                <div id="labelContainer" class="userType" style="border: 1px solid black;"></div>
-            </div>
+        <div class='w3-quarter w3-margin'>
             <br>
-            <div id="formList" class="formList">
-                <div id="formContainer" class="formType" style="border: 1px solid black;"></div>
+            <h2>Participant List</h2>
+            <p>Drag and Drop participants to their appropriate order</p>
+
+            <?php
+                $userLabels = array('Records & Registration', 'Career Resource Center', 'Dean', 'Chair', 'Secretary', 'Student', 'Employer', 'Faculty [Advisor/Instructor]');
+                $userTypes = array('Recreg', 'Crc', 'Dean', 'Chair', 'Secretary', 'Student', 'Employer', 'Faculty');
+                $length = count($userTypes);
+                for ($i=0; $i < $length; $i++) {
+            ?>
+                <label for=""><?php echo $userLabels[$i]; ?></label>
+                <div id='labelContOrig<?php echo $i; ?>' class='labelContainer' ondrop='drop(event)' ondragover='allowDrop(event)'>
+                    <strong id='<?php echo $userTypes[$i]; ?>' draggable='true' ondragstart='drag(event)'><?php echo $userTypes[$i]; ?></strong>
+                </div>
+    			
+            <?php
+                }
+    		?>
+        </div>	
+        <br>
+        <div class='w3-half w3-margin'>
+            <div class='w3-right'>
+            <!-- Workflow visualizer -->
+            <h2>Workflow Order</h2>
+            <p>Click the circle with a "+" to add another participant.</p>
+            <div id='workflowOrder' class="w3-border w3-center w3-row">
+                    <div id="circleList" class="circleList w3-center">
+                        <div class="circle" onclick="addParticipant(event)">+</div>
+                    </div>
+            </div>
+        <br>
+        <input type="submit" value="Create Workflow Template" class="w3-button w3-teal w3-center" name="workflowCreate"></input>
+        <input id=formAssignments name=formAssignments type="hidden"> </input>
             </div>
         </div>
-        <br>
-        <input type="submit" value="Create Workflow Template" class="w3-button w3-teal" name="workflowCreate"></input>
-        <input id=formAssignments name=formAssignments type="hidden"> </input>
     </form>
 </div>
 
-
 <!-- Script for enabling drag and drop-->
 <script>
+    var numParticipants = 1;
+
     function allowDrop(event) {
         event.preventDefault();
     }
@@ -277,7 +254,7 @@
 		//testing
 		//alert("current order: " + arr[0] + ", " + arr[1] + ", " + arr[2] + ", " + arr[3] + ", " + arr[4] + ", " + arr[5] + ", " + arr[6] + ", " + arr[7]);
 		
-		workflow_size = parseInt(document.getElementById('circleList').lastChild.innerHTML);
+		workflow_size = numParticipants - 1;
 		if (workflow_size > 0){  
 			var x = document.createElement("INPUT");
 			x.setAttribute("id", "submission");
@@ -302,7 +279,6 @@
 <!-- Script for adding more participants to the workflow. -->
 <script> 
     var options = "";
-
     window.onload = function LoadFormOptions() {
         fetch("backend/formUtils/getFormTitles.php", {
             method:'POST',
@@ -320,19 +296,20 @@
         });
     }
 
+
     function addParticipant(event) {   
         event.preventDefault();
-        //Find how many participants there are.
-        numParticipants = Math.ceil(document.getElementById('circleList').children.length/2);
-        num =  numParticipants;
+        num = numParticipants;
 
         if(numParticipants < 9) {
             //Add a line, circle, and label.
-            document.getElementById('circleList').innerHTML += "<div class='line'></div><div class='circle'>" + numParticipants + "</div>";
+            var addParticipantHTML = "<div class='w3-row w3-margin'><div class='w3-col m4 13'><div class='circle'>" + numParticipants + "</div></div>"
             
-            document.getElementById('labelList').innerHTML += "<div class='spacer'></div><div id='labelContainer" + numParticipants + "' class='userType' style='border: 1px solid black;' ondrop='drop(event)' ondragover='allowDrop(event)'></div>";
-            
-            document.getElementById('formList').innerHTML += "<div class='spacer'></div><div id='formContainer' class='formType' ><select id =form"+ num +  " onChange= 'UpdateFormAssignments(" + num + ");'> <option>Select Form</option>"+ options + " </select> </div>";
+            addParticipantHTML += "<div class='spacer'></div><div class='w3-col m4 13'><div id='labelContainer" + numParticipants + "' class='userType' style='border: 1px solid black;' ondrop='drop(event)' ondragover='allowDrop(event)'></div></div>";
+
+            addParticipantHTML += "<div class='spacer'></div><div class='w3-col m4 13 w3-margin'><div id='formContainer' class='formType' ><select id =form"+ num +  " onChange= 'UpdateFormAssignments(" + num + ");'> <option>Select Form</option>"+ options + " </select> </div></div> </div>";
+
+            document.getElementById('workflowOrder').innerHTML += addParticipantHTML;
         }
         if(numParticipants == 8) {
             //Remove the + circle
@@ -343,7 +320,9 @@
             labelList = document.getElementById('labelList');
             labelList.removeChild(labelList.children[0]);
             labelList.removeChild(labelList.children[0]);
-        }   
+        }
+
+        numParticipants++;   
     } 
 
 </script>
@@ -365,4 +344,23 @@
         
     }
 
+</script>
+
+<script>
+    function showCourse(str) {
+        if (str == "") {
+            document.getElementById("course").innerHTML = "";
+            return;
+        } 
+        else {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("course").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET","./backend/getCourse.php?q="+str,true);
+            xmlhttp.send();
+        }
+    }
 </script>

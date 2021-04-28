@@ -19,7 +19,6 @@ $html_form.= "<form method='POST' action='./dashboard.php?content=workflows&cont
 $html_form.= "<input name='form_title' value='$form_title' hidden/>";
 $html_form.= "<input name='wf_id' value='$wf_id' hidden/>";
 
-
 foreach ($form_structure as $key => $value) {
 	if($key != 'form_title') {
 		$state = 'disabled';
