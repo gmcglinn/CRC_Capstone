@@ -3,6 +3,70 @@
     include_once('./components/userfunctions/workflows/workflows.php')
 ?>
 
+<?php 
+if (isset($_POST['formData'])) {
+
+    $wf_id = $_POST['wf_id'];
+    $uid = $_SESSION['user_id'];
+
+    unset($_POST['wf_id']);
+    unset($_POST['formData']);
+
+    $form_info = json_encode($_POST);
+    $user_type = $_SESSION['user_type'];
+
+    $column = "";
+
+    if($user_type == 2) {
+            //statement that grabs corresponding active wf ids
+            $column = "career_status";  
+        }
+        elseif($user_type == 3){
+            $column = "records_status";
+        }
+        elseif($user_type == 4){
+            $column = "dean_status";
+        }
+        elseif($user_type == 5){
+            $column = "chair_status";
+        }
+        elseif($user_type == 6) {
+            $column = "secretary_status";
+        }
+        elseif($user_type == 7) {
+            $column = "faculty_status";
+        }
+        elseif($user_type == 8) {
+            $column = "student_status";
+        }
+        elseif($user_type == 9) {
+            $column = "supervisor_status";
+        }
+    
+    $update_form_sql = "UPDATE s21_active_form_info SET form_info = '$form_info' WHERE WF_ID = '$wf_id' AND UID = '$uid'";
+    $update_status_sql = "UPDATE s21_active_workflow_status SET $column = 2 WHERE WF_ID = '$wf_id'";
+
+    mysqli_query($db_conn, $update_form_sql);
+
+    if (mysqli_errno($db_conn) == 0) {
+        
+        mysqli_query($db_conn, $update_status_sql);
+
+        if (mysqli_errno($db_conn) == 0) {     
+         echo("<div class='w3-panel w3-margin w3-green'><p>Form Updated Successfully.</p></div>");
+        
+        }
+        else {
+            echo("<div class='w3-panel w3-margin w3-red'><p>Failed sUpdate Form.</p></div>");
+        }
+    } 
+    else {
+        echo("<div class='w3-panel w3-margin w3-red'><p>Failed Update Form.</p></div>");
+     }
+}
+
+?>
+
 <!-- Active Workflows -->
 <div class="w3-container" id='wf-container'>
     <h5>Active Workflows</h5>
@@ -54,9 +118,8 @@
         $sql.= $where_sql."=$user";
 
         $query = mysqli_query($db_conn, $sql);
-        $count = mysqli_num_rows($query);
         
-        if($count > 0) {
+        if($query) {
             $rowNum = 1;
             while($result = mysqli_fetch_array($query)) {
                 echo('<div class="w3-row w3-card-4 w3-margin">'
@@ -164,7 +227,7 @@
 
 <script>
 function showFormUsers(str) {
-    fetch("form/chooseForm.php?q="+str, {
+    fetch("./backend/formUtils/displayWFforms.php?q="+str, {
             method:'POST',
              headers: {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -180,7 +243,7 @@ function showFormUsers(str) {
 
 <script>
 function displayForm(str, x) {
-    fetch("form/displayForm.php?q="+str+"&u="+x, {
+    fetch("./backend/formUtils/displayForm.php?q="+str+"&u="+x, {
             method:'POST',
              headers: {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -188,9 +251,22 @@ function displayForm(str, x) {
         })
         .then(response => response.text())
         .then(forms => {
-            console.log("Here");
             document.getElementById('form').innerHTML = forms;
-
     });
 }
+</script>
+
+<script>
+function saveFormData() {
+    fetch("./backend/formUtils/saveFormData.php?", {
+            method:'POST',
+             headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            },
+        })
+        .then(response => response.text())
+        .then(message => {
+            document.getElementById('form').innerHTML = message;
+    });
+}  
 </script>

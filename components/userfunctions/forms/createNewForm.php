@@ -6,6 +6,12 @@ if(isset($_POST['formCreate'])) {
 	$form_name = mysqli_real_escape_string($db_conn, $_POST['formName']);
 	$user_access_type = mysqli_real_escape_string($db_conn, $_POST['user_type']);
 	
+	$sql = "SELECT URID FROM f20_user_role_table WHERE user_role_title = '$user_access_type'";
+	$result = mysqli_query($db_conn, $sql);
+	$row = mysqli_fetch_assoc($result);
+
+	$user_access_type = $row['URID'];
+
 	$sql = "INSERT INTO `s21_form_templates`(`title`, `instructions`,  `user_access_role`) VALUES ('$form_name', '$form_structure', '$user_access_type')";
 	$result = mysqli_query($db_conn, $sql);
 
@@ -149,7 +155,7 @@ if(isset($_POST['formCreate'])) {
 		document.getElementById('field'+fieldName)
 	}
 
-	function UpdateHiddenInput() {
+	function UpdateHiddenInput(formName) {
 		values = fieldNames.slice(0, fieldNames.length);
 		obj = {}
 		
@@ -158,7 +164,8 @@ if(isset($_POST['formCreate'])) {
 			obj[values[i]] = "";
 		}
 		
-		parsed_vals =  JSON.stringify(obj);
+		obj['form_title'] = document.getElementById('formName').value;
+		parsed_vals = JSON.stringify(obj);
 
 		document.getElementById("formStructure").value = parsed_vals;
 		console.log(parsed_vals);

@@ -295,4 +295,10 @@
             include_once("./components/userfunctions/settings/settings.php");
         }
     }
+     else if($_GET['content'] == "test") {
+        include_once("./form/test.php");
+     }
+      else if($_GET['content'] == "test1") {
+        include_once("./form/test1.php");
+     }
 ?>

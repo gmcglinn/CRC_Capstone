@@ -1,6 +1,6 @@
 <?php
-    include_once('./config.php');
-    include_once('./db_connector.php');
+    include_once('../config.php');
+    include_once('../db_connector.php');
 	
 	$ATPID = $_GET['q'];
 	$sql = "SELECT form_assignments FROM s21_course_workflow_steps WHERE ATPID = '$ATPID'";
@@ -17,7 +17,7 @@
             	<br>";
 		}
 
-		$html_inputs.="<input type='hidden' name='form_assignments' value='".$row['form_assignments']."'>";
+		$html_inputs.="<input type='hidden' name='form_assignments' value='".$row['form_assignments']."'><br>";
 		echo($html_inputs);
 	}
 

@@ -1,6 +1,6 @@
 <?php
-include_once('../backend/config.php');
-include_once('../backend/db_connector.php');
+include_once('../config.php');
+include_once('../db_connector.php');
 
 $wf_id= $_GET['q'];
 $sql = "SELECT form_info, UID FROM s21_active_form_info WHERE WF_ID='$wf_id'";
