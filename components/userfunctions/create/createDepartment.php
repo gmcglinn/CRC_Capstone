@@ -5,7 +5,7 @@
 -->
 
 <?php
-    include_once('./components/userfunctions/create/create.php');
+    include_once('./components/userfunctions/miscFunc/adminTools.php');
     include_once('./backend/db_connector.php');
     if (isset($_POST['departmentCreate'])) {
         include_once('./backend/config.php');

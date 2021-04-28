@@ -74,6 +74,22 @@
     else if($_GET['content'] == "files") {
         include_once("./components/userfunctions/files.php");
     }
+    //If the content requested is one of the many misc sidebar items.
+    else if($_GET['content'] == "miscFunc") {
+        //If the user requested the a specific section of the create page.
+        if(isset($_GET['contentType'])) {
+            if($_GET['contentType'] == "admin") {
+                include_once("./components/userfunctions/miscFunc/adminTools.php");
+            }
+            else if($_GET['contentType'] == "users") {
+                 include_once("./components/userfunctions/miscFunc/users.php");
+            }            
+        }
+        else {//return home if requested incorrectly
+            include_once('./components/dashboard/header.php');
+            include_once('./components/dashboard/actionpanel.php');
+        }
+    }
 
     //If the content requested is the workflows page.
     else if($_GET['content'] == "workflows") {
@@ -189,6 +205,37 @@
         }
         else {
             include_once("./components/userfunctions/courses/workflows.php");
+        }
+    }
+
+    else if($_GET['content'] == "adminTools") {
+        //If the user requested the a specific section of the search page.
+        if(isset($_GET['contentType'])) {
+            if($_GET['contentType'] == "user") {
+                include_once("./components/userfunctions/create/createUser.php");
+            }
+            else if($_GET['contentType'] == "dept") {
+                include_once("./components/userfunctions/create/createDepartment.php");
+            }
+        }
+        else {
+            include_once("./components/userfunctions/miscFunc/adminTools.php");
+        }
+    }
+
+    //router for user actions
+    else if($_GET['content'] == "users") {
+        
+        if(isset($_GET['contentType'])) {
+            if($_GET['contentType'] == "create") {
+                include_once("./components/userfunctions/create/createUser.php");
+            }
+            else if($_GET['contentType'] == "view") {
+                include_once("./components/userfunctions/search/searchUser.php");
+            }
+        }
+        else {
+            include_once("./components/userfunctions/miscFunc/users.php");
         }
     }
 
