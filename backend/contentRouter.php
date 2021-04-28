@@ -191,7 +191,7 @@
                 include_once("./components/userfunctions/courses/activeWorkflows.php");
             }
             else if($_GET['contentType'] == "new") {
-                include_once("./components/userfunctions/courses/newWorkflows.php");
+                include_once("./components/userfunctions/create/createWorkflow.php");
             }
             else if($_GET['contentType'] == "start") {
                 include_once("./components/userfunctions/courses/startWorkflow.php");
