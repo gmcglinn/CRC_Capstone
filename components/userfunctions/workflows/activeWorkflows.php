@@ -15,6 +15,7 @@ if (isset($_POST['formData'])) {
     $form_info = json_encode($_POST);
     $user_type = $_SESSION['user_type'];
 
+    print_r($_POST);
     $column = "";
 
     if($user_type == 2) {
@@ -46,11 +47,11 @@ if (isset($_POST['formData'])) {
     $update_form_sql = "UPDATE s21_active_form_info SET form_info = '$form_info' WHERE WF_ID = '$wf_id' AND UID = '$uid'";
     $update_status_sql = "UPDATE s21_active_workflow_status SET $column = 2 WHERE WF_ID = '$wf_id'";
 
-    mysqli_query($db_conn, $update_form_sql);
+    //mysqli_query($db_conn, $update_form_sql);
 
     if (mysqli_errno($db_conn) == 0) {
         
-        mysqli_query($db_conn, $update_status_sql);
+        //mysqli_query($db_conn, $update_status_sql);
 
         if (mysqli_errno($db_conn) == 0) {     
          echo("<div class='w3-panel w3-margin w3-green'><p>Form Updated Successfully.</p></div>");
