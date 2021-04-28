@@ -18,20 +18,20 @@ panels are contained in this file and printed based on the user type.
                     <h4>Messages</h4>
                 </div>
             </div>
-            <div class="w3-quarter" onClick="location.href = './dashboard.php?content=search'">
+            <!-- <div class="w3-quarter" onClick="location.href = './dashboard.php?content=search'">
                 <div class="w3-container w3-blue w3-padding-16">
                     <div class="w3-left"><i class="fa fa-search w3-xxxlarge"></i></div>
                     <div class="w3-clear"></div>
                     <h4>Search</h4>
                 </div>
-            </div>
-            <div class="w3-quarter" onClick="location.href = './dashboard.php?content=create'">
+            </div> -->
+            <!-- <div class="w3-quarter" onClick="location.href = './dashboard.php?content=create'">
                 <div class="w3-container w3-teal w3-padding-16">
                     <div class="w3-left"><i class="fa fa-plus w3-xxxlarge"></i></div>
                     <div class="w3-clear"></div>
                     <h4>Create</h4>
                 </div>
-            </div>
+            </div> -->
             <div class="w3-quarter" onClick="location.href = './dashboard.php?content=files'">
                 <div class="w3-container w3-orange w3-text-white w3-padding-16">
                     <div class="w3-left"><i class="fa fa-files-o w3-xxxlarge"></i></div>
@@ -42,7 +42,7 @@ panels are contained in this file and printed based on the user type.
 
 
             <!--More Bandaid Solution stuff, sorry other semesters-->
-            <div class="w3-quarter" onClick="location.href = './dashboard.php?content=forms'">
+            <!-- <div class="w3-quarter" onClick="location.href = './dashboard.php?content=forms'">
                 <div class="w3-container w3-teal w3-padding-16">
                     <div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
                     <div class="w3-clear"></div>
@@ -51,14 +51,13 @@ panels are contained in this file and printed based on the user type.
             </div>
 
 
-            <!--More Bandaid Solution stuff, sorry other semesters-->
             <div class="w3-quarter" onClick="location.href = './dashboard.php?content=courses'">
                 <div class="w3-container w3-teal w3-padding-16">
                     <div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
                     <div class="w3-clear"></div>
                     <h4>Courses</h4>
                 </div>
-            </div>
+            </div> -->
 
 
         </div>
