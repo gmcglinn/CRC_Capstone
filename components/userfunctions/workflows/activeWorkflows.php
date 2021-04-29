@@ -11,9 +11,14 @@ if (isset($_POST['formData'])) {
 
     unset($_POST['wf_id']);
     unset($_POST['formData']);
-    $form_info = json_encode($_POST);
-    $user_type = $_SESSION['user_type'];
+    
+    $form_info = json_encode($_POST);    
+    //php adds an underscore to the keys in the _POST
+    //need to remove them for all except form_title
+    $form_info = str_replace('_', ' ', $form_info);
+    $form_info[6] = '_';
 
+    $user_type = $_SESSION['user_type'];
     $column = "";
 
     if($user_type == 2) {
