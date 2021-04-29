@@ -139,7 +139,6 @@
         <br>
         <input type="submit" value="Create Workflow Template" class="w3-button w3-teal w3-center" name="workflowCreate"></input>
         <input id=formAssignments name=formAssignments type="hidden"> </input>
-            </div>
         </div>
     </form>
 </div>
