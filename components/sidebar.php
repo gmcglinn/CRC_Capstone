@@ -38,14 +38,13 @@
       //     echo("<a href='./dashboard.php?content=create' id='createBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-plus fa-fw'></i>  Create</a>");
       // }
 
+      if(($_SESSION['user_type'] == $GLOBALS['secretary_type'] || $_SESSION['user_type'] == $GLOBALS['admin_type'])) {
+        echo("<a href='./dashboard.php?content=search' id='searchBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-search fa-fw'></i>  Search</a>");
+      }
 
       //Displaying admin only tools
       if($_SESSION['user_type'] == $GLOBALS['admin_type']) {
         echo("<a href='./dashboard.php?content=adminTools' id='adminToolsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-diamond fa-fw'></i>  Admin Tools</a>");
-      }
-
-      if(($_SESSION['user_type'] == $GLOBALS['secretary_type'] || $_SESSION['user_type'] == $GLOBALS['admin_type'])) {
-        echo("<a href='./dashboard.php?content=search' id='searchBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-search fa-fw'></i>  Search</a>");
       }
 
       if(($_SESSION['user_type'] == $GLOBALS['admin_type'])) {
@@ -105,9 +104,10 @@
     {
         document.getElementById('adminToolsBar').className += " w3-blue";
     }
-    else if(tempURL[1] == "users")
+    else if(tempURL[1] == "users" || tempURL[1] == "users&contentType")
     {
         document.getElementById('usersBar').className += " w3-blue";
+        
     }
     else if(tempURL[1] == "courses" || tempURL[1] == "courses&contentType")
     {
