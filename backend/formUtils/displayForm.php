@@ -22,7 +22,6 @@ $html_form.= "<input name='wf_id' value='$wf_id' hidden/>";
 foreach ($form_structure as $key => $value) {
 	if($key != 'form_title') {
 		$state = 'disabled';
-
 		$sql = "SELECT user_access_role FROM s21_form_templates WHERE title = '$form_title'";
 		$result = mysqli_query($db_conn, $sql);
 		$row = mysqli_fetch_assoc($result);
