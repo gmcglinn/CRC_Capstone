@@ -66,7 +66,7 @@
       }
 
       //April 14 showing creation of new types of customization Forms, Courses
-      if(($_SESSION['user_type'] == $GLOBALS['admin_type'] || $_SESSION['user_type'] == $GLOBALS['secretary_type'])) {
+      if(($_SESSION['user_type'] == $GLOBALS['admin_type'])) {
         echo("<a href='./dashboard.php?content=forms' id='formsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-wrench fa-fw'></i>  Forms</a>");
       }
 
@@ -229,7 +229,7 @@
       }
 
       //April 14 showing creation of new types of customization Forms, Courses
-      if(($_SESSION['user_type'] == $GLOBALS['admin_type'] || $_SESSION['user_type'] == $GLOBALS['secretary_type'])) {
+      if(($_SESSION['user_type'] == $GLOBALS['admin_type'])) {
 
         echo("<a href='./dashboard.php?content=forms' id='formsBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-wrench fa-fw'></i>  Forms</a>");
       }
