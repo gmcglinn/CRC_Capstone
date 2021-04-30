@@ -20,14 +20,14 @@
 			mysqli_query($db_conn, $sql);
         	//Database insert success
         	if (mysqli_errno($db_conn) == 0) {
-            	echo("<div class='w3-panel w3-margin w3-green'><p>Workflow Successfully Created.</p></div>");
+            	echo("<div class='w3-panel w3-margin w3-green'><p>New Workflow Successfully Created.</p></div>");
         	} 
         	//Database detected duplicate entry
         	else if (mysqli_errno($db_conn) == 1062) {  
-            echo("<div class='w3-panel w3-margin w3-red'><p>Failed to Create Workflow - Duplicate Found.</p></div>");
+            echo("<div class='w3-panel w3-margin w3-red'><p>Failed to Create Course - Duplicate Found.</p></div>");
         	}
         	else {
-            	echo("<div class='w3-panel w3-margin w3-red'><p>Failed to Create Workflow.</p></div>");
+            	echo("<div class='w3-panel w3-margin w3-red'><p>Failed to Create Course</p></div>");
 
         	}
 
@@ -74,7 +74,7 @@
 
 <!-- Create Workflow -->
 <div id="workflowForm" class="w3-card-4 w3-padding w3-margin" style="display: block;">
-    <h5 onload="LoadFormOptions()">Create Course (Workflow Template)</h5>
+    <h5 onload="LoadFormOptions()">Create New Course (Workflow Template)</h5>
     <p>You can create a custom course (workflow template) here.</p>
     <form id="subform" method="post">
         <label for="workflowTitle">Course Title (Workflow Template Title)</label>
