@@ -14,7 +14,6 @@
     <table id="workflowTable" class="pagination w3-table-all w3-responsive" data-pagecount="8" style="max-width:fit-content;">
         <tr>
             <th>Title</th>
-            <th>Initiator</th>
             <th>Priority</th>
             <th>Status</th>
             <th>Created</th>
@@ -23,28 +22,26 @@
         </tr>
 
         <?php
-            $sql = "SELECT * FROM f20_app_table
-                        JOIN f20_app_type_table
-                            ON f20_app_table.ATID = f20_app_type_table.ATID
-                        JOIN f20_app_status_table
-                            ON f20_app_table.ASID = f20_app_status_table.ASID
-                        JOIN f20_user_table
-                            ON f20_app_table.UID = f20_user_table.UID";
+            $sql = "SELECT * FROM s21_active_workflow_ids as m
+                    INNER JOIN s21_active_workflow_info as n
+                    ON n.WF_ID=m.WF_ID
+                    INNER JOIN s21_active_workflow_status as s
+                    ON s.WF_ID=m.WF_ID
+                    INNER JOIN s21_course_workflow_steps as t
+                    ON t.ATPID=n.ATPID";
 
             $query = mysqli_query($db_conn, $sql);
             
             while ($row = mysqli_fetch_array($query)) {
-                $workflowID = $row['AID'];
-                $owner = $row['user_name'] . " (" . $row['user_email'] . ")";
-                $title = $row['4'];
-                $priority = $row['9'];
-                $status = $row['12'];
+                $workflowID = $row['ATPID'];
+                $title = $row['title'];
+                $priority = $row['priority'];
+                $status = $row['status'];
                 $created = $row['created'];
                 $deadline = $row['deadline'];
         ?>
         <tr>
             <td><?php echo $title; ?></td>
-            <td><?php echo $owner; ?></td>
             <td><?php echo $priority; ?></td>
             <td><?php echo $status; ?></td>
             <td><?php echo $created; ?></td>

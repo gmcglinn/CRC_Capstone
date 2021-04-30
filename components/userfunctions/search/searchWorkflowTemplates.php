@@ -1,9 +1,5 @@
 <?php
 
-
-//USELESS?
-
-
     include_once('./backend/config.php');
     include_once('./backend/db_connector.php');
     //Loading the page title and action buttons.
@@ -24,15 +20,20 @@
         </tr>
 
         <?php
-            $sql = "SELECT * FROM f20_app_template_table AS t1
-                        JOIN f20_template_status_table AS t2
-                            ON t1.TSID = t2.TSID";
+            $sql = "SELECT * FROM s21_active_workflow_ids as m
+                    INNER JOIN s21_active_workflow_info as n
+                    ON n.WF_ID=m.WF_ID
+                    INNER JOIN s21_active_workflow_status as s
+                    ON s.WF_ID=m.WF_ID
+                    INNER JOIN s21_course_workflow_steps as t
+                    ON t.ATPID=n.ATPID";
             $query = mysqli_query($db_conn, $sql);
             
             while ($row = mysqli_fetch_array($query)) {
                 $templateID = $row['ATPID'];
-                $title = $row['2'];
-                $status = $row['5'];
+                $title = $row['title'];
+                $status = $row['status'];
+                $priority = $row['priority'];
         ?>
         <tr>
             <td><?php echo $title; ?></td>

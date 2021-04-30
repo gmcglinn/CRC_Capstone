@@ -17,17 +17,17 @@
     <!-- Department Creation only available to Admin -->
     <?php if($_SESSION['user_type'] == $GLOBALS['admin_type']) { ?>
     <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=adminTools&contentType=dept'">
-    <div class="w3-container w3-teal w3-padding-16 w3-border ">
+    <div class="w3-container w3-amber w3-padding-16 w3-border ">
         <div class="w3-left"><i class="fa fa-building w3-xxxlarge"></i></div>
         <div class="w3-clear"><h5>Create Department</h5></div>
     </div>
     </div>
     <?php } ?>
     
-    <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=adminTools&contentType=user'">
-    <div class="w3-container w3-teal w3-padding-16 w3-border">
+    <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=users&contentType=create'">
+    <div class="w3-container w3-amber w3-padding-16 w3-border">
         <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
-        <div class="w3-clear"><h5>Create User</h5></div>
+        <div class="w3-clear"><h5>Create New User</h5></div>
     </div>
     </div>
 </div>
