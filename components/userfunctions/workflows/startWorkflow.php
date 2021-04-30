@@ -14,14 +14,15 @@
         $deadline = mysqli_real_escape_string($db_conn, $_POST['deadline']);
         $ATPID = mysqli_real_escape_string($db_conn,  $_POST['ATPID']);
         $priority = mysqli_real_escape_string($db_conn, $_POST['priority']);
+        $title = mysqli_real_escape_string($db_conn, $_POST['title']);
+
         $form_assignments = $_POST['form_assignments'];   
         $form_assignments = json_decode($form_assignments, True);
 
-
         $wf_id = bin2hex(random_bytes(32));  //duplication is unlikely with this one. 1 in 20billion apparently
         
-        $newappsql = "INSERT INTO s21_active_workflow_info(WF_ID, ATPID, priority, deadline) 
-            VALUES ('$wf_id','$ATPID', '$priority', '$deadline');";
+        $newappsql = "INSERT INTO s21_active_workflow_info(WF_ID, ATPID, priority, deadline, title) 
+            VALUES ('$wf_id','$ATPID', '$priority', '$deadline', '$title');";
 
         //get workflow steps info
         $sql = "SELECT * FROM s21_course_workflow_steps WHERE ATPID = '$ATPID'";
@@ -130,6 +131,9 @@
     <h4>Start A Workflow</h4>
         <form method="post">
            <div class='w3-container'>
+           <label for="priority">Title</label>
+           <input class="w3-input" type="text" name="title" required></input>
+           <br>
            <label for="form_type">Course (Workflow Template)</label>
             <select class="w3-input" name="ATPID" id="wf_title" onchange="showFormUsers(this.value)">
             <option value="">Select a Workflow:</option>
