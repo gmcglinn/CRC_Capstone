@@ -8,6 +8,7 @@ if (isset($_POST['formData'])) {
 
     $wf_id = $_POST['wf_id'];
     $uid = $_SESSION['user_id'];
+    $status = $_POST['formData'];
 
     unset($_POST['wf_id']);
     unset($_POST['formData']);
@@ -49,7 +50,7 @@ if (isset($_POST['formData'])) {
     
     $update_form_sql = "UPDATE s21_active_form_info SET form_info = '$form_info' WHERE WF_ID = '$wf_id' AND UID = '$uid'";
     
-    $update_status_sql = "UPDATE s21_active_workflow_status SET $column = 2 WHERE WF_ID = '$wf_id'";
+    $update_status_sql = "UPDATE s21_active_workflow_status SET $column = $status WHERE WF_ID = '$wf_id'";
 
     mysqli_query($db_conn, $update_form_sql);
 

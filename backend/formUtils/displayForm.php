@@ -36,8 +36,8 @@ foreach ($form_structure as $key => $value) {
 }
 
 if ($row['user_access_role'] == $_SESSION['user_type']) {
-	$html_form.= "<button class='w3-button w3-teal' type='submit' name='formData' >Submit</button>";
-
+	$html_form.= "<button class='w3-button w3-teal w3-margin' type='submit' name='formData' value='1' >Submit</button>";
+	$html_form.= "<button class='w3-button w3-blue w3-padding' type='submit' name='formData' value='2'>Save</button>";
 }
 
 $html_form.= "</form>";
