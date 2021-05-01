@@ -187,24 +187,21 @@
     else if($_GET['content'] == "courses") {
         //If the user requested the a specific section of the workflows page.
         if(isset($_GET['contentType'])) {
-            if($_GET['contentType'] == "active") {
-                include_once("./components/userfunctions/courses/activeWorkflows.php");
+            if($_GET['contentType'] == "create") {
+                include_once("./components/userfunctions/courses/createCourse.php");
             }
-            else if($_GET['contentType'] == "new") {
-                include_once("./components/userfunctions/create/createWorkflow.php");
+            else if($_GET['contentType'] == "edit") {
+                include_once("./components/userfunctions/create/editCourse.php");
             }
-            else if($_GET['contentType'] == "start") {
-                include_once("./components/userfunctions/courses/startWorkflow.php");
+            else if($_GET['contentType'] == "view") {
+                include_once("./components/userfunctions/courses/viewAllCourses.php");
             }
-            else if($_GET['contentType'] == "completed") {
-                include_once("./components/userfunctions/courses/completedWorkflows.php");
-            }
-            else if($_GET['contentType'] == "viewWorkflow") {
-                include_once("./components/userfunctions/courses/viewWorkflow.php");
+            else if($_GET['contentType'] == "delete") {
+                include_once("./components/userfunctions/courses/deleteCourse.php");
             }
         }
         else {
-            include_once("./components/userfunctions/courses/workflows.php");
+            include_once("./components/userfunctions/courses/courses.php");
         }
     }
 
