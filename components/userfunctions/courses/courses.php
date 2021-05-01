@@ -24,7 +24,7 @@
     </div>
     </div>
 
-    <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=workflows&contentType=edit'">
+    <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=courses&contentType=edit'">
     <div class="w3-container w3-teal w3-padding-16 w3-border">
         <div class="w3-left"><i class="fa fa-gear w3-xxxlarge"></i></div>
         <div class="w3-clear"><h5>Edit Courses</h5></div>
@@ -32,7 +32,7 @@
     </div>
     
     
-    <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=workflows&contentType=delete'">
+    <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=courses&contentType=delete'">
     <div class="w3-container w3-teal w3-padding-16 w3-border">
         <div class="w3-left"><i class="fa fa-minus w3-xxxlarge"></i></div>
         <div class="w3-clear"><h5>Delete Course</h5></div>

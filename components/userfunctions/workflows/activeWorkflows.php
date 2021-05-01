@@ -123,7 +123,7 @@ if (isset($_POST['formData'])) {
         
         $sql.= $where_sql."=$user";
 
-        if ($user_type == 1) {
+        if ($type == 1) {
             $sql = substr($sql, 0, strpos($sql, "WHERE"));
         }
         
