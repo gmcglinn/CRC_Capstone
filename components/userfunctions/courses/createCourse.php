@@ -42,9 +42,6 @@
 ?>
 
 <!-- Content Title -->
-<header class="w3-container" style="padding-top:22px">
-    <h5><b><i class="fa fa-plus"></i>  Admin Create Tool</b></h5>
-</header>
 
 <!-- Create Workflow -->
 <div id="workflowForm" class="w3-card-4 w3-padding w3-margin" style="display: block;">

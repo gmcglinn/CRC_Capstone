@@ -48,7 +48,7 @@
       }
 
       if(($_SESSION['user_type'] == $GLOBALS['admin_type'])) {
-        echo("<a href='./dashboard.php?content=users' id='usersBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-male fa-fw'></i>  Users</a>");
+        echo("<a href='./dashboard.php?content=users' id='usersBar' class='w3-bar-item w3-button w3-padding'><i class='fa fa-user fa-fw'></i>  Manage Users</a>");
       }
 
       //Displaying the workflows option for users involved in only their own Workflows.
