@@ -35,7 +35,7 @@ panels are contained in this file and printed based on the user type.
                 </div>
             </div>
             
-            <div class="w3-quarter" onClick="location.href = './dashboard.php?content=files'">
+            <div class="w3-quarter" onClick="location.href = './dashboard.php?content=users'">
                 <div class="w3-container w3-green w3-text-white w3-padding-16">
                     <div class="w3-left"><i class="fa fa-user w3-xxxlarge"></i></div>
                     <div class="w3-clear"></div>
