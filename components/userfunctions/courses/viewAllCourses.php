@@ -2,7 +2,6 @@
     include_once('./backend/config.php');
     include_once('./backend/db_connector.php');
     include_once('./components/userfunctions/courses/courses.php');
-
 ?>
 
 
