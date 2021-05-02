@@ -19,7 +19,7 @@
 
 
     <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=search&contentType=user'">
-    <div class="w3-container w3-teal w3-padding-16 w3-border">
+    <div class="w3-container w3-green w3-padding-16 w3-border">
         <div class="w3-left"><i class="fa fa-search w3-xxxlarge"></i></div>
         <div class="w3-clear"><h5>Search Users</h5></div>
     </div>
@@ -29,7 +29,7 @@
     <!-- User Creation only available to Admin -->
     <?php if($_SESSION['user_type'] == $GLOBALS['admin_type']) { ?>
     <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=users&contentType=create'">
-    <div class="w3-container w3-teal w3-padding-16 w3-border ">
+    <div class="w3-container w3-green w3-padding-16 w3-border ">
         <div class="w3-left"><i class="fa fa-plus w3-xxxlarge"></i></div>
         <div class="w3-clear"><h5>Create New User</h5></div>
     </div>

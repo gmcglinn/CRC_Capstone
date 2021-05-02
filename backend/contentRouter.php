@@ -191,7 +191,7 @@
                 include_once("./components/userfunctions/courses/createCourse.php");
             }
             else if($_GET['contentType'] == "edit") {
-                include_once("./components/userfunctions/create/editCourse.php");
+                include_once("./components/userfunctions/courses/editCourse.php");
             }
             else if($_GET['contentType'] == "view") {
                 include_once("./components/userfunctions/courses/viewAllCourses.php");

@@ -8,7 +8,7 @@ $result = mysqli_query($db_conn, $sql);
 
 $form_list_html = "
 <header class='w3-container' style='padding-top:22px'>
-   <h2>Form Selection:</h2>
+   <h2>View Workflow Content/Information:</h2>
    <h3>Select your form.</h3>
 
 </header>
@@ -23,7 +23,7 @@ while($row = mysqli_fetch_array($result)) {
 	$form_list_html.="<div class='w3-quarter' onClick=displayForm('$wf_id',". $uid .")>
                       <div class='w3-container w3-blue w3-padding-16 w3-border'>
                         <div class='w3-left'><i class='fa fa-users w3-xxxlarge'></i></div>
-                        <div class='w3-clear'><h5>$form_title</h5></div>
+                        <div class='w3-clear'><h5>$form_title<br>Form ID: $uid</h5></div>
                     </div>
                     </div>";
 }

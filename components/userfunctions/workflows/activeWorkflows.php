@@ -75,7 +75,7 @@ if (isset($_POST['formData'])) {
 
 <!-- Active Workflows -->
 <div class="w3-container" id='wf-container'>
-    <h5>Active Workflows</h5>
+    <h5>In-Progress Workflows</h5>
     <!-- Getting the current user's workflows from the database and printing them in a preview. -->
     <?php
         include_once('./backend/db_connector.php');
