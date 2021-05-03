@@ -40,7 +40,10 @@
             
             <td><?php echo $title; ?></td>
           
-            <td><?php echo $user_access_role; ?></td>
+            <td><?php if($user_access_role == 4) echo "Dean";
+                            elseif($user_access_role == 8) echo "Student";
+                            elseif($user_access_role == 6) echo "Secretary";
+                            elseif($user_access_role == 5) echo "Chair"; ?></td>
             <td><?php echo $created; ?></td>
             <td><?php echo $changed; ?></td>
             <td>

@@ -43,6 +43,7 @@
         else {
             echo("<div class='w3-panel w3-margin w3-red'><p>Error updating the workflow: " . $db_conn->error . "</p></div>");
         }
+    }
 
 
 
@@ -62,8 +63,14 @@
         $query = mysqli_query($db_conn, $sql);
         $row = mysqli_fetch_array($query);
 
+        $TID = $row['ATPID'];
+        $title = $row['workflow_title'];
+        $instructions = $row['instructions'];
+        $form_assignments = $row['form_assignments'];
+        $form_assignments = str_replace(':', '=>', $form_assignments);
+        $form_assignments = str_replace(',', ' | ', $form_assignments);
+        $form_assignments = str_replace('"', '', $form_assignments);
 
-        
 ?>
 
 
@@ -73,50 +80,31 @@
 <div id="courseForm" class="w3-card-4 w3-padding w3-margin">
     
 
-    <h5>CourseS:</h5>
-    <form method="post" action="./dashboard.php?content=view&contentType=workflow">
+    <h5>Course:</h5>
+    <form method="post" action="./dashboard.php?content=courses&contentType=editSingle">
         <!-- Workflow ID, never displayed to the user but here for when the user submits the course to edit or remove. -->
         <input id="TID" name="TID" type="hidden" class="w3-input" value="<?php echo $TID; ?>" readonly>
 
         <label for="title" class="w3-input">Title:</label>
-        <input id="title" name="forTitle" type="text" class="w3-input" value="<?php echo $row[1]; ?>" >
+        <input id="title" name="courseTitle" type="text" class="w3-input" value="<?php echo $title; ?>" >
 
-        <!-- 
-            
-            PLEASE LOOK AT THIS 
-        
+        <!--
+        For the presentation we may only want to make title editable 
+        Otherwise I was thinking we take the CREATE COURSE functionality and auto-fill it from the sql query    
         -->
+        
 
         <label for="title" class="w3-input">Instructions:</label>
-        <input id="title" name="formInstructions" type="text" class="w3-input" value="<?php echo $row[2]; ?>" >
+        <input id="title" name="instruction" type="text" class="w3-input" value="<?php echo $instructions; ?>" readonly>
 
-        
+        <label for="title" class="w3-input">Assignments:</label>
+        <input id="title" name="assignments" type="text" class="w3-input" value="<?php echo $form_assignments; ?>" readonly>
 
-        <label for="title" class="w3-input">Created:</label>
-        <input id="title" name="formCreateDate" type="text" class="w3-input" value="<?php echo $row[4]; ?>" readonly>
-
-        <label for="title" class="w3-input">Changed:</label>
-        <input id="title" name="formChangedDate" type="text" class="w3-input" value="<?php echo $row[5]; ?>" readonly>
-
-        
-
-        <label for="title" class="w3-input">Responsibility:</label>
-        <select id="user_type" name="user_type" class="w3-input">
-            <option value=""><?php $row[3]?></option>
-            <?php
-                $sql = "SELECT DISTINCT user_role_title FROM `f20_user_role_table`";
-                $result  = mysqli_query($db_conn, $sql);
-                while ($row = mysqli_fetch_array($result)) {
-                    $user_type = $row['user_role_title'];
-                    echo("<option value=" . $user_type . ">" . $user_type . "</option>");
-                }
-            ?>
-        </select>
 
 
         <br>
         <div id="editButtons" style="display: inline-block;">
-            <button type="submit" class="w3-button w3-blue" name="saveFormChanges">Save Changes</button>
+            <button type="submit" class="w3-button w3-blue" name="saveCourseChanges">Save Changes</button>
         </div>
     </form>
     

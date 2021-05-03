@@ -43,6 +43,7 @@
         else {
             echo("<div class='w3-panel w3-margin w3-red'><p>Error updating the workflow: " . $db_conn->error . "</p></div>");
         }
+    }
 
 
 

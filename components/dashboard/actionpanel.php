@@ -44,25 +44,6 @@ panels are contained in this file and printed based on the user type.
             </div>
 
 
-            <!--More Bandaid Solution stuff, sorry other semesters-->
-            <!-- <div class="w3-quarter" onClick="location.href = './dashboard.php?content=forms'">
-                <div class="w3-container w3-teal w3-padding-16">
-                    <div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
-                    <div class="w3-clear"></div>
-                    <h4>Forms</h4>
-                </div>
-            </div>
-
-
-            <div class="w3-quarter" onClick="location.href = './dashboard.php?content=courses'">
-                <div class="w3-container w3-teal w3-padding-16">
-                    <div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
-                    <div class="w3-clear"></div>
-                    <h4>Courses</h4>
-                </div>
-            </div> -->
-
-
         </div>
 <?php
     }

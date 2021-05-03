@@ -156,9 +156,6 @@
             if($_GET['contentType'] == "create") {
                 include_once("./components/userfunctions/forms/createNewForm.php");
             }
-            // else if($_GET['contentType'] == "delete") {
-            //     include_once("./components/userfunctions/forms/deleteForm.php");
-            // }
             else if($_GET['contentType'] == "edit") {
                 include_once("./components/userfunctions/forms/editForm.php");
             }
@@ -198,6 +195,9 @@
             }
             else if($_GET['contentType'] == "delete") {
                 include_once("./components/userfunctions/courses/deleteCourse.php");
+            }
+            else if($_GET['contentType'] == "editSingle") {
+                include_once("./components/userfunctions/courses/editSingle.php");
             }
         }
         else {
