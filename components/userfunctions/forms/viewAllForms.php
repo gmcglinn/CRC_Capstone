@@ -19,8 +19,6 @@
             <th>Priority</th>
             <th>Status</th>
             <th>Created</th>
-            <!--<th>Deadline</th>
-            <th>Actions</th>-->
         </tr>
 
         <?php
