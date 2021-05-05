@@ -18,33 +18,6 @@
     }
 
 
-    if(isset($_POST['saveFormChanges'])) {
-        include_once('./backend/db_connector.php');
-        //Get all user input.
-        $workflowID = mysqli_real_escape_string($db_conn, $_POST['workflowID']);
-        $title = mysqli_real_escape_string($db_conn, $_POST['workflowTitle']);
-        $initiator = mysqli_real_escape_string($db_conn, $_POST['initiator']);
-        $priority = mysqli_real_escape_string($db_conn, $_POST['priority']);
-        $status = mysqli_real_escape_string($db_conn, $_POST['status']);
-        $created = mysqli_real_escape_string($db_conn, $_POST['created']);
-        $deadline = mysqli_real_escape_string($db_conn, $_POST['deadline']);
-
-        $sql = "UPDATE f20_app_table 
-                    SET ASID = $status,
-                    ATID = '$priority',
-                    `UID` = $initiator,
-                    title = '$title',
-                    created = '$created',
-                    deadline = '$deadline'                     
-                WHERE AID = $workflowID";
-        if ($db_conn->query($sql) === TRUE) {
-            echo("<div class='w3-panel w3-margin w3-green'><p>Successfully Edited this Workflow.</p></div>");
-        } 
-        else {
-            echo("<div class='w3-panel w3-margin w3-red'><p>Error updating the workflow: " . $db_conn->error . "</p></div>");
-        }
-    }
-
 
 
     if(!isset($_POST['TID'])) {
@@ -59,51 +32,177 @@
         $TID = mysqli_real_escape_string($db_conn, $_POST['TID']);
 
         //Find all data related to the workflow.
-        $sql = "SELECT * FROM s21_form_templates";
+        $sql = "SELECT * FROM s21_form_templates WHERE TID = $TID";
         $query = mysqli_query($db_conn, $sql);
         $row = mysqli_fetch_array($query);
+    }
+
+    include_once('./backend/util.php');
+    include_once('./backend/db_connector.php');
+if(isset($_POST['formCreate'])) {	
+	$form_structure = $_POST['formStructure'];
+	$form_name = mysqli_real_escape_string($db_conn, $_POST['formName']);
+	$user_access_type = mysqli_real_escape_string($db_conn, $_POST['user_type']);
+	
+	$sql = "SELECT URID FROM f20_user_role_table WHERE user_role_title = '$user_access_type'";
+	$result = mysqli_query($db_conn, $sql);
+	$row = mysqli_fetch_assoc($result);
+
+	$user_access_type = $row['URID'];
+
+	$sql = "UPDATE `s21_form_templates` SET title = '$form_name', instructions = '$form_structure', user_access_role = '$user_access_type' WHERE TID = '$TID'";
 
 
-        
+
+	$result = mysqli_query($db_conn, $sql);
+
+	if ($result) {
+            
+        echo("<div class='w3-card w3-green w3-margin w3-padding'>Successfully Edited Form.</div>");
+    }       
+	else {
+            echo("<div class='w3-card w3-red w3-margin w3-padding'> Error Editing Form.</div>");
+    }
+}
+	
 ?>
 
+<script>
+	var fieldNames = [];
 
-<!-- View Forms -->
+	function AddW3Classes() {
+		if (document.getElementById('formPreview').classList.length == 0) {
+			document.getElementById('formPreview').classList.add('w3-card-4');
+			document.getElementById('formPreview').classList.add('w3-padding');
+			document.getElementById('formPreview').classList.add('w3-margin');
+		}
+	}
 
+	function AddField(event) {
+		event.preventDefault();
+		fieldNames.push(document.getElementById('addField').value);
+		document.getElementById('addField').value = '';
+		
+		AddW3Classes();
+		UpdateHiddenInput();
 
-<div id="formForm" class="w3-card-4 w3-padding w3-margin">
+		if (!document.getElementById('templateHeader')) {
+				document.getElementById('userForm').outerHTML += "<h2 id=templateHeader class=w3-padding > Form Preview </h2>";
+		}
+		
+		if (fieldNames.length == 1) {
+			document.getElementById('submit').innerHTML += `<br>
+                                                                <input type="hidden" name="TID" value="<?php echo $TID;?>">
+																<button class='w3-button w3-green' type="submit" name="formCreate"> Modify Form </button> 
+																`;
+
+		}
+		
+		let newField = fieldNames[fieldNames.length - 1];
+		let fieldNumber = fieldNames.length
+
+		document.getElementById('formPreview').innerHTML +=  `
+															<div id = field` + newField + `
+																<label class="w3-margin">  ` + newField + `</label> 
+																<div class = 'w3-row '>
+
+																	<div class="w3-threequarter" > 
+																		<input type=text class="w3-input w3-gray"/> 
+																	</div>
+																
+																	<div class="w3-margin-left w3-center" > 
+																		<button class="w3-button w3-margin-right w3-green" onClick='document.ge'> Edit</button>
+																		<button class="w3-button w3-red" onclick='RemoveField(event, "` + newField + `")'> 
+																			Delete
+																		</button>
+																	</div>
+
+																</div>
+															</div>
+															`  ;
+		
+	}
+
+	function AddFormTitle(event) {
+		event.preventDefault();
+		title = document.getElementById('addTitle').value;
+		document.getElementById('addTitle').value = '';
+		document.getElementById('formTitle').innerHTML = title;
+		document.getElementById('formName').value = title;
+
+		AddW3Classes();
+
+		if (!document.getElementById('templateHeader')) {
+			document.getElementById('userForm').outerHTML += "<h2 id=templateHeader class=w3-padding > Form Preview </h2>";
+		}
+	}
+	
+	function RemoveField(event,  fieldName) {
+		event.preventDefault();
+		
+	    for( var i = 0; i < fieldNames.length; i++){ 
     
+        if ( fieldNames[i] === fieldName) { 
+    
+            	fieldNames.splice(i, 1); 
+			}
+    
+    	}
+		
+		console.log(fieldNames + "deletion");
+		document.getElementById('field'+fieldName).remove();
+		
+		UpdateHiddenInput();
+	}
 
-    <h5>Form:</h5>
-    <form method="post" action="./dashboard.php?content=view&contentType=workflow">
-        <!-- Workflow ID, never displayed to the user but here for when the user submits the form to edit or remove. -->
-        <input id="TID" name="TID" type="hidden" class="w3-input" value="<?php echo $TID; ?>" readonly>
+	function EditField(event, fieldName) {
+		event.preventDefault();
+		document.getElementById('field'+fieldName)
+	}
 
-        <label for="title" class="w3-input">Title:</label>
-        <input id="title" name="forTitle" type="text" class="w3-input" value="<?php echo $row[1]; ?>" >
+	function UpdateHiddenInput(formName) {
+		values = fieldNames.slice(0, fieldNames.length);
+		obj = {}
+		
 
-        <!-- 
-            
-            PLEASE LOOK AT THIS 
-        
-        -->
+		for (let i = 0; i < values.length; i++) {
+			obj[values[i]] = "";
+		}
+		
+		obj['form_title'] = document.getElementById('formName').value;
+		parsed_vals = JSON.stringify(obj);
 
-        <label for="title" class="w3-input">Instructions:</label>
-        <input id="title" name="formInstructions" type="text" class="w3-input" value="<?php echo $row[2]; ?>" >
+		document.getElementById("formStructure").value = parsed_vals;
+		console.log(parsed_vals);
+	}
+	
+</script>
 
-        
+<h2 class='w3-margin'> Edit Form</h2>
+<div id=userForm class='w3-card-4 w3-padding w3-margin'>
+	<form onSubmit= 'AddFormTitle(event)'/>
+		<h4>Form Title</h4>
+    	<input id=addTitle  name= addTitle  type= text placeholder="Modify Course Title" class= 'w3-input' required/>		
+    	<br>
+    	<button type='submit' name=addTitle class='w3-button w3-teal'>Change Form Title</button>
+    	<!--<button onclick='Increment()' name='studentSubmit' class='w3-button w3-teal'>Create Form</button>
+		-->
+	</form>
+	
+	<form onSubmit= 'AddField(event)'/>
+		<h4>New Field</h4>
+    	<input id=addField  name= addField  type= text placeholder="Enter Field Name" class= 'w3-input' required/>		
+    	<br>
+    	<button type='submit' name=addField class='w3-button w3-teal'>Add Input</button>
+	</form>
 
-        <label for="title" class="w3-input">Created:</label>
-        <input id="title" name="formCreateDate" type="text" class="w3-input" value="<?php echo $row[4]; ?>" readonly>
-
-        <label for="title" class="w3-input">Changed:</label>
-        <input id="title" name="formChangedDate" type="text" class="w3-input" value="<?php echo $row[5]; ?>" readonly>
-
-        
-
-        <label for="title" class="w3-input">Responsibility:</label>
+	<form id=submit method=post>
+		<input id='formStructure' type="hidden" name="formStructure"/>
+		<input id='formName' type="hidden" name="formName"/>
+		<input id='user' type="hidden" name="user"/>
+		<br>
         <select id="user_type" name="user_type" class="w3-input">
-            <option value=""><?php $row[3]?></option>
+            <option value="">Please select the user who has access to this form.</option>
             <?php
                 $sql = "SELECT DISTINCT user_role_title FROM `f20_user_role_table`";
                 $result  = mysqli_query($db_conn, $sql);
@@ -113,16 +212,12 @@
                 }
             ?>
         </select>
-
-
-        <br>
-        <div id="editButtons" style="display: inline-block;">
-            <button type="submit" class="w3-button w3-blue" name="saveFormChanges">Save Changes</button>
-        </div>
-    </form>
-    
+	</form>
 </div>
 
-<?php 
-    }
-?>
+<div id="formPreview">
+	<div class = 'w3-blue'>
+		<h3 id='formTitle' class='w3-margin-left'></h3>
+	</div>
+	<br>
+</div>

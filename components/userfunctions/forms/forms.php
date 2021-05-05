@@ -28,7 +28,7 @@
     <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=forms&contentType=view'">
     <div class="w3-container w3-teal w3-padding-16 w3-border">
         <div class="w3-left"><i class="fa fa-eye w3-xxxlarge"></i></div>
-        <div class="w3-clear"><h5>View All Forms</h5></div>
+        <div class="w3-clear"><h5>View Forms</h5></div>
     </div>
     </div>
     <div class="w3-quarter" onclick="window.location.href='./dashboard.php?content=forms&contentType=create'">
